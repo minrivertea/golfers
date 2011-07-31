@@ -22,16 +22,17 @@
 	<meta name="robots" content="ALL" />
 	
     {% block extra-head %}{% endblock %}
-    <link rel="stylesheet" href="/static/css/styles.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
     <title>ProAdvanced Sports - {% block pagetitle %}{% endblock %}</title>
-    <script type="text/javascript" src="/static/js/searchbar.js"></script>
+    <script type="text/javascript" src="/js/searchbar.js"></script>
     	
-	<link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
 
 {% block extracss %}{% endblock %}
 {% block extrajs %}{% endblock %}
+ 
     
-    {% block ga %}
+{% block ga %}
     {% if ga_is_on %}
 <script type="text/javascript">
 
@@ -47,13 +48,21 @@
 
 </script>
     {% endif %}
-    {% endblock %}
+{% endblock %}
     
 </head>
 
 <body>	
 	<div id="container-header">
 	    <div id="header">
+	          
+	          <div id="basket">
+	            <div id="inner">
+	          	<img src="/images/cart.png"> {{ basket_quantity }} item{{ basket_quantity|pluralize }}
+	          	- <a href="{% url basket %}">checkout now!</a>
+	          	</div>
+	          </div>
+	          
 	     	  <div id="nav">
 	    	    <ul>
 	    	    	<li><a class="selected" href="/" title="" alt="">Home</a></li>

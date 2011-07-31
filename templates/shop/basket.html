@@ -3,75 +3,141 @@
 
 {% block pagetitle %}Your basket ({{ basket_quantity }}){% endblock %}
 
+{% block extracss %}
+<style type="text/css">
+.basket-row {
+  float: left;
+  width: 100%;	
+  border-bottom: 1px solid #e1e1e1;
+  padding: 20px 0;
+  
+}
+
+.basket-row .remove {
+  width: 40px;
+  float: left;
+  font-size: 10px;	
+}
+
+.basket-row .photo {
+  float: left;
+  width: 100px;	
+  margin-right: 20px;
+  display: block;
+}
+
+.basket-row .details {
+  float: left;
+  width: 300px;	
+}
+
+.basket-row .details a {
+  font-weight: bold;	
+}
+
+.basket-row .details .remove {
+  font-size: 10px;	
+  font-weight: normal;
+}
+
+.basket-row .quantity {
+  float: left;
+  width: 150px;	
+}
+
+.basket-row .total {
+  float: left;
+  width: 80px;	
+}
+
+#totals {
+  float: left;
+  margin-top: 30px;
+  width: 100%;
+  font-weight: bold;
+}
+
+#totals .label {
+  margin-left: 470px;
+  float: left;	
+}
+
+#totals .total {
+  float: left;
+  margin-left: 45px;	
+}
+
+#checkout-button {
+  font-size: 13px;	
+  margin-top: 40px;
+  float: left;
+  text-align: right;
+  width: 100%;
+}
+
+#checkout-button a {
+  font-weight: bold;
+  font-size: 20px;	
+}
+
+</style>
+{% endblock %}
 
 {% block content %}
 
-<div id="featured-small"></div>
+<div id="feature">
 
-<div id="main-text-wide">
+<div id="steps">
+Step 1/4
+</div>
 
-
-<h2 class="fontface">Your shopping basket</h2>
+<h1>Your shopping basket</h1>
 
 
 {% if not basket_items %}
 <p class="introduction">Your basket is empty! </p>
 {% else %}
 
-<p class="introduction">You currently have {{ basket_quantity }} item{% ifequal basket_quantity 1 %}{% else %}s{% endifequal %} in your basket
+<p class="introduction">You currently have {{ basket_quantity }} item{% ifequal basket_quantity 1 %}{% else %}s{% endifequal %} in your basket</p>
 
-</p>
-<div id="checkout-button">
-
-
-<a href="{% url order_check_details %}"></a>
-<p class="checkout"><strong>Next step:</strong> Please provide your address and personal details</p>
-</div>
-
-
-	<div id="basket-full">
-	
-	  <div class="basket-head-row">
-	    <div class="tea-remove">&nbsp;</div>
-		<div class="tea-name">&nbsp;</div>
-		<div class="tea-weight">ITEM</div>
-		<div class="tea-price">&nbsp;</div>
-		<div class="tea-quantity">AMOUNT</div>
-		<div class="tea-total">TOTAL</div>
-		
-      </div>
       
-	{% for thing in basket_items %}
-	  <div class="basket-row">
-	    <div class="tea-remove"><a title="Remove" alt="remove item from your basket" href="{% url remove_from_basket thing.item.id %}"></a></div>
-		<div class="tea-name">
-			<img src="{% thumbnail thing.item.parent_product.image 80x80 %}"/><br/>
-		</div>
-		<div class="tea-weight">
-			<a title="{{ thing.item.parent_product.description }}" href="{% url tea_view thing.item.parent_product.slug %}">{{ thing.item.parent_product.name }}</a>
-			{% if not thing.item.weight %}{% else %}({{ thing.item.weight|floatformat }}{{ thing.item.weight_unit }}) {% endif %}<br/>
-			{{ thing.item.price_unit }}{{ thing.item.price }}
-		</div>
-		<div class="tea-price">&nbsp;</div>
-		<div class="tea-quantity">{{ thing.quantity }} <a href="{% url increase_quantity thing.item.id %}">+</a>{% ifequal thing.quantity 1 %}{% else %} <a href="{% url reduce_quantity thing.item.id %}">-</a>{% endifequal %} </div>
-		<div class="tea-total">{{ thing.item.price_unit}}{{ thing.get_price }}</div>
+{% for thing in basket_items %}
+  <div class="basket-row">
+    <div class="remove"></div>
+	<div class="photo">
+		<img src="{% thumbnail thing.item.parent_product.image 100x100 %}"/><br/>
+	</div>
+
+	<div class="details">
+		<a title="{{ thing.item.parent_product.description }}" href="{% url product_view thing.item.parent_product.slug %}">{{ thing.item.parent_product.name }}</a><br/>
+		{{ thing.item.price_unit }}{{ thing.item.price }}<br/>
+		<a class="remove" alt="remove item from your basket" href="{% url remove_from_basket thing.item.id %}">Remove</a>
+	</div>
+
+
+	<div class="quantity">{{ thing.quantity }} <a href="{% url increase_quantity thing.item.id %}">+</a>{% ifequal thing.quantity 1 %}{% else %} <a href="{% url reduce_quantity thing.item.id %}">-</a>{% endifequal %} </div>
+	
+	<div class="total">{{ thing.item.price_unit}}{{ thing.get_price }}</div>
 		
-	  </div>
-	{% endfor %}
-	  <div class="basket-row postage">
-	  	<div class="tea-remove">&nbsp;</div>
-		<div class="tea-name"><em>Postage</em></div>
-		<div class="tea-weight">&nbsp;</div>
-		<div class="tea-price">&nbsp;</div>
-		<div class="tea-quantity">&nbsp;</div>
-		<div class="tea-total">£4.00</div>
-	  </div>
-	</div>
-	<br clear="all"/>
-	<div id="totals">
-		<div class="label">TOTAL:</div><div class="total">£{{ total_price }}</div>
-	</div>
-	<br clear="all"/>
+  </div>
+{% endfor %}
+
+  <div class="basket-row">
+		<div class="photo"><em>&nbsp;</em></div>
+		<div class="details">Postage</div>
+		<div class="quantity">&nbsp;</div>
+		<div class="total">£4.00</div>
+  </div>
+
+  <div id="totals">
+	<div class="label">TOTAL:</div><div class="total">£{{ total_price }}</div>
+  </div>
+	
+	
+<div id="checkout-button">
+	<a href="{% url order_check_details %}">Proceed to checkout &raquo;</a>
+	<p class="checkout"><strong>Next step:</strong> Please provide your address and personal details</p>
+</div>
 
 
 	

@@ -12,14 +12,75 @@
 {% block extracss %}
 <link rel="stylesheet" href="/css/lightbox.css" type="text/css" media="screen" />
 <style type="text/css">
-  div#header {height: 140px;}
-  div#feature {height: 120px;}
-  div#feature div.left {width: 800px;}
+  #top {
+    width: 100%;
+    float: left;
+    margin: 0px 0 30px;	
+  }
+  
+  #top #topleft {
+    width: 500px;
+    float: left;
+    margin-right: 30px;
+  }
+  
+  #top #topright {
+    float: left;
+    width: 350px;	
+  }
+  
+  #top .prices {
+    font-size: 20px;
+    font-weight: bold;	
+    margin-top: 20px;
+    float: left;
+    margin-bottom: 15px;
+  }
+  
+  #top .prices .price {
+    float: left; 
+    width: 190px;	
+  }
+  
+  #top .prices .button {
+    float: left;
+    width: 160px;	
+  }
+  
+  #top .prices a {
+  	font-size: 16px;
+    padding: 10px 15px;
+    background: -moz-linear-gradient(100% 100% 90deg, #e6e6e6, #f1f1f1); 
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f1f1f1), to(#e6e6e6)); 
+    background: -webkit-linear-gradient(#e6e6e6, #f1f1f1); 
+	background: -o-linear-gradient(#e6e6e6, #f1f1f1);   
+    border-color: #e1e1e1 #C1C1C1 #C1C1C1 #e1e1e1;
+    border-radius: 4px 4px 4px 4px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px -1px #666, 0 -1px 0 #666;
+    text-shadow: 0 1px 2px #fff;
+  }
+  
+  #top .prices a:hover {
+  	background: -moz-linear-gradient(100% 100% 90deg, #f1f1f1, #e6e6e6); 
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f1f1f1), to(#e6e6e6)); 
+    background: -webkit-linear-gradient(#e6e6e6, #f1f1f1); 
+	background: -o-linear-gradient(#e6e6e6, #f1f1f1);
+	color: #BD1B30;
+  }
+  
+  #message {
+    background-color: #FFFFFF;
+    border: 1px solid #E1E1E1;
+    border-radius: 5px 5px 5px 5px;
+    float: right;
+    font-size: 13px;
+    padding: 15px 20px;
+    text-align: right;
+  }
+  
   span.red {color: #BD1B30;}
-  div#content div.left h4 {border-bottom: none; font-weight: bold;}
-  div#content div.left ul.reviews {font-size: 14px; text-align:justify;}
-  div#content div.right h3 {font-size: 15px;}
-  div#content div.right div.product-photos-small {width: 400px;margin-bottom: 30px;}
 </style>
 {% endblock %}
 
@@ -27,54 +88,75 @@
 {% block pagetitle %} {{ product.name }}{% endblock %}
 
 {% block content %}
+<div id="feature">	
+	
+	{% if message %}
+	<div id="message">
+	  <strong>1 x {{ product.name }} added to your basket!<br/>
+	  <a href="{% url basket %}">Checkout now &raquo</a></strong>
+	</div>
+	{% endif %}
+	
+    <p class="sport">{{ product.category }}</p>
+	<h1>{{ product.name }}</h1>
 
-<div id="feature-container">
-	<div id="feature">	
-
-	<div class="left">
-	    <p class="sport">{{ product.category }}</p>
-  		<h3>{{ product.name }}</h3>
-  		{{ product.short_description|safe }}
-  		
+	<div id="top">
+		<div id="topleft">
+		<img class="product-photo-main" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image 500x500 %}"/>
+		</div>
+		
+		<div id="topright">
+			<p class="super-short">{{ product.super_short_description }}</p>
+			<div class="product-photos-small">	
+			{% if product.image_2 %}
+				<a href="{% thumbnail product.image_2 550x550 %}" rel="lightbox[tea]" title="{{ product.image_2_caption }}">
+				<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image_2 80x80 %}"/>
+				</a>
+			{% endif %}
+			{% if product.image_3 %}
+				<a href="{% thumbnail product.image_3 550x550 %}" rel="lightbox[tea]" title="{{ product.image_3_caption }}">
+				<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image_3 80x80 %}"/>
+				</a>
+			{% endif %}
+			</div>	
+			
+			
+			{% for price in prices %}
+			<div class="prices">
+			<div class="price">
+				{{ price.price_unit }}{{ price.price }}
+			</div>
+			<div class="button">
+				<a href="{% url add_to_basket price.id %}">Add to basket</a>
+			</div>
+			</div>
+			{% endfor %}
+				
+			
+		
+		</div>		
+		
+		
 	</div>
 	
-	<div class="right">	  		
-			
+
+
+	<div class="left">
+		{{ product.body_text|safe }}	
+  	</div>		
+
+	<div class="right">
+	
+	<h3>Customer testimonials</h3>
+		<ul class="reviews">
+			{% for review in reviews %}
+			<li><em>{{ review.text }}</em> <span class="red">{{ review.owner }}</span></li>
+			{% endfor %}
+		</ul>
 	</div>
-			
-  </div>
+
 </div>
 
-<div id="content-container">
-  <div id="content">
-	<div class="left">
-	<p class="super-short"><em>&ldquo;{{ product.super_short_description }}&rdquo;</em></p>
-		<p>{{ product.body_text|safe }}</p>	
-	</div>
-			<div class="right">
-				<img class="product-photo-main" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image 400x400 %}"/>
-				<div class="product-photos-small">	
-				{% if product.image_2 %}
-					<a href="{% thumbnail product.image_2 550x550 %}" rel="lightbox[tea]" title="{{ product.image_2_caption }}">
-					<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image_2 80x80 %}"/>
-					</a>
-				{% endif %}
-				{% if product.image_3 %}
-					<a href="{% thumbnail product.image_3 550x550 %}" rel="lightbox[tea]" title="{{ product.image_3_caption }}">
-					<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image_3 80x80 %}"/>
-					</a>
-				{% endif %}
-			</div>	
-			<br clear="all"/>
-				<h3>Customer testimonials</h3>
-				<ul class="reviews">
-		{% for review in reviews %}
-		<li><em>{{ review.text }}</em> <span class="red">{{ review.owner }}</span></li>
-		{% endfor %}
-		</ul>
-		</div>
-  </div>
-</div>
 	
 
 {% endblock %}

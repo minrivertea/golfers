@@ -3,40 +3,78 @@
 {% block pagetitle %}Order (Step 1 of 3) - Your details{% endblock %}
 
 
+{% block extracss %}
+<style type="text/css">
+
+.row {
+  width: 650px;
+  float: left;	
+}
+
+.row-box p {
+  float: left;
+  width: 650px;
+  margin: 10px 0 0px 0;	
+}
+
+.row label {
+    color: #000000;
+    float: left;
+    font-size: 13px;
+    font-weight: bold;
+    width: 200px;
+    margin: 10px 0 10px;
+}
+
+.row input {
+    border-color: #D1D1D1 #E1E1E1 #E1E1E1 #D1D1D1;
+    border-radius: 7px 7px 7px 7px;
+    border-style: solid;
+    border-width: 1px 0 0 1px;
+    color: #666666;
+    float: left;
+    font: 95% arial,helvetica,clean,sans-serif;
+    height: 20px;
+    margin: 10px 0 10px 0px;
+    padding: 10px 15px;
+    width: 400px;
+}
+
+span.red {
+  color: red;	
+}
+
+
+</style>
+{% endblock %}
+
 {% block content %}
 
-<div id="featured-small"></div>
+<div id="feature">
 
-<div id="main-text-wide">
+<div id="steps">
+Step 2/4
+</div>
 
-
-<img src="/images/basket4.png" class="basket">
-<h2 class="fontface">Please provide your details</h2>
+<h1>Please provide your details</h1>
 
     <form method="post" action="">
-    
-<p class="introduction">Step 1 of 3</p>
 
-
-	<div class="checkout-button">
-	<input type="submit" value="" next="" class="button-confirm-address"/>
-	<p class="checkout"><strong>Next step:</strong> Confirm your order</p>
+	<span class="red">
 	{{ form.first_name.errors }}
 	{{ form.last_name.errors }}
 	{{ form.email.errors }}
 	{{ form.non_field_errors }} 
-	      {% for error in form.errors %}
-      
-      {{ error.error }}
-      
-      {% endfor %}
-	</div>
+    {% for error in form.errors %}
+      {{ error.error }}      
+    {% endfor %}
+	</span>
 	
 
 
 	<div class="row">
 		<div class="row-label">
-			<h3>Your details</h3>
+			<h2>Your details</h2>
 		</div>
     	<div class="row-box">
     	<p class="intro">Please give your name and email address - just in case we need to contact you about your order.</p>
@@ -49,24 +87,40 @@
 	
 	<div class="row">
 		<div class="row-label">
-			<h3>Your address</h3>
+			<h2>Your address</h2>
 		</div>
     	<div class="row-box">
-    		<p class="intro">Please confirm which address we should send your tea to - make sure it's a valid UK address or we won't be able to post your tea!</p>
+    		<p class="intro">Please confirm your address where we should ship your order.</p>
 
-      <p><input id="id_house_name_number" type="text" name="house_name_number" maxlength="200" value="{{ house_name_number }}"/><label for="id_house_name_number">House name number:</label></p>
+      <p>
+      <label for="id_house_name_number">House name number:</label>
+      <input id="id_house_name_number" type="text" name="house_name_number" maxlength="200" value="{{ house_name_number }}"/></p>
 	  {{ form.address_line_1.error }}
-	  <p><input id="id_address_line_1" type="text" name="address_line_1" maxlength="200" value="{{ address_line_1 }}"/><label for="id_address_line_1">Address line 1:</label> </p>
+	  <p>
+	  <label for="id_address_line_1">Address line 1:</label>
+	  <input id="id_address_line_1" type="text" name="address_line_1" maxlength="200" value="{{ address_line_1 }}"/> </p>
       {{ form.address_line_2.errors }}
-      <p><input id="id_address_line_2" type="text" name="address_line_2" maxlength="200"  value="{{ address_line_2 }}"/><label for="id_address_line_2">Address line 2:</label></p>
+      <p>
+      <label for="id_address_line_2">Address line 2:</label>
+      <input id="id_address_line_2" type="text" name="address_line_2" maxlength="200"  value="{{ address_line_2 }}"/></p>
       {{ form.town_city.errors }}
-      <p><input id="id_town_city" type="text" name="town_city" maxlength="200" value="{{ town_city }}"/><label for="id_town_city">Town city:</label> </p>
+      
+      <p>
+      <label for="id_town_city">Town city:</label>
+      <input id="id_town_city" type="text" name="town_city" maxlength="200" value="{{ town_city }}"/> </p>
       {{ form.postcode.errors }}
-      <p><input id="id_postcode" type="text" name="postcode" maxlength="200" value="{{ postcode }}" /><label for="id_postcode">Postcode:</label> </p>
+      <p>
+      <label for="id_postcode">Postcode:</label>
+      <input id="id_postcode" type="text" name="postcode" maxlength="200" value="{{ postcode }}" /> </p>
  	</div> 
 	</div>
 
-	
+ <br clear="all"/>
+
+	<div class="checkout-button">
+	<p class="checkout"><strong>Next step:</strong> Confirm your order</p>
+	<input type="submit" value="Submit your details" next="" class="button-confirm-address"/>
+	</div>
 	
 	
 </form>

@@ -5,14 +5,19 @@
 
 {% block extracss %}
 <style type="text/css">
-p.quote {
+h1 {
+  margin-bottom: 0;	
+}
+
+div.left p.quote {
   font-family: Georgia, serif;
   font-size: 18px;
   line-height: 1.5em;
-  color: #30A5C7;	
+  color: #30A5C7;
+  margin-top: 20px;	
 }
 
-p.quote strong {
+div.left p.quote strong {
   color: #000;
   font-family: Helvetica, sans-serif;
   font-size: 13px;	
@@ -25,20 +30,18 @@ p.quote strong {
 
 <div id="feature-container">
 	<div id="feature">	
-			{% for product in featured %}	
+		{% for product in featured %}	
+			<div class="right">
+			<h1>{{ product.name }}</h1>	
+			<p class="super-short">{{ product.super_short_description }}</p>
+
+			<a class="more" href="{{ product.get_absolute_url }}">Find out more &raquo; </a>
+					
+			</div>
 			
-				<div class="right">
-				<p class="sport">{{ product.category }}</p>
-			<h3>{{ product.name }}</h3>	
-					<p class="super-short"><em>{{ product.super_short_description }}</em></p>
-					
-					{{ product.long_description|safe }}
-					<a class="more" href="{{ product.get_absolute_url }}">Find out more &raquo; </a>
-					
-				</div>
-				<div class="left">
-					<a href="{{ product.get_absolute_url }}"><img src="{% thumbnail product.image 420x420 %}"></a>
-					<p class="quote">&ldquo;<em>When Tiger was 6 months old, he would sit in our garage, watching me hit balls into a net. He had been assimilating his golf swing. When he got out of the high chair, he had a golf swing.</em>&rdquo;<br/><strong>Earl Woods</strong></p>
+			<div class="left">
+				<a href="{{ product.get_absolute_url }}"><img src="{% thumbnail product.image 550x550 %}"></a>
+				<p class="quote">&ldquo;<em>When Tiger was 6 months old, he would sit in our garage, watching me hit balls into a net. He had been assimilating his golf swing. When he got out of the high chair, he had a golf swing.</em>&rdquo;<br/><strong>Earl Woods</strong></p>
 				</div>
 			{% endfor %}
 	</div>

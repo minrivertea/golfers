@@ -5,23 +5,14 @@
 
 {% block extracss %}
 <style type="text/css">
-  div#header {height: 140px;}
-  div#feature {height: 80px;}
-  div#feature p {margin-top: 0; font-size: 15px;line-height: 18px; }
 </style>
 {% endblock %}
 
 {% block content %}
 
-<div id="feature-container">
 	<div id="feature">
-	<h3>Our golf nets</h3>
+	<h1>Our golf nets</h1>
 
-  </div>
-</div>
-
-<div id="content-container">
-  <div id="content">
 
 		{% for product, prices in products_and_prices %}
 	     <div class="{% cycle 'product-promo first' 'product-promo' 'product-promo last' %}">
@@ -37,7 +28,6 @@
         		{% if forloop.first %}
         			<div class="price">
         			{{ price.price_unit }}{{ price.price|floatformat }} 
-        			<span class="grey">({{ price.weight|floatformat }}{{ price.weight_unit }})</span> 
             		</div>
 		        {% else %}
     		    {% endif %}

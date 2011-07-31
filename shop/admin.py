@@ -7,6 +7,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Review)
+admin.site.register(UniqueProduct)
 
 
 from django import forms
