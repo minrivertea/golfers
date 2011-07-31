@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block pagetitle %}{{ flatpage.title }}{% endblock %}
+
+{% block extracss %}
+<style type="text/css">
+  div#header {height: 140px;}
+  div#feature {height: 60px;}
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div id="feature-container">
+	<div id="feature">	
+	<h3>{{ flatpage.title }}</h3>
+	</div>
+	
+</div>
+<div id="content">
+	<div class="flatpage-content">
+		
+		{{ flatpage.content }}
+	</div>
+
+
+</div>
+{% endblock %}

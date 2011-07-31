@@ -1,0 +1,8 @@
+Hey,
+
+{{ message }}
+
+Check out:
+
+http://www.minrivertea.com/tea/{{ slug }}
+

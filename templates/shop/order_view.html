@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id="featured-small"></div>
+
+<div id="main-text-wide">
+
+	<h2 class="fontface">Your order</h2>
+	<p class="introduction">This is the order you made on {{ order.date_confirmed }}</p>
+
+
+	<div class="left">
+
+	<p>Confirmed: {{ order.date_confirmed }}</p>
+	<p>Payment received: {{ order.date_paid }}</p>
+	<p>{{ order.status }}</p>
+	<p>{{ order. }}</p>
+	<p>{{ order. }}</p>
+	</div>
+
+
+</div>
+{% endblock %}

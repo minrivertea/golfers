@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block extrajs %}
+<script type="text/javascript" src="/js/prototype.js"></script>
+<script type="text/javascript" src="/js/scriptaculous.js?load=effects,builder"></script>
+<script type="text/javascript" src="/js/lightbox.js"></script>
+{% endblock %}
+
+{% block metadescription %}{% if product.meta_description %}{{ product.meta_description }}{% else %}{{ product.long_description }}{% endif %}{% endblock %}
+
+{% block extracss %}
+<link rel="stylesheet" href="/css/lightbox.css" type="text/css" media="screen" />
+<style type="text/css">
+  div#header {height: 140px;}
+  div#feature {height: 120px;}
+  div#feature div.left {width: 800px;}
+  span.red {color: #BD1B30;}
+  div#content div.left h4 {border-bottom: none; font-weight: bold;}
+  div#content div.left ul.reviews {font-size: 14px; text-align:justify;}
+  div#content div.right h3 {font-size: 15px;}
+  div#content div.right div.product-photos-small {width: 400px;margin-bottom: 30px;}
+</style>
+{% endblock %}
+
+
+{% block pagetitle %} {{ product.name }}{% endblock %}
+
+{% block content %}
+
+<div id="feature-container">
+	<div id="feature">	
+
+	<div class="left">
+	    <p class="sport">{{ product.category }}</p>
+  		<h3>{{ product.name }}</h3>
+  		{{ product.short_description|safe }}
+  		
+	</div>
+	
+	<div class="right">	  		
+			
+	</div>
+			
+  </div>
+</div>
+
+<div id="content-container">
+  <div id="content">
+	<div class="left">
+	<p class="super-short"><em>&ldquo;{{ product.super_short_description }}&rdquo;</em></p>
+		<p>{{ product.body_text|safe }}</p>	
+	</div>
+			<div class="right">
+				<img class="product-photo-main" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image 400x400 %}"/>
+				<div class="product-photos-small">	
+				{% if product.image_2 %}
+					<a href="{% thumbnail product.image_2 550x550 %}" rel="lightbox[tea]" title="{{ product.image_2_caption }}">
+					<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image_2 80x80 %}"/>
+					</a>
+				{% endif %}
+				{% if product.image_3 %}
+					<a href="{% thumbnail product.image_3 550x550 %}" rel="lightbox[tea]" title="{{ product.image_3_caption }}">
+					<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image_3 80x80 %}"/>
+					</a>
+				{% endif %}
+			</div>	
+			<br clear="all"/>
+				<h3>Customer testimonials</h3>
+				<ul class="reviews">
+		{% for review in reviews %}
+		<li><em>{{ review.text }}</em> <span class="red">{{ review.owner }}</span></li>
+		{% endfor %}
+		</ul>
+		</div>
+  </div>
+</div>
+	
+
+{% endblock %}

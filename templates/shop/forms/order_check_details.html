@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block pagetitle %}Order (Step 1 of 3) - Your details{% endblock %}
+
+
+{% block content %}
+
+<div id="featured-small"></div>
+
+<div id="main-text-wide">
+
+
+<img src="/images/basket4.png" class="basket">
+<h2 class="fontface">Please provide your details</h2>
+
+    <form method="post" action="">
+    
+<p class="introduction">Step 1 of 3</p>
+
+
+	<div class="checkout-button">
+	<input type="submit" value="" next="" class="button-confirm-address"/>
+	<p class="checkout"><strong>Next step:</strong> Confirm your order</p>
+	{{ form.first_name.errors }}
+	{{ form.last_name.errors }}
+	{{ form.email.errors }}
+	{{ form.non_field_errors }} 
+	      {% for error in form.errors %}
+      
+      {{ error.error }}
+      
+      {% endfor %}
+	</div>
+	
+
+
+	<div class="row">
+		<div class="row-label">
+			<h3>Your details</h3>
+		</div>
+    	<div class="row-box">
+    	<p class="intro">Please give your name and email address - just in case we need to contact you about your order.</p>
+    		<p><label for="id_first_name">First name</label><input type="text" name="first_name" id="id_first_name" value="{{ first_name }}"/></p>
+    		<p><label for="id_last_name">Surname</label><input type="text" name="last_name" id="id_last_name" value="{{ last_name }}"/></p>
+    		<p><label for="id_email">Email address</label><input type="text" name="email" id="id_email" value="{{ email }}"/></p>	
+    	</div>
+    </div>
+    
+	
+	<div class="row">
+		<div class="row-label">
+			<h3>Your address</h3>
+		</div>
+    	<div class="row-box">
+    		<p class="intro">Please confirm which address we should send your tea to - make sure it's a valid UK address or we won't be able to post your tea!</p>
+
+      <p><input id="id_house_name_number" type="text" name="house_name_number" maxlength="200" value="{{ house_name_number }}"/><label for="id_house_name_number">House name number:</label></p>
+	  {{ form.address_line_1.error }}
+	  <p><input id="id_address_line_1" type="text" name="address_line_1" maxlength="200" value="{{ address_line_1 }}"/><label for="id_address_line_1">Address line 1:</label> </p>
+      {{ form.address_line_2.errors }}
+      <p><input id="id_address_line_2" type="text" name="address_line_2" maxlength="200"  value="{{ address_line_2 }}"/><label for="id_address_line_2">Address line 2:</label></p>
+      {{ form.town_city.errors }}
+      <p><input id="id_town_city" type="text" name="town_city" maxlength="200" value="{{ town_city }}"/><label for="id_town_city">Town city:</label> </p>
+      {{ form.postcode.errors }}
+      <p><input id="id_postcode" type="text" name="postcode" maxlength="200" value="{{ postcode }}" /><label for="id_postcode">Postcode:</label> </p>
+ 	</div> 
+	</div>
+
+	
+	
+	
+</form>
+
+</div>
+{% endblock %}

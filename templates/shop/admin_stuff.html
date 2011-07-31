@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block extracss %}
+  <style type="text/css">
+      table {font-size: 14px;}
+      td { padding:5px; padding-right: 30px;}
+      td ul {padding:0; margin:0;}
+      td ul li {list-style-type:none;}
+      thead {font-weight: bold;}
+      h3 {margin: 30px 0 20px 0;}
+  </style>
+{% endblock %}
+
+{% block pagetitle %}Our Teas{% endblock %}
+
+{% block content %}
+
+<div id="featured-small"></div>
+
+<div id="main-text-wide">
+
+<h2>Admin pages</h2>
+<a href="/admin/">Login to admin interface</a>
+<p></p>
+<h3>Orders</h3>
+	<table id="orders-table">
+		<thead>
+			<tr>
+			<td>Order ID</td>
+			<td>Items</td>
+			<td>Owner</td>
+			<td>Status</td>
+			<td>Date paid</td>
+			</tr>
+		</thead>
+	{% for order, items in paid_orders %}
+		<tr>
+			<td>{{ order }}</td>
+			<td>
+				<ul>
+				{% for item in items %}
+					<li>{{ item }}</li>
+				{% endfor %}
+				</ul>
+			</td>
+			<td>{{ order.owner }}</td>
+			<td>{{ order.status }}</td>
+			<td>{{ order.date_paid }}</td>
+		</tr>
+	{% empty %}
+		<p>No current unpaid orders</p>
+	{% endfor %}
+	</table>
+
+<h3>Not paid orders</h3>
+	<table id="orders-table">
+		<thead>
+			<tr>
+			<td>Order ID</td>
+			<td>Items</td>
+			<td>Owner</td>
+			<td>Status</td>
+			<td>Date confirmed</td>
+			</tr>
+		</thead>
+	{% for order, items in not_paid_orders %}
+		<tr>
+			<td>{{ order }}</td>
+			<td>
+				<ul>
+				{% for item in items %}
+					<li>{{ item }}</li>
+				{% endfor %}
+				</ul>
+			</td>
+			<td>{{ order.owner }}</td>
+			<td>{{ order.status }}</td>
+			<td>{{ order.date_confirmed }}</td>
+		</tr>
+	{% empty %}
+		<p>No current unpaid orders</p>
+	{% endfor %}
+	</table>
+
+<h3>Stocks</h3>
+{% for product in products %}
+	{{ product }}<br/>
+{% endfor %}
+
+</div>
+{% endblock %}

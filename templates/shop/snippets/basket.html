@@ -1,0 +1,18 @@
+<h4><a href="{% url basket %}">Your Basket</a></h4>
+
+
+
+{% if basket_items %}
+    <ul>
+	{% for thing in basket_items %}
+	<li>{{ thing.item.parent_product.name }} ({{ thing.quantity }}) - (<a href="{% url remove_from_basket thing.item.id %}">remove</a>)<br/>
+	{{ thing.item.price_unit }}{{ thing.item.price }}
+	</li>
+	{% endfor %}
+	</ul>
+{% else %}
+
+<p>There's currently nothing in your basket - add something quickly!</p>
+
+{% endif %}
+</ul>

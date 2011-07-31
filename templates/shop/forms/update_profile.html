@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="featured-small"></div>
+
+<div id="main-text-wide">
+
+<h2 class="fontface">Update your profile</h2>
+
+<p class="introduction">Use this form to update your email and name</p>
+
+<form method="post" action=".">
+  <p><label for="id_first_name">First name:</label> <input type="text" name="first_name" id="id_first_name" value="{{ shopper.first_name }}"/></p>
+<p><label for="id_last_name">Last name:</label> <input type="text" name="last_name" id="id_last_name" value="{{ shopper.last_name }}" /></p>
+
+{% if form.email.errors %}<p><label>&nbsp;</label></p>{{ form.email.errors }}{% endif %}
+<p><label for="id_email">Email:</label> <input type="text" name="email" id="id_email" value="{{ shopper.user.email }}" /></p>
+
+  <input type="submit" value="Submit" next="" />
+</form>
+
+
+</div>
+{% endblock %}

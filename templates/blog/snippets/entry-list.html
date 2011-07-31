@@ -1,0 +1,21 @@
+{% load thumbnail %}
+
+  {% for thing in entries %}
+  
+  
+  <div class="entry{% if forloop.last %} last{% endif %}">
+	<div class="image">
+		<img src="{% thumbnail thing.promo_image 120x120 crop %}"/>
+  	</div>
+  	<div class="text">
+  	<span class="entry-meta">{{ thing.date_added|date:"d M Y" }}</span>
+  		<h3>
+  		<a alt="{{ thing.title }}" title="{{ thing.title }}" href="{% url blog_entry thing.slug %}">{{ thing.title }}</a>
+  		</h3>
+  		<p>{{ thing.summary|urlize }}</p>
+  		
+  		</p>
+	</div> 
+  </div>
+
+  {% endfor %}

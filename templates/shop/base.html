@@ -1,0 +1,65 @@
+
+{% block doctype %}<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+{% endblock %}
+
+<head>
+    {% block extra-head %}{% endblock %}
+    <link rel="stylesheet" href="{{ media_url }}/css/styles.css" />
+    <title>{% block pagetitle %}{% endblock %} - ProAdvanced Sports</title>
+    <script type="text/javascript" src="/js/searchbar.js"></script>
+    	
+	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+
+{% block extracss %}{% endblock %}
+{% block extrajs %}{% endblock %}
+    
+    
+</head>
+
+<body>
+
+    
+
+	<div id="container">
+	
+		<div id="container-header">
+		    <div id="header">
+	      	  <div id="nav">
+	    	    <ul>
+	    	    	<li><a class="selected" href="/" title="" alt="">Home</a></li>
+	    	        <li><a href="/about-us/" title="" alt="">About Us</a></li>
+	    	        <li><a href="{% url products %}" title="" alt="">Products</a></li>
+	    	        <li><a href="" title="" alt="">Innovation</a></li>
+	    	        <li><a href="" title="" alt="">Our commitments</a></li>
+	    	        <li><a href="" title="" alt="">Distributors</a></li>
+	  			</ul>
+			</div>
+			
+			<div id="logo">
+				<a title="ProAdvanced Sports Goods" alt="the ProAdvanced logo" href="/">
+					<h1><span>ProAdvanced</span></h1>
+				</a>
+			</div>
+			<div id="contact">
+			<p><a href="/contact-us/" class="contact">&raquo; Contact us</a></p>
+			</div>
+      	</div>
+
+	
+
+	    {% block content %}{% endblock %}
+	<br clear="all"/>
+    {% include 'snippets/footer.html' %}
+	</div>
+	</div>
+	
+
+
+
+</body>
+
+</html>

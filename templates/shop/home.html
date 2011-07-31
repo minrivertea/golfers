@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block pagetitle %}Sport nets, golf practice nets, soccer nets{% endblock %}
+
+{% block extracss %}
+<style type="text/css">
+p.quote {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  line-height: 1.5em;
+  color: #30A5C7;	
+}
+
+p.quote strong {
+  color: #000;
+  font-family: Helvetica, sans-serif;
+  font-size: 13px;	
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div id="feature-container">
+	<div id="feature">	
+			{% for product in featured %}	
+			
+				<div class="right">
+				<p class="sport">{{ product.category }}</p>
+			<h3>{{ product.name }}</h3>	
+					<p class="super-short"><em>{{ product.super_short_description }}</em></p>
+					
+					{{ product.long_description|safe }}
+					<a class="more" href="{{ product.get_absolute_url }}">Find out more &raquo; </a>
+					
+				</div>
+				<div class="left">
+					<a href="{{ product.get_absolute_url }}"><img src="{% thumbnail product.image 420x420 %}"></a>
+					<p class="quote">&ldquo;<em>When Tiger was 6 months old, he would sit in our garage, watching me hit balls into a net. He had been assimilating his golf swing. When he got out of the high chair, he had a golf swing.</em>&rdquo;<br/><strong>Earl Woods</strong></p>
+				</div>
+			{% endfor %}
+	</div>
+</div>
+	
+
+{% endblock %}

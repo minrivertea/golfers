@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block meta-description %}{{ entry.summary }}{% endblock %}
+{% block pagetitle %}{{ entry.title }}{% endblock %}
+
+{% block extracss %}
+<style type="text/css">
+
+div#header {height: 140px;}
+div#feature {height:100px;}
+div#feature p {margin-top: 0px;}
+div#content div.left {
+  width: 550px;	
+}
+
+div#content div.left h3 {
+  font-size: 1.6em;
+  color: #BD1B30;	
+}
+
+div#content div.right {
+  width: 250px;
+  border-left: 1px solid #e1e1e1;
+  padding-left: 40px;	
+}
+
+div#content div.right h4 {
+  border-bottom: none;
+  font-weight: bold;
+  margin-bottom: 0px;	
+}
+
+div#entry-content p.date {
+  font-size: 14px;
+  color: #666;
+  margin: 0;	
+}
+
+div#entry-content img {
+  float: right;
+  margin: 20px 0 30px 30px;	
+}
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<div id="feature-container">
+	<div id="feature">
+	<p class="sport"><a href="{% url blog_home %}">&laquo; blog home</a></p>	
+	<h3>{{ entry.title }}</h3>
+	<p><em>{{ entry.summary }}</em></p>
+	</div>
+	
+</div>
+
+<div id="content">
+  <div class="left">
+  <div id="entry-content">
+			
+			<p class="date"><em>{{ entry.date_added|date:"D d M Y" }}</em></p>
+			<img src="{% thumbnail entry.promo_image 250x250 %}">
+			<p>{{ entry.content|safe }}</p>
+
+				{% if entry.get_next_by_date_added %}
+				<p>Next entry: <a href="{% url blog_entry entry.get_next_by_date_added %}">{{ entry.get_next_by_date_added.title }} &raquo;</a>
+				<br />
+				{% endif %}
+				{% if entry.get_previous_by_date_added %}
+				Previous entry: <a href="{% url blog_entry entry.get_previous_by_date_added %}">{{ entry.get_previous_by_date_added.title }} &raquo;</a></p>
+				{% endif %}
+		</div>
+
+  </div>
+  
+  <div class="right">
+		{% include "blog/snippets/blog-right.html" %}
+  </div>
+
+
+
+  </div>
+
+{% endblock %}
+
+

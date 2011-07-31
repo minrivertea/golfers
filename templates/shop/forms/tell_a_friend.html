@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block pagetitle%}Tell a friend{% endblock %}
+
+
+
+{% block content %}
+    
+<div id="featured-small"></div>
+
+	<div id="main-text-wide">
+
+
+
+    <form method="post" action="/tell-a-friend/{{ tea.slug }}/">
+    
+<p class="introduction">Tell a friend about our teas - if they eventually purchase some tea from our site, we'll send you a sample box. Gratis!</p>
+    
+    	
+    		<div class="checkout-button">
+    		<input type="submit" value="" class="submit-button">
+    		    {{ form.sender.errors }}
+    		    {{ form.recipient.errors }}        
+				{{ form.message.errors }}
+    		</div>
+    <div class="row">
+    	<div class="row-label">
+			<h3 class="user-add-photo">Who are you going to tell?</h3>
+    	</div>
+    	<div class="row-box">
+    	<p class="intro">Give us your email address, your friend's email address (and write a personal message if you want) and we'll do the rest!</p>
+
+	<p><label>Your email address</label>{{ form.sender }} </p>	
+	<p><label>Your friend's email address</label>{{ form.recipient }}</p>
+	<p><label>Your message (optional)</label>{{ form.message }}</p>
+	
+	</div>
+	</div>
+
+		</form>
+
+    {% endblock %}
