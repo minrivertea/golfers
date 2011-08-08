@@ -6,3 +6,4 @@ SENT FROM WEBSITE CONTACT FORM:
 
 Sender: {{ your_email }}
 Name: {{ your_name }}
+Country: {{ country }}

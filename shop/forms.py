@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 
-from golfers.shop.models import Address, Order, Discount, Shopper
+from golfers.shop.models import Address, Order, Discount, Shopper, US_STATES
 
 from django.contrib.flatpages.models import FlatPage
 from tinymce.widgets import TinyMCE
@@ -29,6 +29,7 @@ class OrderCheckDetailsForm(forms.Form):
     address_line_1 = forms.CharField(max_length=200, required=False)
     address_line_2 = forms.CharField(max_length=200, required=False)
     town_city = forms.CharField(max_length=200, required=False)
+    state = forms.ChoiceField(choices=US_STATES, required=False)
     postcode = forms.CharField(max_length=200, required=False)
     
     def clean(self):
@@ -52,4 +53,5 @@ class ContactForm(forms.Form):
     your_name = forms.CharField(required=True)
     your_email = forms.EmailField(required=True, error_messages={'required': 'Please enter a valid email address'})
     your_message = forms.CharField(widget=forms.Textarea, required=False)
+    country = forms.CharField(required=True)
 

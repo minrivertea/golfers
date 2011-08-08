@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block pagetitle %}{{ page.title }}{% endblock %}
+
+{% block extracss %}
+<style type="text/css">
+
+
+div#left {
+  width: 600px;
+  float: left;
+  margin: 0;	
+}
+
+div#right {
+  float: right;
+  width: 230px;	
+}
+
+ul#right-nav {
+  list-style-type: none;
+  width: 220px;
+  float: left;
+  margin: 20px 0 0 0;
+  padding: 0;
+  font-size: 13px;	
+}
+
+ul#right-nav li a {
+	background-color: #f1f1f1;
+	width: 200px;
+	float: left;
+	padding: 10px 15px;
+	border-bottom: 2px solid #fff;
+}
+
+ul#right-nav li.selected a {
+  font-weight: bold;
+  color: #333;
+  background-color: #e6e6e6;
+}
+
+
+div#right h3 {
+  margin: 15px 0 10px;
+  font-size: 17px;	
+}
+
+div#right h4 {
+  font-size: 14px;
+  color: #333;	
+}
+
+div#right-nav {
+	margin-top: 0px;
+}
+
+div#right-nav ul {
+  margin-top: 0px;	
+}
+
+div#right-nav ul li.selected a {
+  font-weight: bold;
+  color: #333;	
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div id="feature">
+
+<h1>{{ page.title }}</h1>
+
+ 	<div id="right">
+		{% include "shop/snippets/pages_nav.html" %}
+	</div>
+
+	<div id="left">
+		{{ page.content|safe }}
+	</div>
+
+
+	
+</div>
+
+
+
+
+{% endblock %}

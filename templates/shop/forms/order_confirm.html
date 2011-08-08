@@ -2,36 +2,48 @@
 
 {% block pagetitle %}Order (Step 2 of 3) - Confirm Order{% endblock %}
 
+{% block extracss %}
+<style type="text/css">
+
+h1 {
+  padding-bottom: 20px;	
+}
+
+div.row {
+  float: left;
+  width: 100%;
+  margin-top: 30px;	
+}
+
+</style>
+{% endblock %}
+
 {% block content %}
 
-<div id="featured-small"></div>
+<div id="feature">
 
-<div id="main-text-wide">
+<div id="steps">
+Step 3/4
+</div>
 
+<h1>Please confirm your order</h1>
 
-<img src="/images/basket4.png" class="basket">
-<h2 class="fontface">Please confirm your order</h2>
-<p class="introduction">Step 2 of 3</p>
     <form method="post" action="">
-	
-
-
-
 
 		<input type="hidden" name="cmd" value="_cart"> 
 		<input type="hidden" name="upload" value="1"> 
-		<input type="hidden" name="business" value="westc2@gmail.com">
-		<input type="hidden" name="currency_code" value="GBP">
+		<input type="hidden" name="business" value="{{ paypal_receiver_email }}">
+		<input type="hidden" name="currency_code" value="USD">
 		<input type="hidden" name="address_override" value="1">
 		
 		<input type="hidden" name="address1" value="{{ order.address.house_name_number }}, {{ order.address.address_line_1 }}">		
 		<input type="hidden" name="address2" value="{{ order.address.address_line_2 }}">
 		<input type="hidden" name="city" value="{{ order.address.town_city }}">
-		<input type="hidden" name="country" value="GB">
+		<input type="hidden" name="country" value="US">
 		<input type="hidden" name="zip" value="{{ order.address.postcode }}">
-		<input TYPE="hidden" NAME="return" value="http://test.thosecrazychinese.com/order/complete/">
-		<input TYPE="hidden" NAME="cancel" value="http://test.thosecrazychinese.com/paypal/ipn/">
-		<input TYPE="hidden" NAME="notify_url" value="http://test.thosecrazychinese.com/paypal/ipn/">
+		<input TYPE="hidden" NAME="return" value="{{ paypal_return_url }}">
+		<input TYPE="hidden" NAME="cancel" value="{{ paypal_notify_url }}">
+		<input TYPE="hidden" NAME="notify_url" value="{{ paypal_notify_url }}">
 		<input type="hidden" id="id_no_shipping" value="1" name="no_shipping">
 		<input type="hidden" id="id_charset" value="utf-8" name="charset">
 		
@@ -39,9 +51,9 @@
 
 
 
-		<input type="hidden" name="item_name_1" value="Postage Standard Rate"> 
+		<input type="hidden" name="item_name_1" value="Shipping Standard Rate"> 
 		<input type="hidden" name="quantity_1" value="1">
-		<input type="hidden" name="amount_1" value="4.00">
+		<input type="hidden" name="amount_1" value="{{ shipping_price }}">
 		 
 		 
 		 {% for thing in basket_items %}
@@ -49,19 +61,11 @@
 		<input type="hidden" name="quantity_{{ forloop.counter|add:"1" }}" value="{{ thing.quantity }}">
 		<input type="hidden" name="amount_{{ forloop.counter|add:"1" }}" value="{{ thing.item.price }}"> 
 		 {% endfor %}
-
-
-		<div class="checkout-button">
-		<input type="submit" value="" next="" class="checkout-button"/>
-		<p class="checkout"><strong>Next step:</strong> pay securely via Paypal, using all major credit and debit cards or your linked Paypal account.</p>
-		<img src="/images/paypal-horz.gif" class="paypal">
-
-		</div>
 		
-
+		
 <div class="row">
 	<div class="row-label">
-		<h3>You have ordered:</h3>
+		<h2>You have ordered:</h2>
 	</div>
 	
 	<div class="row-box">
@@ -77,20 +81,20 @@
 	    	<td width="150px">
 
 	    	</td>
-	    	<td>£{{ thing.get_price }}</td>
+	    	<td>${{ thing.get_price }}</td>
 	    				
 		  </tr>
 		  {% endfor %}
 		 
 		  <tr>
-		  	<td>Postage</td>
+		  	<td>Shipping</td>
 		  	<td>&nbsp;</td>
-		  	<td>£4.00</td>		  
+		  	<td>${{ shipping_price }}</td>		  
 		  </tr>
 		  <tr>
 		  	<td><strong>TOTAL</strong></td>
 		  	<td>&nbsp;</td>
-		  	<td><strong>£{{ total_price }}</strong></td>		  
+		  	<td><strong>${{ total_price }}</strong></td>		  
 		  </tr>
 		</table>
 		</div>
@@ -100,7 +104,7 @@
 
 <div class="row">
 	<div class="row-label">
-		<h3>We'll send your order to:</h3>
+		<h2>We'll send your order to:</h2>
 	</div>
 	
 	<div class="row-box">
@@ -109,15 +113,21 @@
 		{{ order.address.address_line_1 }}<br/>
 		{{ order.address.address_line_2 }}<br/>
 		{{ order.address.town_city }}<br/>
+		{{ order.address.state }}<br/>
 		{{ order.address.postcode }}<br/>
-		UNITED KINGDOM<br/>
+		USA<br/>
 		({{ shopper.email }})<br/>
 		<br/>
-		<p>Please make sure this is a valid UK address, or we won't be able to post your tea (<a href="/uk-only/" target="_blank">find out why</a>)</p>
+		<p>Please make sure this is a valid US address, or we won't be able to ship your order (<a href="/us-only/" target="_blank">find out why</a>)</p>
 	</div>
 </div>
-		<br clear="all"/>
 
+
+		<div class="checkout-button">
+			<input type="submit" value="Checkout and pay &raquo;" next="" class="checkout-button"/>
+			<p class="checkout"><strong>Next step:</strong> pay securely via Paypal, using all major credit and debit cards or your linked Paypal account.</p>
+		<img src="/images/paypal-horz.gif" class="paypal">
+		</div>
 	
 	</form> 
 

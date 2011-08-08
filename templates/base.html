@@ -57,10 +57,15 @@
 	    <div id="header">
 	          
 	          <div id="basket">
+	            
 	            <div id="inner">
 	          	<img src="/images/cart.png"> {{ basket_quantity }} item{{ basket_quantity|pluralize }}
 	          	- <a href="{% url basket %}">checkout now!</a>
 	          	</div>
+	          	
+	          	<div id="countries">
+	            	<img src="/images/us.png"> <a href="/shipping/">We deliver to the USA</a>
+	            </div>
 	          </div>
 	          
 	     	  <div id="nav">
@@ -68,8 +73,8 @@
 	    	    	<li><a class="selected" href="/" title="" alt="">Home</a></li>
 	    	        <li><a href="/about-us/" title="" alt="">About Us</a></li>
 	    	        <li><a href="{% url products %}" title="" alt="">Golf nets</a></li>
-	    	        <li><a href="{% url blog_home %}">Blog</a></li>
-	    	        <li><a href="/distributors/" title="" alt="">Distributors</a></li>
+	    	        <li><a href="{% url blog_home %}">Learn</a></li>
+	    	        <li><a href="/wholesale/" title="" alt="">Wholesale</a></li>
 	    	        <li><a href="/contact-us/" title="" alt="">Contact Us</a></li>
 	  			</ul>
 			</div>

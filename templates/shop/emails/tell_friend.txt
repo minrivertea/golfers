@@ -1,9 +1,0 @@
-Hi there,
-
-{{ sender }} has recommended that you check out this tea from the Min River Tea Farm:
-
-http://www.minrivertea.com/tea/{{ slug }}
-
-The Min River Tea Farm sells fresh and delicious authentic Chinese teas at amazing prices.
-
-http://www.minrivertea.com 

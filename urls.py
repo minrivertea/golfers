@@ -4,6 +4,7 @@ import django.views.static
 from django.contrib.sitemaps import FlatPageSitemap, GenericSitemap
 from django.views.generic.simple import direct_to_template
 from shop.models import Product
+from shop.views import page
 from blog.models import BlogEntry
 
 # Uncomment the next two lines to enable the admin:
@@ -33,6 +34,7 @@ urlpatterns = patterns('',
     (r'^blog/', include('golfers.blog.urls')),
     (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
     (r'^robots\.txt$', direct_to_template, {'template': 'robots.txt', 'mimetype': 'text/plain'}),
+    url(r'^(?P<slug>[\w-]+)/$', page, name="page"),
 )
 
 

@@ -1,0 +1,19 @@
+{% load nav_selected %}
+
+
+<ul id="right-nav">
+	{% if page.parent %}
+		{% for p in page.parent.get_children %} 
+  			<li class="{% if p.slug in request.path %}selected{% endif %}"><a href="{% url page p.slug %}">{{ p.title }}</a></li>
+ 		{% endfor %}
+	{% else %}
+		{% for p in page.get_children %} 
+  			<li class="{% if p.slug in request.path %}selected{% endif %}"><a href="{% url page p.slug %}">{{ p.title }}</a></li>
+ 		{% endfor %}
+	{% endif %}
+</ul>
+	
+	
+	
+	
+	

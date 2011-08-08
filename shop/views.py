@@ -37,6 +37,7 @@ def render(request, template, context_dict=None, **kwargs):
 
 def index(request):
     photos = Photo.objects.filter(published=True).order_by('?')[:1]
+    reviews = Review.objects.filter(is_published=True)[:2]
     if request.user.is_anonymous():
         try:
             basket =  get_object_or_404(Basket, id=request.session['BASKET_ID'])
@@ -52,7 +53,19 @@ def index(request):
 #    for product in featured:
 #        products_and_prices.append((product, prices.filter(parent_product=product)))
     return render(request, "shop/home.html", locals())
+
+
+def page(request, slug, sub_page=None):
+    if sub_page:
+        page = get_object_or_404(Page, slug=sub_page)
+    else:
+        page = get_object_or_404(Page, slug=slug)
     
+    if page.template:
+        return render(request, page.template, locals())
+    else:
+    
+        return render(request, "shop/page.html", locals())    
     
 
 def products(request):            
@@ -100,12 +113,14 @@ def contact_us_submit(request):
             message = form.cleaned_data['your_message']
             your_name = form.cleaned_data['your_name']
             your_email = form.cleaned_data['your_email']
+            country = form.cleaned_data['country']
             
             # create email to admin
             admin_body = render_to_string('shop/emails/contact_template.txt', {
             	 'message': message,
             	 'your_email': your_email,
             	 'your_name': your_name,
+            	 'country': country,
             })
 
             admin_recipient = settings.SITE_EMAIL
@@ -232,9 +247,9 @@ def increase_quantity(request, productID):
 def basket(request):
     basket = get_object_or_404(Basket, id=request.session['BASKET_ID'])
     basket_items = BasketItem.objects.filter(basket=basket)
-    total_price = 4
+    total_price = float(settings.SHIPPING_PRICE)
     for item in basket_items:
-        price = item.quantity * item.item.price
+        price = float(item.quantity * item.item.price)
         total_price += price
     return render_to_response("shop/basket.html", locals(), context_instance=RequestContext(request))
 
@@ -293,6 +308,7 @@ def order_check_details(request):
                 address_line_1 = form.cleaned_data['address_line_1'],
                 address_line_2 = form.cleaned_data['address_line_2'],
                 town_city = form.cleaned_data['town_city'],
+                state = form.cleaned_data['state'],
                 postcode = form.cleaned_data['postcode'],
             )
             
@@ -317,8 +333,7 @@ def order_check_details(request):
             order.save()
 
             request.session['ORDER_ID'] = order.invoice_id
-            shoppee = shopper
-            request.session['SHOPPER_ID'] = shoppee.id            
+            request.session['SHOPPER_ID'] = shopper.id            
             return HttpResponseRedirect('/order/confirm') 
         
         # if the form has errors...
@@ -328,15 +343,17 @@ def order_check_details(request):
              address_line_1 = request.POST['address_line_1']
              address_line_2 = request.POST['address_line_2']
              town_city = request.POST['town_city']
+             state = request.POST['state']
              postcode = request.POST['postcode']
              first_name = request.POST['first_name']
              last_name = request.POST['last_name']
 
 
-        confirm_form = OrderCheckDetailsForm() 
+    else:     
+        form = OrderCheckDetailsForm() 
+        
 
     return render(request, 'shop/forms/order_check_details.html', locals())
-    
     
     
 
@@ -345,9 +362,9 @@ def order_confirm(request):
     basket = get_object_or_404(Basket, id=request.session['BASKET_ID'])
     order = Order.objects.get(invoice_id=request.session['ORDER_ID'])
     order_items = BasketItem.objects.filter(basket=basket)
-    total_price = 4
+    total_price = float(settings.SHIPPING_PRICE)
     for item in order_items:
-        price = item.quantity * item.item.price
+        price = float(item.quantity * item.item.price)
         total_price += price
         
     if request.method == 'POST': 

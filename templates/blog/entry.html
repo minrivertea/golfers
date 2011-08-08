@@ -7,9 +7,7 @@
 {% block extracss %}
 <style type="text/css">
 
-div#header {height: 140px;}
-div#feature {height:100px;}
-div#feature p {margin-top: 0px;}
+
 div#content div.left {
   width: 550px;	
 }
@@ -48,41 +46,38 @@ div#entry-content img {
 
 {% block content %}
 
-<div id="feature-container">
-	<div id="feature">
+<div id="feature">
 	<p class="sport"><a href="{% url blog_home %}">&laquo; blog home</a></p>	
-	<h3>{{ entry.title }}</h3>
-	<p><em>{{ entry.summary }}</em></p>
-	</div>
+	<h1>{{ entry.title }}</h1>
 	
-</div>
 
-<div id="content">
+
   <div class="left">
   <div id="entry-content">
 			
 			<p class="date"><em>{{ entry.date_added|date:"D d M Y" }}</em></p>
+			<p><em>{{ entry.summary }}</em></p>
+			
 			<img src="{% thumbnail entry.promo_image 250x250 %}">
+			
 			<p>{{ entry.content|safe }}</p>
 
-				{% if entry.get_next_by_date_added %}
-				<p>Next entry: <a href="{% url blog_entry entry.get_next_by_date_added %}">{{ entry.get_next_by_date_added.title }} &raquo;</a>
-				<br />
-				{% endif %}
-				{% if entry.get_previous_by_date_added %}
-				Previous entry: <a href="{% url blog_entry entry.get_previous_by_date_added %}">{{ entry.get_previous_by_date_added.title }} &raquo;</a></p>
-				{% endif %}
-		</div>
-
+			{% if entry.get_next_by_date_added %}
+			<p>Next entry: <a href="{% url blog_entry entry.get_next_by_date_added %}">{{ entry.get_next_by_date_added.title }} &raquo;</a>
+			<br />
+			{% endif %}
+			{% if entry.get_previous_by_date_added %}
+			Previous entry: <a href="{% url blog_entry entry.get_previous_by_date_added %}">{{ entry.get_previous_by_date_added.title }} &raquo;</a></p>
+			{% endif %}
   </div>
+
+</div>
   
-  <div class="right">
-		{% include "blog/snippets/blog-right.html" %}
-  </div>
+<div class="right">
+	{% include "blog/snippets/blog-right.html" %}
+</div>
 
-
-
-  </div>
+</div>
 
 {% endblock %}
 

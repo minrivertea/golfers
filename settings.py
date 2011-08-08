@@ -68,7 +68,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+#    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -89,7 +89,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',
-    'django.contrib.flatpages',
+#    'django.contrib.flatpages',
     'django.contrib.sitemaps',
     'shop',
     'sorl.thumbnail',
@@ -110,6 +110,7 @@ PAYPAL_RECEIVER_EMAIL = ""
 GA_IS_ON = True
 
 SITE_EMAIL = 'renanlore@hotmail.com'
+SHIPPING_PRICE = 14.99
 
 PROJECT_NAME = 'Pro-Advanced'
 

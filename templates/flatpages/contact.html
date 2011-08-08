@@ -13,39 +13,47 @@ div.left {
   width: 100%;	
 }
 
-div.left label {
+div.left p {
   float: left;
-  width: 100%;
-  color: #000;
-  font-size:13px;
-  font-weight: bold;	
+  width: 100%;	
+}
+
+div.left label {
+    color: #000000;
+    float: left;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 10px 0;
+    padding-right: 15px;
+    text-align: right;
+    width: 100px;	
 }
 
 div.left input {
-    border-color: #D1D1D1 #E1E1E1 #E1E1E1 #D1D1D1;
-    border-radius: 7px 7px 7px 7px;
+    border-color: #E1E1E1;
+    border-radius: 5px 5px 5px 5px;
     border-style: solid;
-    border-width: 1px 0 0 1px;
+    border-width: 1px;
     color: #666666;
     float: left;
     font: 95% arial,helvetica,clean,sans-serif;
     height: 20px;
-    margin: 0 0 20px 0px;
-    padding: 10px 15px;
-    width: 450px;
+    margin: 5px 0;
+    padding: 7px 15px;
+    width: 400px;
 }
 
 div.left textarea {
-    border-color: #D1D1D1 #E1E1E1 #E1E1E1 #D1D1D1;
-    border-radius: 7px 7px 7px 7px;
+    border-color: #E1E1E1;
+    border-radius: 5px 5px 5px 5px;
     border-style: solid;
-    border-width: 1px 0 0 1px;
+    border-width: 1px;
     color: #666666;
     float: left;
     font: 95% arial,helvetica,clean,sans-serif;
     margin: 0 0 20px 0px;
     padding: 10px 15px;
-    width: 450px;
+    width: 400px;
 }
 
 div.left label {
@@ -53,29 +61,41 @@ div.left label {
 }
 
 div.left input.submit-button {
-    background: none repeat scroll 0 0 #E1E1E1;
+    background: -moz-linear-gradient(100% 100% 90deg, #e6e6e6, #f1f1f1); 
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f1f1f1), to(#e6e6e6)); 
+    background: -webkit-linear-gradient(#e6e6e6, #f1f1f1); 
+	background: -o-linear-gradient(#e6e6e6, #f1f1f1);   
+    border-color: #e1e1e1 #C1C1C1 #C1C1C1 #e1e1e1;
+    border-radius: 4px 4px 4px 4px;
+    border-style: solid;
+    border-width: 1px;
     float: left;
-    height: 55px;
-    margin-right: 70px;
-    padding: 0;
-    width: 150px;
-    font-family: Georgia, serif;
-    color: #1A6D18;
-    font-size: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 0 1px 2px #fff;
+    margin: 0 0 0 240px;
+    padding: 10px 15px;
+    width: 310px;
+    height: auto;
 }
 
 div.left input.submit-button:hover {
-    background: #666;
-    color:#fff;
-    cursor: pointer;
+    background: -moz-linear-gradient(100% 100% 90deg, #f1f1f1, #e6e6e6); 
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#e6e6e6), to(#f1f1f1)); 
+    background: -webkit-linear-gradient(#f1f1f1, #e6e6e6); 
+	background: -o-linear-gradient(#f1f1f1, #e6e6e6);
+	color: #BD1B30; 
+	cursor: pointer;	
 }
+
 
 div.left p.help-text {
     float: left;
     font-size: 0.7em;
     padding-left: 10px;
     position: relative;
-    top: -15px;
+    left: 240px;
+    top: 10px;
 }
 
 </style>
@@ -115,12 +135,20 @@ div.left p.help-text {
 				<input type="text" name="your_name" id="id_your_name" />
 				</p>
 				
+				<p>
 				<label for="id_your_email">Your email:</label> 
 				<input type="text" name="your_email" id="id_your_email" />
-			
+				</p>
+				
+				<p>
+				<label for="id_country">Your country:</label>
+				<input type="text" name="country" id="id_country"/>
+				</p>
+				
+				<p>
 				<label for="id_your_message">Your message:</label> 
 				<textarea id="id_your_message" rows="10" cols="40" name="your_message"></textarea>
-				
+				</p>
 				<input class="submit-button" value="Submit &raquo;" type="submit">
 				<p class="help-text">
 					* We will never share, sell or spam your email address

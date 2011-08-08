@@ -5,12 +5,13 @@ from golfers.shop.models import *
 def common(request):
     from golfers import settings
     context = {}
-#    context['paypal_return_url'] = settings.PAYPAL_RETURN_URL
-#    context['paypal_notify_url'] = settings.PAYPAL_NOTIFY_URL
-#    context['paypal_business_name'] = settings.PAYPAL_BUSINESS_NAME
-#    context['paypal_receiver_email'] = settings.PAYPAL_RECEIVER_EMAIL
-#    context['paypal_submit_url'] = settings.PAYPAL_SUBMIT_URL
+    context['paypal_return_url'] = settings.PAYPAL_RETURN_URL
+    context['paypal_notify_url'] = settings.PAYPAL_NOTIFY_URL
+    context['paypal_business_name'] = settings.PAYPAL_BUSINESS_NAME
+    context['paypal_receiver_email'] = settings.PAYPAL_RECEIVER_EMAIL
+    context['paypal_submit_url'] = settings.PAYPAL_SUBMIT_URL
     context['ga_is_on'] = settings.GA_IS_ON
+    context['shipping_price'] = settings.SHIPPING_PRICE
     return context
     
 

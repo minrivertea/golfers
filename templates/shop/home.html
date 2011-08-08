@@ -7,21 +7,76 @@
 <style type="text/css">
 h1 {
   margin-bottom: 0;	
+  border-bottom: none;
+  color: #BD1B30;
 }
 
-div.left p.quote {
+div#feature {
+  padding-top: 25px;	
+}
+
+div.left {
+  width: 500px;	
+}
+
+div.right {
+  width: 350px;	
+}
+
+.video {
+  float: left;
+  width: 100%;	
+  margin-top: 20px;
+}
+
+.video .benefits {
+  float: right;
+  width: 440px;	
+  font-size: 18px;
+}
+
+.video .benefits ul {
+  list-style-type: square;	
+}
+
+.reviews {
+  float: left;
+  width: 100%;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 3px dotted #e1e1e1;	
+}
+
+.reviews .box {
+  width: 400px;
+  float: left;
+  margin-right: 30px;	
+}
+
+div#feature p.super-short {
+  color: #000;	
+}
+
+p.quote {
   font-family: Georgia, serif;
   font-size: 18px;
+  float: left;
+  width: 100%;
   line-height: 1.5em;
-  color: #30A5C7;
-  margin-top: 20px;	
+  color: #666;
+  margin: 30px 0 20px 0;	
+  border-top: 3px dotted #e1e1e1;
+  border-bottom: 3px dotted #e1e1e1;
+  padding: 15px 0 10px 0;
 }
 
-div.left p.quote strong {
+p.quote strong {
   color: #000;
   font-family: Helvetica, sans-serif;
   font-size: 13px;	
 }
+
+
 
 </style>
 {% endblock %}
@@ -32,18 +87,36 @@ div.left p.quote strong {
 	<div id="feature">	
 		{% for product in featured %}	
 			<div class="right">
-			<h1>{{ product.name }}</h1>	
-			<p class="super-short">{{ product.super_short_description }}</p>
-
-			<a class="more" href="{{ product.get_absolute_url }}">Find out more &raquo; </a>
-					
+				<h1>{{ product.name }}</h1>	
+				<p class="super-short">{{ product.super_short_description }}</p>
+				{{ product.short_description|safe }}
+				<a class="more" href="{{ product.get_absolute_url }}">Find out more &raquo; </a>		
 			</div>
-			
 			<div class="left">
-				<a href="{{ product.get_absolute_url }}"><img src="{% thumbnail product.image 550x550 %}"></a>
-				<p class="quote">&ldquo;<em>When Tiger was 6 months old, he would sit in our garage, watching me hit balls into a net. He had been assimilating his golf swing. When he got out of the high chair, he had a golf swing.</em>&rdquo;<br/><strong>Earl Woods</strong></p>
-				</div>
+				<a href="{{ product.get_absolute_url }}"><img class="main" src="{% thumbnail product.image 500x500 %}"></a>
+			</div>
+		{% endfor %}
+		
+		
+		<p class="quote">&ldquo;<em>When Tiger was 6 months old, he would sit in our garage, watching me hit balls into a net. He had been assimilating his golf swing. When he got out of the high chair, he had a golf swing.</em>&rdquo;<br/><strong>Earl Woods</strong></p>
+		
+		<div class="video">
+			<div class="benefits">
+				<ul>
+					<li>Easy to open and close</li>
+				</ul>
+			</div>
+			<iframe width="425" height="349" src="http://www.youtube.com/embed/PM8LLp7Q5WQ" frameborder="0" allowfullscreen></iframe>
+		</div>
+		
+		<div class="reviews">
+			<h3>Testimonials from our happy customers</h3>
+			{% for r in reviews %}
+			<div class="box">
+			  <p><em>{{ r.text }}</em><br/><strong>{{ r.owner }}</strong></p>
+			</div>
 			{% endfor %}
+		</div>
 	</div>
 </div>
 	

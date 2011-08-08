@@ -24,6 +24,61 @@ ORDER_STATUS = (
     (u'5', u'Payment flagged'),
 )
 
+# these are the states in America
+US_STATES = (
+  (u'AL', u'Alabama'),
+  (u'AK', u'Alaska'),
+  (u'AZ', u'Arizona'),
+  (u'AK', u'Arkansas'),
+  (u'CA', u'California'),
+  (u'CO', u'Colorado'),
+  (u'CT', u'Connecticut'),
+  (u'DE', u'Delaware'),
+  (u'DC', u'Dist. of Columbia'),
+  (u'FL', u'Florida'),
+  (u'GA', u'Georgia'),
+  (u'HI', u'Hawaii'),
+  (u'ID', u'Idaho'),
+  (u'IL', u'Illinois'),
+  (u'IN', u'Indiana'),
+  (u'IA', u'Iowa'),
+  (u'KS', u'Kansas'),
+  (u'KY', u'Kentucky'),
+  (u'LA', u'Louisiana'),
+  (u'ME', u'Maine'),
+  (u'MD', u'Maryland'),
+  (u'MA', u'Massachusetts'),
+  (u'MI', u'Michigan'),
+  (u'MN', u'Minnesota'),
+  (u'MS', u'Mississippi'),
+  (u'MO', u'Missouri'),
+  (u'MT', u'Montana'),
+  (u'NE', u'Nebraska'),
+  (u'NV', u'Nevada'),
+  (u'NH', u'New Hampshire'),
+  (u'NJ', u'New Jersey'),
+  (u'NM', u'New Mexico'),
+  (u'NY', u'New York'),
+  (u'NC', u'North Carolina'),
+  (u'ND', u'North Dakota'),
+  (u'OH', u'Ohio'),
+  (u'OK', u'Oklahoma'),
+  (u'OR', u'Oregon'),
+  (u'PA', u'Pennsylvania'),
+  (u'RI', u'Rhode Island'),
+  (u'SC', u'South Carolina'),
+  (u'South Dakota', u'SD'),
+  (u'TN', u'Tennessee'),
+  (u'TX', u'Texas'),
+  (u'UT', u'Utah'),
+  (u'VT', u'Vermont'),
+  (u'VA', u'Virginia'),
+  (u'WA', u'Washington'),
+  (u'WV', u'West Virginia'),
+  (u'WI', u'Wisconsin'),
+  (u'WY', u'Wyoming'),
+)
+
 
 class Product(models.Model):
     name = models.CharField(max_length=200, help_text="The product name")
@@ -77,12 +132,9 @@ class Review(models.Model):
 
 
 class UniqueProduct(models.Model):
-    weight = models.IntegerField(null=True, blank=True)
-    weight_unit = models.CharField(help_text="Weight units", max_length=3, null=True, blank=True)
     price = models.DecimalField(help_text="Price", max_digits=8, decimal_places=2, null=True, blank=True)
     price_unit = models.CharField(help_text="Currency", max_length=3, null=True, blank=True)
     parent_product = models.ForeignKey(Product)
-#    available_stock = models.IntegerField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     
     def __unicode__(self):
@@ -109,6 +161,7 @@ class Address(models.Model):
     address_line_1 = models.CharField(max_length=200, blank=True, null=True)
     address_line_2 = models.CharField(max_length=200, blank=True, null=True)
     town_city = models.CharField(max_length=200)
+    state = models.CharField(max_length=100, choices=US_STATES, blank=True, null=True)
     postcode = models.CharField(max_length=200)
     
     def __unicode__(self):
@@ -186,6 +239,27 @@ class Referee(models.Model):
     
     def __unicode__(self):
         return self.email
+
+class Page(models.Model):
+    slug = models.SlugField(max_length=80, 
+        help_text="No special characters or spaces, just lowercase letters and '-' please!")
+    title = models.CharField(max_length=255, 
+        help_text="The title of the page")
+    parent = models.ForeignKey('self', blank=True, null=True, 
+        help_text="Link this page to a higher level page - must be one of the 1st level navigation items!!")
+    content = tinymce_models.HTMLField(
+        help_text="The main content of the page.")
+    image = models.ImageField(upload_to="images/page-images", blank=True, null=True, 
+        help_text="Optional - will appear on the page if you add it")
+    template = models.CharField(max_length=255, blank=True, null=True, 
+        help_text="Leave this field empty unless you know what you're doing.")
+    
+    def __unicode__(self):
+        return self.title
+    
+    def get_children(self):
+        pages = Page.objects.filter(parent=self)
+        return pages
        
 # methods to update order object after successful / failed payment 
 def show_me_the_money(sender, **kwargs):

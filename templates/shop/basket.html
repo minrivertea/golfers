@@ -5,6 +5,11 @@
 
 {% block extracss %}
 <style type="text/css">
+
+h1 {
+  padding-bottom: 20px;	
+}
+
 .basket-row {
   float: left;
   width: 100%;	
@@ -42,7 +47,13 @@
 
 .basket-row .quantity {
   float: left;
-  width: 150px;	
+  width: 150px;
+  font-weight: bold;	
+}
+
+.basket-row .quantity a {
+  font-weight: bold;
+  font-size: 18px;	
 }
 
 .basket-row .total {
@@ -124,13 +135,13 @@ Step 1/4
 
   <div class="basket-row">
 		<div class="photo"><em>&nbsp;</em></div>
-		<div class="details">Postage</div>
+		<div class="details">Shipping (anywhere in the USA)</div>
 		<div class="quantity">&nbsp;</div>
-		<div class="total">£4.00</div>
+		<div class="total">${{ shipping_price }}</div>
   </div>
 
   <div id="totals">
-	<div class="label">TOTAL:</div><div class="total">£{{ total_price }}</div>
+	<div class="label">TOTAL:</div><div class="total">${{ total_price }}</div>
   </div>
 	
 	

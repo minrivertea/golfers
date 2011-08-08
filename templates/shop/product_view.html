@@ -71,7 +71,7 @@
   }
   
   #message {
-    background-color: #FFFFFF;
+    background-color: #f1f1f1;
     border: 1px solid #E1E1E1;
     border-radius: 5px 5px 5px 5px;
     float: right;
@@ -102,7 +102,7 @@
 
 	<div id="top">
 		<div id="topleft">
-		<img class="product-photo-main" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image 500x500 %}"/>
+		<img class="main" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image 500x500 %}"/>
 		</div>
 		
 		<div id="topright">
@@ -146,7 +146,7 @@
   	</div>		
 
 	<div class="right">
-	
+	<img src="/images/paypal-horz.gif">
 	<h3>Customer testimonials</h3>
 		<ul class="reviews">
 			{% for review in reviews %}
