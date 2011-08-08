@@ -86,7 +86,7 @@ def product_view(request, slug):
         added = None
     if added:
         thing = get_object_or_404(BasketItem, id=request.session['ADDED'])
-        message = "1 x %s%s added to your basket!" % (thing.item.weight, thing.item.weight_unit)
+        message = "1 x %s added to your basket!" % (thing.item)
         request.session['ADDED'] = None
     
     
