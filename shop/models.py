@@ -138,7 +138,7 @@ class UniqueProduct(models.Model):
     is_active = models.BooleanField(default=True)
     
     def __unicode__(self):
-        return "%s (%s%s)" % (self.parent_product, self.weight, self.weight_unit)
+        return "%s (%s)" % (self.parent_product, self.price)
 
 
 class Shopper(models.Model):
