@@ -12,6 +12,9 @@ def common(request):
     context['paypal_submit_url'] = settings.PAYPAL_SUBMIT_URL
     context['ga_is_on'] = settings.GA_IS_ON
     context['shipping_price'] = settings.SHIPPING_PRICE
+    countrycode = GetCountry(request)['countryCode']
+    if countrycode == "US":
+       context['howdy'] = True
     return context
     
 
