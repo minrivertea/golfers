@@ -65,9 +65,11 @@
 	          	
 	          	<div id="countries">
 	            	<img src="/images/us.png"> 
-	            	<a href="/shipping/">We deliver to the USA</a>
+	            	
 	            	{% if howdy %}
-	            	<br/> call on 800 123 123
+	            	<strong>Call on 800 123 123</strong>
+	            	{% else %}
+	            	<a href="/shipping/">We deliver to the USA</a>
 	            	{% endif %}
 	            </div>
 	          </div>
