@@ -8,6 +8,7 @@ from paypal.standard.forms import PayPalPaymentsForm
 from django.http import HttpResponseRedirect 
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
+from django.utils import simplejson
 
 import urllib
 import urllib2
