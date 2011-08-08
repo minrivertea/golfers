@@ -1,6 +1,6 @@
 from django.conf import settings
 from golfers.shop.models import *
-
+from golfers.shop.views import GetCountry
 
 def common(request):
     from golfers import settings

@@ -9,6 +9,10 @@ from django.http import HttpResponseRedirect
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 
+import urllib
+import urllib2
+import xml.etree.ElementTree as etree
+
 from PIL import Image
 from cStringIO import StringIO
 import os, md5
@@ -34,6 +38,20 @@ def render(request, template, context_dict=None, **kwargs):
     )
 
 
+def GetCountry(request):
+    # this is coming from http://ipinfodb.com JSON api
+    # the variables
+    apikey = settings.IPINFO_APIKEY 
+    ip = request.META.get('REMOTE_ADDR')
+    baseurl = "http://api.ipinfodb.com/v3/ip-country/?key=%s&ip=%s&format=json" % (apikey, ip)
+    urlobj = urllib2.urlopen(baseurl)
+    
+    # get the data
+    url = baseurl + "?" + apikey + "?"
+    data = urlobj.read()
+    urlobj.close()
+    datadict = simplejson.loads(data)
+    return datadict
 
 def index(request):
     photos = Photo.objects.filter(published=True).order_by('?')[:1]
