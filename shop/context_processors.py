@@ -16,7 +16,7 @@ def common(request):
     if countrycode == "US":
        context['howdy'] = True
     try:
-        s = ShopSettings.objects.all()[:1]
+        s = ShopSettings.objects.all()
         if s:
            context['shopsettings'] = s[0]
     except:
