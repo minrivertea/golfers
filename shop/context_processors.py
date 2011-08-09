@@ -16,7 +16,9 @@ def common(request):
     if countrycode == "US":
        context['howdy'] = True
     try:
-        context['shopsettings'] = get_object_or_404(ShopSettings, pk=1)
+        s = ShopSettings.objects.all()[:1]
+        if s:
+           context['shopsettings'] = s[0]
     except:
         pass
     return context
