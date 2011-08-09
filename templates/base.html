@@ -34,19 +34,7 @@
     
 {% block ga %}
     {% if ga_is_on %}
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-21360323-2']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
+		{{ shopsettings.ga_script|safe }}
     {% endif %}
 {% endblock %}
     
@@ -67,7 +55,7 @@
 	            	<img src="/images/us.png"> 
 	            	
 	            	{% if howdy %}
-	            	<span style="font-weight:bold;font-size: 18px;position: relative;top: 2px;">Call on 800 123 123</span>
+	            	<span style="font-weight:bold;font-size: 15px;position: relative;top: 2px;">Call on 1-800-931-9826</span>
 	            	{% else %}
 	            	<a href="/shipping/">We deliver to the USA</a>
 	            	{% endif %}
@@ -80,7 +68,7 @@
 	    	        <li><a href="/about-us/" title="" alt="">About Us</a></li>
 	    	        <li><a href="{% url products %}" title="" alt="">Golf nets</a></li>
 	    	        <li><a href="{% url blog_home %}">Learn</a></li>
-	    	        <li><a href="/wholesale/" title="" alt="">Wholesale</a></li>
+	    	        <li><a href="/custom/" title="" alt="">Custom</a></li>
 	    	        <li><a href="/contact-us/" title="" alt="">Contact Us</a></li>
 	  			</ul>
 			</div>
@@ -90,9 +78,8 @@
 					<h1><span>ProAdvanced</span></h1>
 				</a>
 			</div>
-			<br clear="all"/>
-			
-			
+
+					
       	</div>
 
 	
@@ -100,6 +87,8 @@
 	    {% block content %}{% endblock %}
 	<br clear="all"/>
     {% include 'shop/snippets/footer.html' %}
+    <div class="paypal" style="background-color: #fff;padding: 0 10px 10px; float: left; margin-bottom: 80px;"><img src="/images/paypal-icon.png"></div>
+    <div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script><fb:like-box href="http://www.facebook.com/proadvanced" width="292" show_faces="false" border_color="" stream="false" header="false"></fb:like-box> 
 	</div>
 	</div>
 	

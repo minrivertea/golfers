@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load thumbnail %}
 
-{% block pagetitle %}Sport nets, golf practice nets, soccer nets{% endblock %}
+{% block pagetitle %}{{ shopsettings.homepage_meta_title }}{% endblock %}
+{% block metadescription %}{{ shopsettings.homepage_meta_description }}{% endblock %}
 
 {% block extracss %}
 <style type="text/css">
@@ -53,6 +54,15 @@ div.right {
   margin-right: 30px;	
 }
 
+.reviews .box p {
+  font-size: 13px;	
+}
+
+.reviews .box p strong {
+  position: relative;
+  top: 5px;
+}
+
 div#feature p.super-short {
   color: #000;	
 }
@@ -96,24 +106,19 @@ p.quote strong {
 				<a href="{{ product.get_absolute_url }}"><img class="main" src="{% thumbnail product.image 500x500 %}"></a>
 			</div>
 		{% endfor %}
-		
-		
-		<p class="quote">&ldquo;<em>When Tiger was 6 months old, he would sit in our garage, watching me hit balls into a net. He had been assimilating his golf swing. When he got out of the high chair, he had a golf swing.</em>&rdquo;<br/><strong>Earl Woods</strong></p>
-		
+	
 		<div class="video">
 			<div class="benefits">
-				<ul>
-					<li>Easy to open and close</li>
-				</ul>
+				{{ shopsettings.homepage_benefits_text|safe }}
 			</div>
-			<iframe width="425" height="349" src="http://www.youtube.com/embed/PM8LLp7Q5WQ" frameborder="0" allowfullscreen></iframe>
+			{{ shopsettings.homepage_video_code|safe }}
 		</div>
 		
 		<div class="reviews">
 			<h3>Testimonials from our happy customers</h3>
 			{% for r in reviews %}
 			<div class="box">
-			  <p><em>{{ r.text }}</em><br/><strong>{{ r.owner }}</strong></p>
+			  <p><em>{{ r.text|safe }}</em><br/><strong>{{ r.owner }}</strong></p>
 			</div>
 			{% endfor %}
 		</div>

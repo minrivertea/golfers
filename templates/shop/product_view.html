@@ -29,6 +29,20 @@
     width: 350px;	
   }
   
+  #top #topright p {
+  	font-weight: bold;
+  	font-size: 16px;
+  	line-height: 1.6em;
+  }
+  
+  #top #topright ul {
+    font-weight: bold;
+  	font-size: 16px;
+  	line-height: 1.6em;
+  	margin: 0 0 10px 10px;
+  	padding-left: 0px;
+  }
+  
   #top .prices {
     font-size: 20px;
     font-weight: bold;	
@@ -106,7 +120,7 @@
 		</div>
 		
 		<div id="topright">
-			<p class="super-short">{{ product.super_short_description }}</p>
+			{{ product.long_description|safe }}
 			<div class="product-photos-small">	
 			{% if product.image_2 %}
 				<a href="{% thumbnail product.image_2 550x550 %}" rel="lightbox[tea]" title="{{ product.image_2_caption }}">
@@ -116,6 +130,16 @@
 			{% if product.image_3 %}
 				<a href="{% thumbnail product.image_3 550x550 %}" rel="lightbox[tea]" title="{{ product.image_3_caption }}">
 				<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image_3 80x80 %}"/>
+				</a>
+			{% endif %}
+			{% if product.image_4 %}
+				<a href="{% thumbnail product.image_4 550x550 %}" rel="lightbox[tea]" title="{{ product.image_4_caption }}">
+				<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image_4 80x80 %}"/>
+				</a>
+			{% endif %}
+			{% if product.image_5 %}
+				<a href="{% thumbnail product.image_5 550x550 %}" rel="lightbox[tea]" title="{{ product.image_5_caption }}">
+				<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image_5 80x80 %}"/>
 				</a>
 			{% endif %}
 			</div>	
@@ -150,7 +174,7 @@
 	<h3>Customer testimonials</h3>
 		<ul class="reviews">
 			{% for review in reviews %}
-			<li><em>{{ review.text }}</em> <span class="red">{{ review.owner }}</span></li>
+			<li><em>{{ review.text|safe }}</em> <span class="red">{{ review.owner }}</span></li>
 			{% endfor %}
 		</ul>
 	</div>

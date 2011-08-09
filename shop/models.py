@@ -79,6 +79,14 @@ US_STATES = (
   (u'WY', u'Wyoming'),
 )
 
+class ShopSettings(models.Model):
+    homepage_meta_description = models.CharField(max_length=200)
+    homepage_meta_title = models.CharField(max_length=200)
+    homepage_benefits_text = tinymce_models.HTMLField()
+    homepage_video_code = models.TextField(blank=True, null=True)
+    ga_script = models.TextField(blank=True, null=True)
+    
+
 
 class Product(models.Model):
     name = models.CharField(max_length=200, help_text="The product name")
@@ -124,7 +132,7 @@ class Product(models.Model):
 class Review(models.Model):
     product = models.ForeignKey(Product)
     owner = models.CharField(max_length=200)
-    text = models.TextField()
+    text = tinymce_models.HTMLField()
     is_published = models.BooleanField(default=False)
     
     def __unicode__(self):
