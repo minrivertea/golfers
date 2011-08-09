@@ -83,7 +83,6 @@ def page(request, slug, sub_page=None):
     if page.template:
         return render(request, page.template, locals())
     else:
-    
         return render(request, "shop/page.html", locals())    
     
 

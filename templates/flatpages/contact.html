@@ -110,7 +110,7 @@ div.left p.help-text {
 			</div>
 {% endblock %}
 
-{% block pagetitle%}Contact us{% endblock %}
+{% block pagetitle%}{{ page.title }}{% endblock %}
 
 
 
@@ -118,11 +118,10 @@ div.left p.help-text {
 
 <div id="feature">	
 
-	<h1>Contact Us</h1>
+	<h1>{{ page.title }}</h1>
 	<div class="left">
-		 	{{ flatpage.content|safe }}
+		 	{{ page.content|safe }}
 		 	
-
 	{% if message %}
 		<h2>Thanks!</h2>
 		<p>Your message has been sent to the team at Pro-Advanced. We'll be in touch as soon as possible (normally within 24 hours).</p>
