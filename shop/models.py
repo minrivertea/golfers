@@ -140,7 +140,9 @@ class Review(models.Model):
 
 
 class UniqueProduct(models.Model):
-    price = models.DecimalField(help_text="Price", max_digits=8, decimal_places=2, null=True, blank=True)
+    original_price = models.DecimalField(help_text="An earlier higher price that won't be paid", 
+        max_digits=8, decimal_places=2, null=True, blank=True)
+    price = models.DecimalField(help_text="The current price that people will pay", max_digits=8, decimal_places=2, null=True, blank=True)
     price_unit = models.CharField(help_text="Currency", max_length=3, null=True, blank=True)
     parent_product = models.ForeignKey(Product)
     is_active = models.BooleanField(default=True)
