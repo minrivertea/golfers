@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block pagetitle %}Show us a picture of yourself!{% endblock %}
+
+{% block extracss %}
+<style type="text/css">
+.reviews ul li {
+  margin-bottom: 20px;
+  width: 600px;	
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="feature">
+
+		<h1>Testimonials from our happy customers</h1>
+
+		<p class="introduction"></p>
+		
+
+		<div class="reviews">
+		 <ul>
+		 {% for r in reviews %}
+		 <li>{{ r.text|safe }}<br/><strong>{{ r.owner }}</strong></li>
+		 {% endfor %}
+		 </ul>
+		
+		
+		</div>
+		
+		
+		
+
+		
+</div>
+{% endblock %}

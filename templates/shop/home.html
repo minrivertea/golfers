@@ -115,7 +115,7 @@ p.quote strong {
 		</div>
 		
 		<div class="reviews">
-			<h3>Testimonials from our happy customers</h3>
+			<h3>Testimonials from our happy customers <span><a href="{% url testimonials %}">- see more testimonials</a></span></h3>
 			{% for r in reviews %}
 			<div class="box">
 			  <p><em>{{ r.text|safe }}</em><br/><strong>{{ r.owner }}</strong></p>

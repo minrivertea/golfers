@@ -115,6 +115,11 @@ def product_view(request, slug):
         
     return render(request, "shop/product_view.html", locals())
     
+def testimonials(request):
+    reviews = Review.objects.filter(is_published=True)
+    return render(request, "shop/reviews.html", locals())
+
+
 def contact_us_submit(request):
     try:
         if request.session['MESSAGE'] == "1":
