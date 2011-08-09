@@ -312,6 +312,7 @@ div#feature a.more {
     margin-top: 10px;
     padding: 10px 15px;
     width: 310px;
+    text-align: center;
 }
 
 div#feature a.more:hover {

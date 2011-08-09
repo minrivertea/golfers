@@ -5,6 +5,14 @@
 
 {% block extracss %}
 <style type="text/css">
+
+div.price {
+  font-weight: bold;	
+}
+span.strikethrough {
+  text-decoration: line-through;
+  font-weight: normal;	
+}
 </style>
 {% endblock %}
 
@@ -28,6 +36,9 @@
         		{% if forloop.first %}
         			<div class="price">
         			{{ price.price_unit }}{{ price.price|floatformat }} 
+        			{% if price.original_price %}
+					<span class="strikethrough">{{ price.price_unit }}{{ price.original_price }}</span>
+					{% endif %}
             		</div>
 		        {% else %}
     		    {% endif %}
