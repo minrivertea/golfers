@@ -111,7 +111,7 @@ PAYPAL_RECEIVER_EMAIL = ""
 GA_IS_ON = True
 
 SITE_EMAIL = 'renanlore@hotmail.com'
-SHIPPING_PRICE = 14.99
+SHIPPING_PRICE = 0.01
 
 PROJECT_NAME = 'Pro-Advanced'
 
