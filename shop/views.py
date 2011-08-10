@@ -75,6 +75,13 @@ def index(request):
 
 
 def page(request, slug, sub_page=None):
+    try:
+        if request.session['MESSAGE'] == "1":
+            message = True
+            request.session['MESSAGE'] = ""
+    except:
+        pass 
+        
     if sub_page:
         page = get_object_or_404(Page, slug=sub_page)
     else:
@@ -121,12 +128,6 @@ def testimonials(request):
 
 
 def contact_us_submit(request):
-    try:
-        if request.session['MESSAGE'] == "1":
-            message = True
-            request.session['MESSAGE'] = ""
-    except:
-        pass 
         
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -169,8 +170,9 @@ def contact_us_submit(request):
                           [customer_recipient],
                           fail_silently=False,
             )
-            
-            return HttpResponseRedirect('/contact-us/thanks/') 
+            print "making a cookie"
+            request.session['MESSAGE'] = "1"
+            return HttpResponseRedirect('/contact-us/') 
     else:
         form = ContactForm() 
     
