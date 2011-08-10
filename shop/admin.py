@@ -10,5 +10,6 @@ admin.site.register(Review)
 admin.site.register(ShopSettings)
 admin.site.register(UniqueProduct)
 admin.site.register(Page)
+admin.site.register(Order)
 
 
