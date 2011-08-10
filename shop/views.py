@@ -383,9 +383,13 @@ def order_check_details(request):
     
 
 def order_confirm(request):
-    shopper = get_object_or_404(Shopper, id=request.session['SHOPPER_ID'])
-    basket = get_object_or_404(Basket, id=request.session['BASKET_ID'])
-    order = Order.objects.get(invoice_id=request.session['ORDER_ID'])
+    try:
+        shopper = get_object_or_404(Shopper, id=request.session['SHOPPER_ID'])
+        basket = get_object_or_404(Basket, id=request.session['BASKET_ID'])
+        order = Order.objects.get(invoice_id=request.session['ORDER_ID'])
+    except:
+        return render(request, "shop/order_problem.html", locals())
+        
     order_items = BasketItem.objects.filter(basket=basket)
     total_price = float(settings.SHIPPING_PRICE)
     for item in order_items:
