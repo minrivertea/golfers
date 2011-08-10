@@ -34,7 +34,7 @@ div.right {
 
 .video .benefits {
   float: right;
-  width: 440px;	
+  width: 340px;	
   font-size: 18px;
 }
 
@@ -51,7 +51,7 @@ div.right {
 }
 
 .reviews .box {
-  width: 400px;
+  width: 300px;
   float: left;
   margin-right: 30px;	
 }
@@ -63,6 +63,10 @@ div.right {
 .reviews .box p strong {
   position: relative;
   top: 5px;
+}
+
+.reviews h3 span a {
+  font-size: 14px;	
 }
 
 div#feature p.super-short {
@@ -122,7 +126,9 @@ p.quote strong {
 			<div class="box">
 			  <p><em>{{ r.text|safe }}</em><br/><strong>{{ r.owner }}</strong></p>
 			</div>
+			
 			{% endfor %}
+			<div class="paypal" style="background-color: #fff;padding: 0 10px 10px; float: left; margin-bottom: 80px;"><img src="/images/paypal-icon.png"></div>
 		</div>
 	</div>
 </div>
