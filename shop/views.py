@@ -354,7 +354,7 @@ def order_check_details(request):
                 order.save()
 
             # give the order a unique ID
-            order.invoice_id = "TEA-00%s" % (order.id)
+            order.invoice_id = "PROAD-00%s" % (order.id)
             order.save()
 
             request.session['ORDER_ID'] = order.invoice_id

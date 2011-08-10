@@ -1,0 +1,13 @@
+Hi {{ first_name }},
+
+Just to let you know, we've received your order at http://www.pro-advanced.com:
+
+{% for item in order_items %}
+	- {{ item }}
+{% endfor %}
+
+Please note, we must confirm payment is received before we send any orders. If there is a problem with your payment, we'll contact you immediately. Otherwise, if you need to contact us, please quote this order ID: {{ invoice_id }}
+
+Many thanks for ordering from ProAdvanced!
+
+http://www.pro-advanced.com

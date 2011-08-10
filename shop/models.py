@@ -214,7 +214,21 @@ class Order(models.Model):
     address = models.ForeignKey(Address, null=True)
     owner = models.ForeignKey(Shopper)
     discount = models.ForeignKey(Discount, null=True, blank=True)
-    status = models.CharField(max_length=20, choices=ORDER_STATUS)
+
+    STATUS_CREATED_NOT_PAID = 'created not paid'
+    STATUS_PAID = 'paid'
+    STATUS_SHIPPED = 'shipped'
+    STATUS_ADDRESS_PROBLEM = 'address problem'
+    STATUS_PAYMENT_FLAGGED = 'payment flagged'
+    STATUS_CHOICES = (
+            (STATUS_CREATED_NOT_PAID, u"Created, not paid"),
+            (STATUS_PAID, u"Paid"),
+            (STATUS_SHIPPED, u"Shipped"),
+            (STATUS_ADDRESS_PROBLEM, u"Address problem"),
+            (STATUS_PAYMENT_FLAGGED, u"Payment flagged"),     
+    )
+    
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, db_index=True)
     invoice_id = models.CharField(max_length=20)
     
     def get_discount(self):
@@ -271,28 +285,77 @@ class Page(models.Model):
         pages = Page.objects.filter(parent=self)
         return pages
        
-# methods to update order object after successful / failed payment 
+# signals to connect to receipt of PayPal IPNs
+
 def show_me_the_money(sender, **kwargs):
     ipn_obj = sender
-    order = Order.objects.get(invoice_id=ipn_obj.invoice)
-    order.status = "2"
-    order.date_paid = ipn.obj.payment_date
+    order = get_object_or_404(Order, invoice_id=ipn_obj.invoice)
+    if order.status == Order.STATUS_PAID:
+        return
+        
+    order.status = Order.STATUS_PAID
+    order.date_paid = ipn_obj.payment_date
     order.is_paid = True
     order.save()
     
+    # create and send an email to the customer
+    recipient = order.owner.email
+    body = render_to_string('shop/emails/order_confirm_customer.txt', {
+    	        'first_name': order.owner.first_name, 
+    	        'invoice_id': order.invoice_id, 
+    	        'order_items': order.items.all(), 
+    	        'order_status': order.status})
+    subject_line = "Order confirmed - Pro-Advanced.com" 
+    email_sender = settings.SITE_EMAIL
+      
+    send_mail(
+                  subject_line, 
+                  body, 
+                  email_sender,
+                  [recipient], 
+                  fail_silently=False
+     )
+     
+     # create and send an email to admin
+    recipient = settings.SITE_EMAIL
+    body = render_to_string('shop/emails/order_confirm_admin.txt', {
+    	        'email': order.owner.email, 
+    	        'invoice_id': order.invoice_id, 
+    	        'order_items': order.items.all(), 
+    	        'order_status': order.status})
+    subject_line = "NEW ORDER - %s" % invoice_id      
+    email_sender = settings.SITE_EMAIL
+      
+    send_mail(
+                  subject_line, 
+                  body, 
+                  email_sender,
+                  [recipient], 
+                  fail_silently=False
+     )  
+payment_was_successful.connect(show_me_the_money)    
+
+    
 def payment_flagged(sender, **kwargs):
     ipn_obj = sender
-    order = Order.objects.get(invoice_id=ipn_obj.invoice)
-    order.status = "5"
+    order = get_object_or_404(Order, invoice_id=ipn_obj.invoice)
+    order.status = Order.STATUS_PAYMENT_FLAGGED
     order.save()
 
-
-# signals to connect to receipt of PayPal IPNs
-payment_was_successful.connect(show_me_the_money)
+     # create and send an email to me
+    invoice_id = order.invoice_id
+    email = order.owner.email
+    recipient = settings.SITE_EMAIL
+    body = render_to_string('shop/emails/order_confirm_admin.txt', {'email': email, 'invoice_id': invoice_id, 'order_items': order.items.all()})
+    subject_line = "FLAGGED ORDER - %s" % invoice_id 
+    email_sender = settings.SITE_EMAIL
+      
+    send_mail(
+                  subject_line, 
+                  body, 
+                  email_sender,
+                  [recipient], 
+                  fail_silently=False
+     )   
 payment_was_flagged.connect(payment_flagged)
-
-
-
-
-
 
