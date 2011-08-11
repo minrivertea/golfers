@@ -11,7 +11,7 @@ urlpatterns = patterns('',
     
     url(r'^golf-nets/$', views.products, name="products"),
     url(r'^testimonials/$', views.testimonials, name="testimonials"),
-    url(r'^products/(?P<slug>[\w-]+)/$', views.product_view, name="product_view"),
+    url(r'^golf-nets/(?P<slug>[\w-]+)/$', views.product_view, name="product_view"),
     url(r'^basket/$', views.basket, name="basket"),
     url(r'^basket/add/(\w+)$', views.add_to_basket, name="add_to_basket"),
     url(r'^basket/reduce/(\w+)$', views.reduce_quantity, name="reduce_quantity"),
