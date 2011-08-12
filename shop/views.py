@@ -417,13 +417,21 @@ def order_confirm(request):
     
 def order_complete(request):
         
-    shopper = get_object_or_404(Shopper, id=request.session['SHOPPER_ID'])
-    if request.user.is_anonymous():
-        try:
-            basket = get_object_or_404(Basket, id=request.session['BASKET_ID'])
-        except:
-            basket = Basket.objects.create(owner=shopper, date_modified=datetime.now())
-            request.session['BASKET_ID'] = basket.id
+    # the user should be logged in here, so we'll find their Shopper object
+    # or redirect them to home if they're not logged in
+    try:
+        shopper = get_object_or_404(Shopper, user=request.user)
+    except:
+        shopper = None
+    
+    try:
+        order = get_object_or_404(Order, invoice_id=request.session['ORDER_ID'])
+    except:
+        pass
+        
+    # this line should reset the basket cookie. basically, if 
+    # the user ends up here, they need to have a new basket
+    request.session['BASKET_ID'] = None
    
 
     return render(request, "shop/order_complete.html", locals())

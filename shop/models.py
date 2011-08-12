@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
+from django.shortcuts import render_to_response, get_object_or_404
 
 from datetime import datetime
 from tinymce import models as tinymce_models
