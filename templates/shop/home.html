@@ -109,7 +109,7 @@ p.quote strong {
 				<a class="more" href="{{ product.get_absolute_url }}">Find out more &raquo; </a>		
 			</div>
 			<div class="left">
-				<a href="{{ product.get_absolute_url }}"><img class="main" src="{% thumbnail product.image 500x500 %}"></a>
+				<a href="{% url product_view product.slug %}"><img class="main" src="{% thumbnail product.image 500x500 %}"></a>
 			</div>
 		{% endfor %}
 	

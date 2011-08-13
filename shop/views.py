@@ -354,7 +354,7 @@ def order_check_details(request):
                 order.save()
 
             # give the order a unique ID
-            order.invoice_id = "PROAD-00%s" % (order.id)
+            order.invoice_id = "PROAD-100%s" % (order.id)
             order.save()
 
             request.session['ORDER_ID'] = order.invoice_id
@@ -404,7 +404,8 @@ def order_confirm(request):
         request.session['BASKET_ID'] = new_basket.id
         request.session['ORDER_ID'] = None
         
-        return HttpResponseRedirect('https://www.sandbox.paypal.com/cgi-bin/webscr')
+        url = settings.PAYPAL_SUBMIT_URL
+        return HttpResponseRedirect(url)
         
         
     else:
