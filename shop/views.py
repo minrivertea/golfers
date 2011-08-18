@@ -272,12 +272,28 @@ def increase_quantity(request, productID):
 def basket(request):
     basket = get_object_or_404(Basket, id=request.session['BASKET_ID'])
     basket_items = BasketItem.objects.filter(basket=basket)
-    shipping_price = float(settings.SHIPPING_PRICE_LOW)
-    discount = None
     
+    # set the default values for shipping and discount
+    try:
+        if request.session['SHIPPING'] == "high":
+            shipping_price = float(settings.SHIPPING_PRICE_HIGH)
+            shipping_choice = request.session['SHIPPING']
+        else: 
+            shipping_price = float(settings.SHIPPING_PRICE_LOW)
+    except:
+        shipping_price = float(settings.SHIPPING_PRICE_LOW)
+    
+    try:
+        discount = get_object_or_404(Discount, pk=request.session['DISCOUNT_ID'])
+    except:
+        discount = None
+    
+    # if someone is submitting a discount code or changing their shipping preference
     if request.method == 'POST':
         shipping_form = ShippingOptions(request.POST)
         discount_form = DiscountForm(request.POST)
+        
+        # if it's the shipping form...
         if shipping_form.is_valid():
             shipping_choice = shipping_form.cleaned_data['shipping_choice']
             if shipping_choice == "high":
@@ -286,6 +302,9 @@ def basket(request):
             else:
                 shipping_price == float(settings.SHIPPING_PRICE_LOW)
                 request.session['SHIPPING'] = None
+                
+        
+        # if it's the discount form....
         if discount_form.is_valid():
             discount_code = discount_form.cleaned_data['discount_code']
             try:
@@ -293,19 +312,29 @@ def basket(request):
                 request.session['DISCOUNT_ID'] = discount.id
             except:
                 discount_message = "That is not a valid discount code"
-                             
+            
+
+    
+    # calculate the value of the basket and shipping
+    total_price = shipping_price                         
     for item in basket_items:
         price = float(item.quantity * item.item.price)
         if discount:
             price = price - (price*float(discount.discount_value))
-            
-        total_price = (shipping_price + price)
+        total_price += price   
 
     
     shipping_form = ShippingOptions()
     discount_form = DiscountForm()
     return render_to_response("shop/basket.html", locals(), context_instance=RequestContext(request))
 
+def clear_discount(request):
+    try:
+        request.session['DISCOUNT_ID'] = None
+    except:
+        pass
+    
+    return HttpResponseRedirect('/basket/')
 
 def order_check_details(request):
     try:
@@ -432,8 +461,12 @@ def order_confirm(request):
         basket = get_object_or_404(Basket, id=request.session['BASKET_ID'])
         basket.delete()
         new_basket = Basket.objects.create(owner=shopper, date_modified=datetime.now())
+        
+        # clear all the cookies
         request.session['BASKET_ID'] = new_basket.id
         request.session['ORDER_ID'] = None
+        request.session['SHIPPING'] = None
+        request.session['DISCOUNT_ID'] = None
         
         url = settings.PAYPAL_SUBMIT_URL
         return HttpResponseRedirect(url)
