@@ -20,7 +20,6 @@ urlpatterns = patterns('',
     url(r'^order/check-details/$', views.order_check_details, name="order_check_details"),
     url(r'^order/confirm/$', views.order_confirm, name="order_confirm"),
     url(r'^order/complete/$', views.order_complete, name="order_complete"),    
-    url(r'^order/update-discount$', views.update_discount, name="update_discount"),
     url(r'^photos/$', views.photos, name="photos"),
     url(r'^tell-a-friend/(?P<slug>[\w-]+)/$', views.tell_a_friend, name="tell_a_friend"),
 )

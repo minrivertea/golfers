@@ -11,7 +11,8 @@ def common(request):
     context['paypal_receiver_email'] = settings.PAYPAL_RECEIVER_EMAIL
     context['paypal_submit_url'] = settings.PAYPAL_SUBMIT_URL
     context['ga_is_on'] = settings.GA_IS_ON
-    context['shipping_price'] = settings.SHIPPING_PRICE
+    context['shipping_price_low'] = settings.SHIPPING_PRICE_LOW
+    context['shipping_price_high'] = settings.SHIPPING_PRICE_HIGH
     countrycode = GetCountry(request)['countryCode']
     if countrycode == "US":
        context['howdy'] = True

@@ -205,9 +205,15 @@ class BasketItem(models.Model):
 
     
 class Discount(models.Model):
-    discount_code = models.CharField(max_length=40)
-    name = models.CharField(max_length=200)
-    discount_value = models.DecimalField(max_digits=3, decimal_places=2)
+    discount_code = models.CharField(max_length=40,
+        help_text="The actual code. Try keep it simple, no special characters or accents. eg. DISC123 is good!")
+    name = models.CharField(max_length=200,
+       help_text="Just a name, so it's easy to remember what this discount is for")
+    discount_value = models.DecimalField(max_digits=3, decimal_places=2,
+        help_text="Enter a decimal value that represents the percentage. eg. 0.20 means 20% off. 0.05 == 5% off")
+    
+    def __unicode__(self):
+        return "%s (%s)" % (self.name, self.discount_code)
     
 class Order(models.Model):
     items = models.ManyToManyField(BasketItem)

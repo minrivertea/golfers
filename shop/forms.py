@@ -55,3 +55,13 @@ class ContactForm(forms.Form):
     your_message = forms.CharField(widget=forms.Textarea, required=False)
     country = forms.CharField(required=True)
 
+SHIPPING_CHOICES = (
+    (u'high', u'UPS Fast'),
+    (u'low', u'UPS Ground'),
+)
+
+class ShippingOptions(forms.Form):
+    shipping_choice = forms.ChoiceField(choices=SHIPPING_CHOICES, widget=forms.RadioSelect)
+
+class DiscountForm(forms.Form):
+    discount_code = forms.CharField(required=True)

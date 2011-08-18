@@ -11,5 +11,6 @@ admin.site.register(ShopSettings)
 admin.site.register(UniqueProduct)
 admin.site.register(Page)
 admin.site.register(Order)
+admin.site.register(Discount)
 
 

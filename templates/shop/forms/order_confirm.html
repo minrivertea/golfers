@@ -52,7 +52,7 @@ Step 3/4
 
 
 
-		<input type="hidden" name="item_name_1" value="Shipping Standard Rate"> 
+		<input type="hidden" name="item_name_1" value="Shipping"> 
 		<input type="hidden" name="quantity_1" value="1">
 		<input type="hidden" name="amount_1" value="{{ shipping_price }}">
 		 
@@ -60,7 +60,10 @@ Step 3/4
 		 {% for thing in basket_items %}
 		<input type="hidden" name="item_name_{{ forloop.counter|add:"1" }}" value="{{ thing.item.parent_product.name }} {{ thing.item.parent_product.category }} -  ({{ thing.item.weight|floatformat }}{{ thing.item.weight_unit }})"> 
 		<input type="hidden" name="quantity_{{ forloop.counter|add:"1" }}" value="{{ thing.quantity }}">
-		<input type="hidden" name="amount_{{ forloop.counter|add:"1" }}" value="{{ thing.item.price }}"> 
+		<input type="hidden" name="amount_{{ forloop.counter|add:"1" }}" value="{{ thing.item.price }}">
+		{% if order.discount %}
+		<input type="hidden" name="discount_rate_{{ forloop.counter|add:"1" }}" value="{{ order.discount.discount_value|cut:"0." }}">
+		{% endif %}
 		 {% endfor %}
 		
 		
@@ -74,7 +77,6 @@ Step 3/4
 
 		{% for thing in basket_items %}
 		  <tr>
-			
 	    	<td width="200px">
 	    		{{ thing.quantity }} X {{ thing.item.parent_product.name }}
 	    	</td>
@@ -89,12 +91,16 @@ Step 3/4
 		  <tr>
 		  	<td>Shipping</td>
 		  	<td>&nbsp;</td>
-		  	<td>${{ shipping_price }}</td>		  
+		  	<td>${{ shipping_price|floatformat:2 }}</td>		  
 		  </tr>
 		  <tr>
 		  	<td><strong>TOTAL</strong></td>
 		  	<td>&nbsp;</td>
-		  	<td><strong>${{ total_price }}</strong></td>		  
+		  	<td><strong>${{ total_price|floatformat:2 }}</strong>
+		  	{% if order.discount %}
+	    	<span style="font-weight: bold;font-size:12px;color:red;">({{ order.discount.discount_value|cut:"0." }}% off discount applied)</span>
+	    	{% endif %}
+	    	</td>		  
 		  </tr>
 		</table>
 		</div>

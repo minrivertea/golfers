@@ -272,31 +272,39 @@ def increase_quantity(request, productID):
 def basket(request):
     basket = get_object_or_404(Basket, id=request.session['BASKET_ID'])
     basket_items = BasketItem.objects.filter(basket=basket)
-    total_price = float(settings.SHIPPING_PRICE)
+    shipping_price = float(settings.SHIPPING_PRICE_LOW)
+    discount = None
+    
+    if request.method == 'POST':
+        shipping_form = ShippingOptions(request.POST)
+        discount_form = DiscountForm(request.POST)
+        if shipping_form.is_valid():
+            shipping_choice = shipping_form.cleaned_data['shipping_choice']
+            if shipping_choice == "high":
+                shipping_price = float(settings.SHIPPING_PRICE_HIGH)
+                request.session['SHIPPING'] = "high"
+            else:
+                shipping_price == float(settings.SHIPPING_PRICE_LOW)
+                request.session['SHIPPING'] = None
+        if discount_form.is_valid():
+            discount_code = discount_form.cleaned_data['discount_code']
+            try:
+                discount = Discount.objects.get(discount_code=discount_code)
+                request.session['DISCOUNT_ID'] = discount.id
+            except:
+                discount_message = "That is not a valid discount code"
+                             
     for item in basket_items:
         price = float(item.quantity * item.item.price)
-        total_price += price
-    return render_to_response("shop/basket.html", locals(), context_instance=RequestContext(request))
-
-
-def update_discount(request):
-    if request.method == 'POST':
-        form = UpdateDiscountForm(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
+        if discount:
+            price = price - (price*float(discount.discount_value))
             
-            if data['discount']:
-                d = Discount.objects.get(discount_code=data['discount'])
-                request.session['DISCOUNT_ID'] = d.id
-                
-            return HttpResponseRedirect('/order/check-details') 
+        total_price = (shipping_price + price)
+
     
-    else:
-        confirm_form = OrderConfirmForm() 
-        discount_form = UpdateDiscountForm()
-
-    return render_to_response('shop/forms/order_check_details.html', locals(), context_instance=RequestContext(request))
-
+    shipping_form = ShippingOptions()
+    discount_form = DiscountForm()
+    return render_to_response("shop/basket.html", locals(), context_instance=RequestContext(request))
 
 
 def order_check_details(request):
@@ -326,6 +334,13 @@ def order_check_details(request):
                     last_name = form.cleaned_data['last_name'],     
                 )
             
+            try:
+                cookie = request.session['DISCOUNT_ID']
+                discount = get_object_or_404(Discount, pk=cookie)
+            
+            except:
+                discount = None
+            
             # create an address based on the info they provided           
             address = Address.objects.create(
                 owner = shopper,
@@ -345,7 +360,8 @@ def order_check_details(request):
                 address = address,
                 owner = shopper,
                 status = "1",
-                invoice_id = "TEMP"
+                invoice_id = "TEMP",
+                discount = discount,
             )
             
             # add the items to the order
@@ -391,9 +407,24 @@ def order_confirm(request):
         return render(request, "shop/order_problem.html", locals())
         
     order_items = BasketItem.objects.filter(basket=basket)
-    total_price = float(settings.SHIPPING_PRICE)
+    
+    # check for a shipping preference cookie
+    try:
+        cookie = request.session['SHIPPING']
+    except:
+        cookie = None
+        
+    if cookie == "high":
+        total_price = float(settings.SHIPPING_PRICE_HIGH)
+        
+    else:
+        total_price = float(settings.SHIPPING_PRICE_LOW)
+    
+    shipping_price = total_price
     for item in order_items:
         price = float(item.quantity * item.item.price)
+        if order.discount:
+            price = price - (price*float(order.discount.discount_value))
         total_price += price
         
     if request.method == 'POST': 

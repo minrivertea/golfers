@@ -4,6 +4,8 @@
 {% block pagetitle %}Your basket ({{ basket_quantity }}){% endblock %}
 
 {% block extracss %}
+<script src="http://cdn.jquerytools.org/1.2.5/full/jquery.tools.min.js"></script>
+
 <style type="text/css">
 
 h1 {
@@ -58,7 +60,7 @@ h1 {
 
 .basket-row .total {
   float: left;
-  width: 80px;	
+  width:180px;	
 }
 
 #totals {
@@ -89,6 +91,30 @@ h1 {
 #checkout-button a {
   font-weight: bold;
   font-size: 20px;	
+}
+
+div.total ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  font-size: 13px;	
+}
+
+div.total ul li {
+  margin-bottom: 5px;	
+}
+
+div.total span.red {
+  font-size: 12px;
+  font-weight: bold;
+  color: red;	
+}
+
+div.total span.black a {
+  font-size: 12px;
+  font-weight: bold;
+  color: #000;	
 }
 
 </style>
@@ -135,13 +161,51 @@ Step 1/4
 
   <div class="basket-row">
 		<div class="photo"><em>&nbsp;</em></div>
-		<div class="details">Shipping (anywhere in the USA)</div>
+		<div class="details">Your shipping preference:<br/><img style="float:left;margin-right:10px; position:relative;top:4px;" src="/images/us.png"/>
+			<span style="font-size: 10px; position:relative; top:5px;">Remember we ship to the USA only. For international orders, <a href="/contact-us/">contact us to order.</a></span></div>
 		<div class="quantity">&nbsp;</div>
-		<div class="total">${{ shipping_price }}</div>
+		<div class="total">
+		<form action="" method="post">
+			<ul>
+				<li>
+					<label for="id_shipping_choice_0">
+					<input type="radio" {% ifequal shipping_choice "high" %}checked{% endifequal %} id="id_shipping_choice_0" value="high" name="shipping_choice" /> UPS Fast (${{ shipping_price_high|floatformat:2 }})
+					</label>
+				</li>
+				<li>
+					<label for="id_shipping_choice_1">
+					<input type="radio" {% ifnotequal shipping_choice "high" %}checked{% endifnotequal %} id="id_shipping_choice_1" value="low" name="shipping_choice" /> UPS Ground ({{ shipping_price_low|floatformat:2 }})
+					</label>
+				</li>
+</ul>
+			<input type="submit" value="Update"/>
+		</form>
+		</div>	
+  </div>
+  
+
+  <div class="basket-row">
+		<div class="photo"><em>&nbsp;</em></div>
+		<div class="details">Have a discount code?</div>
+		<div class="quantity">&nbsp;</div>
+		<div class="total">
+		{% if discount %}
+		<span class="red">Your discount code is worth {{ discount.discount_value|cut:"0." }}% off!</span> 
+		<span class="black"><a href="">Clear discount</a></span>
+		{% else %}
+		<form action="" method="post">
+			<input type="text" name="discount_code" id="id_discount_code" value="{{ discount_code }}" />
+			{% if discount_message %}
+			    <span class="red">{{ discount_message }}</span><br/>
+			{% endif %}
+			<input type="submit" value="Update"/>
+		</form>
+		{% endif %}
+		</div>	
   </div>
 
   <div id="totals">
-	<div class="label">TOTAL:</div><div class="total">${{ total_price }}</div>
+	<div class="label">TOTAL:</div><div class="total">${{ total_price|floatformat:2 }}</div>
   </div>
 	
 	
