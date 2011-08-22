@@ -34,6 +34,8 @@ urlpatterns = patterns('',
     (r'^blog/', include('golfers.blog.urls')),
     (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
     (r'^robots\.txt$', direct_to_template, {'template': 'robots.txt', 'mimetype': 'text/plain'}),
+    (r'^thefind_409afb7958adb2af23161ae569c086ce\.html$, direct_to_template, 
+        {'template': 'thefind_409afb7958adb2af23161ae569c086ce\.html', 'mimetype': 'text/plain'}),
     url(r'^(?P<slug>[\w-]+)/$', page, name="page"),
 )
 
