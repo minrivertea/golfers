@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE RateRequest SYSTEM "http://www.shipwire.com/exec/download/RateRequest.dtd">
+<RateRequest currency="{{ currency_code }}">
+    <Username>{{ shipwire_username }}</Username>
+    <Password>{{ shipwire_password }}</Password>
+    <Order id="{{ order.invoice_id }}">
+        <Warehouse>00</Warehouse>
+        <AddressInfo type="ship">
+            <Address1>{{ order.address.house_name_number }} </Address1>
+            <Address2>{{ order.address.address_line_1 }}</Address2>
+            <City>{{ order.address.town_city }}</City>
+            <State>{{ order.address.state }}</State>
+            <Country>{{ order.address.country }}</Country>
+            <Zip>{{ order.address.postcode }}</Zip>
+        </AddressInfo>
+        {% for item in order.items.all %}
+        <Item num="{{ forloop.counter }}">
+            <Code>{{ item.item.parent_product.slug }}</Code>
+            <Quantity>{{ item.quantity }}</Quantity>
+        </Item>
+        {% endfor %}
+    </Order>
+</RateRequest>

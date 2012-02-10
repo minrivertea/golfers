@@ -1,9 +1,9 @@
-New order from {{ email }}
+New order from {{ order.owner.email }}
 
-{% for item in order_items %}
+{% for item in order.items.all %}
 	{{ item }}
 {% endfor %}
 
-INVOICE ID: {{ invoice_id }}
+INVOICE ID: {{ order.invoice_id }}
 
-ORDER STATUS: {{ order_status }}
+ORDER STATUS: {{ order.get_order_status_display }}

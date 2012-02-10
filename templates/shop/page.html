@@ -76,7 +76,9 @@ div#right-nav ul li.selected a {
 
  	<div id="right">
 		{% include "shop/snippets/pages_nav.html" %}
+		{% if page.image %}
 		<img style="margin-top: 20px;" src="{% thumbnail page.image 230x1000 %}">
+		{% endif %}
 	</div>
 
 	<div id="left">

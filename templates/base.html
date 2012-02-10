@@ -1,3 +1,5 @@
+{% load i18n %}
+
 
 {% block doctype %}<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html
@@ -24,18 +26,16 @@
     {% block extra-head %}{% endblock %}
     <link rel="stylesheet" href="/css/styles.css" />
     <title>ProAdvanced Sports - {% block pagetitle %}{% endblock %}</title>
-    <script type="text/javascript" src="/js/searchbar.js"></script>
     	
 	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
-
+	<link href="https://plus.google.com/102021322550266637657" rel="publisher" />
 {% block extracss %}{% endblock %}
 {% block extrajs %}{% endblock %}
  
     
 {% block ga %}
     {% if ga_is_on %}
-		{{ shopsettings.ga_script|safe }}
-    {% endif %}
+		{{ shopsettings.ga_script|safe }}    {% endif %}
 {% endblock %}
     
 </head>
@@ -45,26 +45,24 @@
 	    <div id="header">
 	          
 	          <div id="basket">
-	            
 	            <div id="inner">
-	          	<img src="/images/cart.png"> {{ basket_quantity }} item{{ basket_quantity|pluralize }}
-	          	- <a href="{% url basket %}">checkout now!</a>
-	          	</div>
-	          	
-	          	<div id="countries">
-	            	<img src="/images/us.png"> 
-	            	<a href="/shipping/">We deliver to the USA</a>
-	            </div>
+		          	<img src="/images/cart.png"> 
+			          	{% blocktrans count basket_quantity as counter %}
+			          		{{ basket_quantity }} item{% plural %}{{ basket_quantity }} items
+			          	{% endblocktrans %}
+		          		- <a href="{% url basket %}">{% trans 'checkout now!' %}</a>
+		          	</div>
+		          	{% include 'shop/snippets/currency.html' %}      	
 	          </div>
 	          
 	     	  <div id="nav">
 	    	    <ul>
-	    	    	<li><a class="selected" href="/" title="" alt="">Home</a></li>
-	    	        <li><a href="/about-us/" title="" alt="">About Us</a></li>
-	    	        <li><a href="{% url products %}" title="" alt="">Golf nets</a></li>
-	    	        <li><a href="{% url blog_home %}">Learn</a></li>
-	    	        <li><a href="/custom/" title="" alt="">Custom</a></li>
-	    	        <li><a href="/contact-us/" title="" alt="">Contact Us</a></li>
+	    	    	<li><a class="selected" href="/" title="" alt="">{% trans 'Home' %}</a></li>
+	    	        <li><a href="/about-us/" title="" alt="">{% trans 'About Us' %}</a></li>
+	    	        <li><a href="{% url products %}" title="" alt="">{% trans 'Golf nets' %}</a></li>
+	    	        <li><a href="{% url blog_home %}">{% trans 'Learn' %}</a></li>
+	    	        <li><a href="/custom/" title="" alt="">{% trans 'Custom' %}</a></li>
+	    	        <li><a href="/contact-us/" title="" alt="">{% trans 'Contact Us' %}</a></li>
 	  			</ul>
 			</div>
 			
@@ -77,8 +75,14 @@
 					
       	</div>
 
-	
 	<div id="container">
+		<div id="language">
+			{% get_current_language as LANGUAGE_CODE %}
+			<a href="{% url changelang 'fr' %}" class="{% if LANGUAGE_CODE == 'fr' %}selected{% endif %}">{% trans 'French' %}</a>
+			<a href="{% url changelang 'en' %}" class="{% if LANGUAGE_CODE == 'en' %}selected{% endif %}">{% trans 'English' %}</a>
+			<a href="{% url changelang 'de' %}" class="{% if LANGUAGE_CODE == 'de' %}selected{% endif %}">{% trans 'German' %}</a>
+		</div>	    
+	
 	    {% block content %}{% endblock %}
 	<br clear="all"/>
     {% include 'shop/snippets/footer.html' %}

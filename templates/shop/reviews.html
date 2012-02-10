@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% load thumbnail %}
+{% load thumbnail i18n %}
 
-{% block pagetitle %}Show us a picture of yourself!{% endblock %}
+{% block pagetitle %}{% trans 'Testimonials and reviews' %}{% endblock %}
 
 {% block extracss %}
 <style type="text/css">
@@ -15,7 +15,7 @@
 {% block content %}
 <div id="feature">
 
-		<h1>Testimonials from our happy customers</h1>
+		<h1>{% trans 'Testimonials from our happy customers' %}</h1>
 
 		<p class="introduction"></p>
 		

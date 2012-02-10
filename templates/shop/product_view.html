@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load thumbnail %}
+{% load thumbnail i18n %}
 
 {% block extrajs %}
 <script type="text/javascript" src="/js/prototype.js"></script>
@@ -33,6 +33,7 @@
   	font-weight: bold;
   	font-size: 16px;
   	line-height: 1.6em;
+  	margin: 0 0 20px;
   }
   
   #top #topright ul {
@@ -115,7 +116,7 @@
 	
 	{% if message %}
 	<div id="message">
-	  <strong>1 x {{ product.name }} added to your basket!<br/>
+	  <strong>{% blocktrans with product.name as name %}1 x {{ name }} added to your basket!{% endblocktrans %}<br/>
 	  <a href="{% url basket %}">Checkout now &raquo</a></strong>
 	</div>
 	{% endif %}
@@ -155,17 +156,17 @@
 			
 			
 			{% for price in prices %}
-			<div class="prices">
-			<div class="price">
-				{{ price.price_unit }}{{ price.price }} 
-				{% if price.original_price %}
-				<span class="strikethrough">{{ price.price_unit }}{{ price.original_price }}</span>
-				{% endif %}
-			</div>
-			<div class="button">
-				<a href="{% url add_to_basket price.id %}">Add to basket</a>
-			</div>
-			</div>
+				<div class="prices">
+					<div class="price">
+						{{ price.currency.symbol }}{{ price.price }} 
+						{% if price.original_price %}
+							<span class="strikethrough">{{ price.currency.symbol }}{{ price.original_price }}</span>
+						{% endif %}
+					</div>
+					<div class="button">
+						<a href="{% url add_to_basket price.id %}">Add to basket</a>
+					</div>
+				</div>
 			{% endfor %}
 				
 			

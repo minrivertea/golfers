@@ -1,0 +1,8 @@
+{% load i18n %}
+
+<div id="currency">
+	{% trans 'Change your currency' %}: &nbsp; &nbsp;
+	<a class="uk {% if currency.code == 'GBP' %}strong{% endif %}" href="{% url change_currency %}?curr=GBP">£</a>
+	<a class="us {% if currency.code == 'USD' %}strong{% endif %}" href="{% url change_currency %}?curr=USD">$</a>
+	<a class="eu {% if currency.code == 'EUR' %}strong{% endif %}" href="{% url change_currency %}?curr=EUR">€</a>
+</div>

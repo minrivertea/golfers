@@ -1,20 +1,24 @@
-
+{% load i18n %}
 
 
 <div id="footer">
-	<p>©2011 Pro-advanced.com </p>
+
+	{% if ga_is_on %}<a href="https://plus.google.com/102021322550266637657?prsrc=3" style="cursor:pointer;display:inline-block;text-decoration:none;color:#fff;font:13px/16px arial,sans-serif;"><span style="display:inline-block;font-weight:bold;vertical-align:top;margin-right:5px;margin-top:8px;">Follow us</span><span style="display:inline-block;vertical-align:top;margin-right:15px;margin-top:8px;">on</span><img src="https://ssl.gstatic.com/images/icons/gplus-32.png" alt="" style="border:0;width:32px;height:32px;"/></a>
+	{% endif %}
 		<ul>
 		
-		<li><a href="/golf-nets/">Golf nets</a></li>
-		<li><a href="/become-a-dealer/">Become a dealer</a></li>
-		<li><a href="/international-distributors/">International distributors</a></li>
-		<li><a href="/co-branding/">Co-branding</a></li>
-		<li><a href="/affiliate-program/">Affiliate program</a></li>
-		<li><a href="/terms/">Terms and Conditions</a></li>
-		<li><a href="/about-us/">About Us</a></li>
-		<li><a href="/privacy/">Privacy</a></li>
-		<li><a href="/contact-us/">Contact Us</a></li>
+		<li><a href="/golf-nets/">{% trans 'Golf nets' %}</a></li>
+		<li><a href="/become-a-dealer/">{% trans 'Become a dealer' %}</a></li>
+		<li><a href="/international-distributors/">{% trans 'International distributors' %}</a></li>
+		<li><a href="/co-branding/">{% trans 'Co-branding' %}</a></li>
+		<li><a href="/affiliate-program/">{% trans 'Affiliate program' %}</a></li>
+		<li><a href="/terms/">{% trans 'Terms and Conditions' %}</a></li>
+		<li><a href="/about-us/">{% trans 'About Us' %}</a></li>
+		<li><a href="/privacy/">{% trans 'Privacy' %}</a></li>
+		<li><a href="/contact-us/">{% trans 'Contact Us' %}</a></li>
 	   </ul>
+	   
+	   <p>©2011 Pro-advanced.com </p>
 		
 		{% if ga_is_on %}
 		<br clear="all"/>

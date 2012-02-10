@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load thumbnail %}
+{% load thumbnail i18n %}
 
 {% block pagetitle %}{{ shopsettings.homepage_meta_title }}{% endblock %}
 {% block metadescription %}{{ shopsettings.homepage_meta_description }}{% endblock %}
@@ -106,7 +106,7 @@ p.quote strong {
 				<h1>{{ product.name }}</h1>	
 				<p class="super-short">{{ product.super_short_description }}</p>
 				{{ product.short_description|safe }}
-				<a class="more" href="{% url product_view product.slug %}">Find out more &raquo; </a>		
+				<a class="more" href="{% url product_view product.slug %}">{% trans 'Find out more &raquo;' %} </a>		
 			</div>
 			<div class="left">
 				<a href="{% url product_view product.slug %}"><img class="main" src="{% thumbnail product.image 500x500 %}"></a>
@@ -117,13 +117,11 @@ p.quote strong {
 			<div class="benefits">
 				{{ shopsettings.homepage_benefits_text|safe }}
 			</div>
-				
-				<img src="/images/renan.jpg">
-				
+				<iframe width="480" height="360" src="http://www.youtube.com/embed/pyUFFJTlDZ0" frameborder="0" allowfullscreen></iframe>				
 		</div>
 		
 		<div class="reviews">
-			<h3>Testimonials from our happy customers <span><a href="{% url testimonials %}">- see more testimonials</a></span></h3>
+			<h3>{% trans 'Testimonials from our happy customers' %} <span><a href="{% url testimonials %}">- {% trans 'see more testimonials' %}</a></span></h3>
 			{% for r in reviews %}
 			<div class="box">
 			  <p><em>{{ r.text|safe }}</em><br/><strong>{{ r.owner }}</strong></p>

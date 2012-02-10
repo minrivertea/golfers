@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% load thumbnail %}
+{% load thumbnail i18n %}
 
-{% block pagetitle %}Our Products{% endblock %}
+{% block pagetitle %}{% trans 'Our Products' %}{% endblock %}
 
 {% block extracss %}
 <style type="text/css">
@@ -19,7 +19,7 @@ span.strikethrough {
 {% block content %}
 
 	<div id="feature">
-	<h1>Our golf nets</h1>
+	<h1>{% trans 'Our golf nets' %}</h1>
 
 
 		{% for product, prices in products_and_prices %}
@@ -35,9 +35,9 @@ span.strikethrough {
       		{% for price in prices %}  	
         		{% if forloop.first %}
         			<div class="price">
-        			{{ price.price_unit }}{{ price.price|floatformat }} 
+        			{{ price.currency.symbol }}{{ price.price|floatformat }} 
         			{% if price.original_price %}
-					<span class="strikethrough">{{ price.price_unit }}{{ price.original_price }}</span>
+					<span class="strikethrough">{{ price.currency.symbol }}{{ price.original_price }}</span>
 					{% endif %}
             		</div>
 		        {% else %}

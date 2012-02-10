@@ -135,17 +135,6 @@ div#header {
   font-size: 12px;
 }
 
-#countries {
-  float: right;	
-  margin: 7px 30px 0 0;
-  position: relative;
-  top: 5px;
-}
-
-#countries img {
-  position: relative;
-  top: 8px;	
-}
 
 #basket a {
   text-decoration: underline;
@@ -162,6 +151,74 @@ div#header {
   margin-top: 9px;
   position: relative;
   top: 5px;
+}
+
+#currency {
+    color: #999999;
+    font-size: 12px;
+    float: right;
+    text-align: center;
+    width: auto;
+    position: relative;
+    top: 20px;
+    right: 50px;
+}
+
+#currency a {
+    color: #e1e1e1;
+    margin-right: 5px;
+    width: 24px;
+    opacity: 0.3;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#currency a img {
+  margin-bottom: 3px;	
+}
+
+#currency a.eu img {position: relative; right: 24px;}
+
+#currency a.us img {position: relative; right: 48px;}
+
+#currency a.strong {
+  font-weight: bold;
+  color: #fff;
+  opacity: 1;	
+}
+
+#currency a:hover {
+  color: #666;
+  opacity: 1;
+}
+
+#countries {
+  float: right;	
+  margin: 7px 30px 0 0;
+  position: relative;
+  top: 5px;
+}
+
+#countries img {
+  position: relative;
+  top: 8px;	
+}
+
+#language {
+  width: auto;
+  float: right;
+  margin: 20px 20px 5px 0;	
+}
+
+#language a {
+  font-size: 12px;
+  color: #999;
+  margin-right: 10px;	
+}
+
+#language a.selected {
+  font-weight: bold;
+  color: #BD1B30;	
 }
 
 div#logo {
@@ -272,9 +329,8 @@ a.contact:hover {
 
 div#feature {
     background: none repeat scroll 0 0 #fff;
-    border: 4px solid #FFFFFF;
+    border: 8px solid #FFFFFF;
     border-radius: 10px 10px 10px 10px;
-    box-shadow: 0 1px 14px #F1F1F1;
     float: left;
     width:890px;
     padding: 20px 30px;
@@ -282,10 +338,6 @@ div#feature {
 
 div#feature h3 {	
 
-}
-
-div#feature img.main {
-    box-shadow: 0 1px 8px #333333;	
 }
 
 div#feature p.super-short, div.left p.super-short {
@@ -404,9 +456,9 @@ div.left {
     width: 550px;
 }
 
-div.left p {
+div.left p, div#left p {
   margin: 0 0 20px 0;
-  line-height: 1.6em;	
+  line-height: 1.8em;	
 }
 
 div.right {

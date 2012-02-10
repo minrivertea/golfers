@@ -13,9 +13,12 @@ def common(request):
     context['ga_is_on'] = settings.GA_IS_ON
     context['shipping_price_low'] = settings.SHIPPING_PRICE_LOW
     context['shipping_price_high'] = settings.SHIPPING_PRICE_HIGH
-#    countrycode = GetCountry(request)['countryCode']
-#    if countrycode == "US":
-#       context['howdy'] = True
+    try:
+        code = request.session['CURRENCY']
+        context['currency'] = Currency.objects.get(code=code)
+    except:
+        context['currency'] = Currency.objects.get(code='USD')
+        
     try:
         s = ShopSettings.objects.all()
         if s:

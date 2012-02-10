@@ -10,6 +10,7 @@ from tinymce import models as tinymce_models
 
 from golfers.slugify import smart_slugify
 from paypal.standard.ipn.signals import payment_was_successful, payment_was_flagged
+from golfers.countries import *
 
 
 # these are the categories of products on the site.
@@ -28,60 +29,7 @@ ORDER_STATUS = (
     (u'5', u'Payment flagged'),
 )
 
-# these are the states in America
-US_STATES = (
-  (u'AL', u'Alabama'),
-  (u'AK', u'Alaska'),
-  (u'AZ', u'Arizona'),
-  (u'AK', u'Arkansas'),
-  (u'CA', u'California'),
-  (u'CO', u'Colorado'),
-  (u'CT', u'Connecticut'),
-  (u'DE', u'Delaware'),
-  (u'DC', u'Dist. of Columbia'),
-  (u'FL', u'Florida'),
-  (u'GA', u'Georgia'),
-  (u'HI', u'Hawaii'),
-  (u'ID', u'Idaho'),
-  (u'IL', u'Illinois'),
-  (u'IN', u'Indiana'),
-  (u'IA', u'Iowa'),
-  (u'KS', u'Kansas'),
-  (u'KY', u'Kentucky'),
-  (u'LA', u'Louisiana'),
-  (u'ME', u'Maine'),
-  (u'MD', u'Maryland'),
-  (u'MA', u'Massachusetts'),
-  (u'MI', u'Michigan'),
-  (u'MN', u'Minnesota'),
-  (u'MS', u'Mississippi'),
-  (u'MO', u'Missouri'),
-  (u'MT', u'Montana'),
-  (u'NE', u'Nebraska'),
-  (u'NV', u'Nevada'),
-  (u'NH', u'New Hampshire'),
-  (u'NJ', u'New Jersey'),
-  (u'NM', u'New Mexico'),
-  (u'NY', u'New York'),
-  (u'NC', u'North Carolina'),
-  (u'ND', u'North Dakota'),
-  (u'OH', u'Ohio'),
-  (u'OK', u'Oklahoma'),
-  (u'OR', u'Oregon'),
-  (u'PA', u'Pennsylvania'),
-  (u'RI', u'Rhode Island'),
-  (u'SC', u'South Carolina'),
-  (u'South Dakota', u'SD'),
-  (u'TN', u'Tennessee'),
-  (u'TX', u'Texas'),
-  (u'UT', u'Utah'),
-  (u'VT', u'Vermont'),
-  (u'VA', u'Virginia'),
-  (u'WA', u'Washington'),
-  (u'WV', u'West Virginia'),
-  (u'WI', u'Wisconsin'),
-  (u'WY', u'Wyoming'),
-)
+
 
 class ShopSettings(models.Model):
     homepage_meta_description = models.CharField(max_length=200)
@@ -124,6 +72,7 @@ class Product(models.Model):
     )
        
     category = models.CharField(max_length=20, choices=PRODUCT_CATEGORIES, db_index=True)
+    shipwire_id = models.CharField(max_length=200, help_text="The Shipwire Product Code")
     is_featured = models.BooleanField(default=False, help_text="If ticked, it will appear on homepage")
     is_active = models.BooleanField(default=True, help_text="If checked, product will appear on the site")
         
@@ -143,11 +92,20 @@ class Review(models.Model):
         return self.owner 
 
 
+class Currency(models.Model):
+    code = models.CharField(max_length=5)
+    symbol = models.CharField(max_length=5)
+    active = models.BooleanField(default=False)
+    
+    
+    def __unicode__(self):
+        return self.code
+
 class UniqueProduct(models.Model):
     original_price = models.DecimalField(help_text="An earlier higher price that won't be paid", 
         max_digits=8, decimal_places=2, null=True, blank=True)
     price = models.DecimalField(help_text="The current price that people will pay", max_digits=8, decimal_places=2, null=True, blank=True)
-    price_unit = models.CharField(help_text="Currency", max_length=3, null=True, blank=True)
+    currency = models.ForeignKey(Currency)
     parent_product = models.ForeignKey(Product)
     is_active = models.BooleanField(default=True)
     
@@ -177,6 +135,7 @@ class Address(models.Model):
     town_city = models.CharField(max_length=200)
     state = models.CharField(max_length=100, choices=US_STATES, blank=True, null=True)
     postcode = models.CharField(max_length=200)
+    country = models.CharField(max_length=3, choices=COUNTRY_CHOICES)
     
     def __unicode__(self):
         return "%s, %s" % (self.house_name_number, self.postcode)
@@ -294,6 +253,20 @@ class Page(models.Model):
     def get_children(self):
         pages = Page.objects.filter(parent=self)
         return pages
+    
+    def get_absolute_url(self):
+        if self.parent:
+            if self.parent.parent:
+                if self.parent.parent.parent:
+                    url = "/%s/%s/%s/%s/" % (self.parent.parent.parent.slug, self.parent.parent.slug, self.parent.slug, self.slug)
+                else:
+                    url = "/%s/%s/%s/" % (self.parent.parent.slug, self.parent.slug, self.slug)
+            else:
+                url = "/%s/%s/" % (self.parent.slug, self.slug)
+        else:
+            url = "/%s/" % (self.slug)
+            
+        return url 
        
 # signals to connect to receipt of PayPal IPNs
 
@@ -311,10 +284,8 @@ def show_me_the_money(sender, **kwargs):
     # create and send an email to the customer
     recipient = order.owner.email
     body = render_to_string('shop/emails/order_confirm_customer.txt', {
-    	        'first_name': order.owner.first_name, 
-    	        'invoice_id': order.invoice_id, 
-    	        'order_items': order.items.all(), 
-    	        'order_status': order.status})
+    	        'order': order
+    	        })
     subject_line = "Order confirmed - Pro-Advanced.com" 
     email_sender = settings.SITE_EMAIL
       
@@ -329,11 +300,9 @@ def show_me_the_money(sender, **kwargs):
      # create and send an email to admin
     recipient = settings.SITE_EMAIL
     body = render_to_string('shop/emails/order_confirm_admin.txt', {
-    	        'email': order.owner.email, 
-    	        'invoice_id': order.invoice_id, 
-    	        'order_items': order.items.all(), 
-    	        'order_status': order.status})
-    subject_line = "NEW ORDER - %s" % invoice_id      
+    	        'order': order, 
+    	        })
+    subject_line = "NEW ORDER - %s" % order.invoice_id      
     email_sender = settings.SITE_EMAIL
       
     send_mail(

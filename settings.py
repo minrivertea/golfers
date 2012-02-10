@@ -24,13 +24,7 @@ DATABASE_PORT = ''             # Set to empty string for default. Not used with 
 
 TIME_ZONE = 'Europe/London'
 
-LANGUAGE_CODE = 'en'
-
 SITE_ID = 1
-
-# If you set this to False, Django will make some optimizations so as not
-# to load the internationalization machinery.
-USE_I18N = False
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -58,6 +52,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.debug',
     'django.core.context_processors.request',
+    'django.core.context_processors.i18n',
     'golfers.shop.context_processors.get_basket',
     'golfers.shop.context_processors.get_basket_quantity',
     'golfers.shop.context_processors.common',
@@ -67,6 +62,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 #    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
@@ -96,6 +92,8 @@ INSTALLED_APPS = (
     'paypal.standard.ipn',
     'tinymce',
     'blog',
+    'modeltranslation',
+    'rosetta',
 )
 
 # Random app information for different things
@@ -107,6 +105,24 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 PAYPAL_IDENTITY_TOKEN = ""
 PAYPAL_RECEIVER_EMAIL = ""
+
+# language stuff
+USE_I18N = True
+USE_L10N = True
+gettext = lambda s: s
+LANGUAGE_CODE = 'en'
+LANGUAGES = (
+    ('en', gettext('English')),
+    ('fr', gettext('French')),
+    ('de', gettext('German')),
+)
+
+LOCALE_PATHS = (
+    os.path.join(PROJECT_PATH, "locale")
+)
+
+MODELTRANSLATION_TRANSLATION_REGISTRY = "translation"
+
 
 GA_IS_ON = True
 

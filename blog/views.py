@@ -1,6 +1,7 @@
 from golfers.blog.models import BlogEntry
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 
 #render shortcut
 def render(request, template, context_dict=None, **kwargs):
@@ -35,6 +36,9 @@ def even_more(request):
     
 def blog_entry(request, slug):
     entry = get_object_or_404(BlogEntry, slug=slug)
+    if entry.is_draft and not request.user.is_superuser:
+        raise Http404
+        
     others = BlogEntry.objects.all().order_by('?')[:2]
     return render(request, "blog/entry.html", locals())
   

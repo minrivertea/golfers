@@ -5,10 +5,11 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from django.template import RequestContext
 from paypal.standard.forms import PayPalPaymentsForm
-from django.http import HttpResponseRedirect 
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.utils import simplejson
+from django.db.models import Q
 
 import urllib
 import urllib2
@@ -38,6 +39,57 @@ def render(request, template, context_dict=None, **kwargs):
                               **kwargs
     )
 
+def changelang(request, code):
+    from django.utils.translation import check_for_language, activate, to_locale, get_language
+    next = request.REQUEST.get('next', None)
+    if not next:
+        next = request.META.get('HTTP_REFERER', None)
+    if not next:
+        next = '/'
+    response = HttpResponseRedirect(next)
+    lang_code = code
+    if lang_code and check_for_language(lang_code):
+        if hasattr(request, 'session'):
+            request.session['django_language'] = lang_code
+        else:
+            response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
+    return response
+
+
+def _get_currency(request):
+    try:
+        code = request.session['CURRENCY']
+        currency = get_object_or_404(Currency, code=code)
+    except:
+        currency = get_object_or_404(Currency, code='USD')
+    return currency
+
+
+def change_currency(request):
+    try:
+        currency = get_object_or_404(Currency, code=request.GET.get('curr'))
+        request.session['CURRENCY'] = currency.code
+    except:
+        currency = get_object_or_404(Currency, code='USD')
+        request.session['CURRENCY'] = currency.code
+    
+    # if they have a basket already, we need to change the unique products around
+    try:
+        basket = get_object_or_404(Basket, id=request.session['BASKET_ID'])
+        for item in BasketItem.objects.filter(basket=basket):
+            print "%s" % item
+            newup = get_object_or_404(UniqueProduct,
+                is_active=True, 
+                parent_product=item.item.parent_product,
+                currency=currency)
+            item.item = newup
+            item.save()
+            
+    except:
+        pass  
+    
+    url = request.META.get('HTTP_REFERER','/')
+    return HttpResponseRedirect(url)
 
 def GetCountry(request):
     # this is coming from http://ipinfodb.com JSON api
@@ -67,10 +119,6 @@ def index(request):
         pass
         
     featured = Product.objects.filter(is_featured=True) 
-#    prices = UniqueProduct.objects.all()
-#    products_and_prices = []
-#    for product in featured:
-#        products_and_prices.append((product, prices.filter(parent_product=product)))
     return render(request, "shop/home.html", locals())
 
 
@@ -82,21 +130,20 @@ def page(request, slug, sub_page=None):
     except:
         pass 
         
-    if sub_page:
-        page = get_object_or_404(Page, slug=sub_page)
-    else:
-        page = get_object_or_404(Page, slug=slug)
+    template = "shop/page.html"
     
+    page = get_object_or_404(Page, slug=slug)
+        
     if page.template:
-        return render(request, page.template, locals())
-    else:
-        return render(request, "shop/page.html", locals())    
+        template = page.template
+    
+    return render(request, template, locals())   
     
 
 def products(request):            
 
     products = Product.objects.filter()
-    prices = UniqueProduct.objects.all()
+    prices = UniqueProduct.objects.filter(currency=_get_currency(request))
     products_and_prices = []
     for product in products:
         products_and_prices.append((product, prices.filter(parent_product=product)))
@@ -117,7 +164,7 @@ def product_view(request, slug):
     
     product = get_object_or_404(Product, slug=slug)
     reviews = Review.objects.filter(is_published=True, product=product)
-    prices = UniqueProduct.objects.filter(parent_product=product)
+    prices = UniqueProduct.objects.filter(parent_product=product, currency=_get_currency(request))
     others = Product.objects.filter(category="GOL").exclude(id=product.id)
         
     return render(request, "shop/product_view.html", locals())
@@ -379,6 +426,7 @@ def order_check_details(request):
                 town_city = form.cleaned_data['town_city'],
                 state = form.cleaned_data['state'],
                 postcode = form.cleaned_data['postcode'],
+                country = form.cleaned_data['country'],
             )
             
             # create an order object
@@ -437,19 +485,8 @@ def order_confirm(request):
         
     order_items = BasketItem.objects.filter(basket=basket)
     
-    # check for a shipping preference cookie
-    try:
-        cookie = request.session['SHIPPING']
-    except:
-        cookie = None
-        
-    if cookie == "high":
-        total_price = float(settings.SHIPPING_PRICE_HIGH)
-        
-    else:
-        total_price = float(settings.SHIPPING_PRICE_LOW)
+    total_price = 0
     
-    shipping_price = total_price
     for item in order_items:
         price = float(item.quantity * item.item.price)
         if order.discount:
