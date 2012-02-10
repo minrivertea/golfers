@@ -13,11 +13,11 @@ def common(request):
     context['ga_is_on'] = settings.GA_IS_ON
     context['shipping_price_low'] = settings.SHIPPING_PRICE_LOW
     context['shipping_price_high'] = settings.SHIPPING_PRICE_HIGH
-    #try:
-    #    code = request.session['CURRENCY']
-    #    context['currency'] = Currency.objects.get(code=code)
-    #except:
-    #    context['currency'] = Currency.objects.get(code='USD')
+    try:
+        code = request.session['CURRENCY']
+        context['currency'] = Currency.objects.get(code=code)
+    except:
+        context['currency'] = Currency.objects.get(code='USD')
         
     try:
         s = ShopSettings.objects.all()
