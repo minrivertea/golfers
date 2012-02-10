@@ -7,6 +7,8 @@ from shop.models import Product, Page
 from shop.views import page, changelang
 from blog.models import BlogEntry
 
+from datetime import datetime
+
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -18,7 +20,7 @@ products = {
 }
 
 blogs = {
-    'queryset': BlogEntry.objects.filter(is_draft=False),	
+    'queryset': BlogEntry.objects.filter(is_draft=False, date_added__lte=datetime.now()),	
 }
 
 pages = {
