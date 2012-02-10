@@ -114,7 +114,6 @@ LANGUAGE_CODE = 'en'
 LANGUAGES = (
     ('en', gettext('English')),
     ('fr', gettext('French')),
-    ('de', gettext('German')),
 )
 
 LOCALE_PATHS = (
