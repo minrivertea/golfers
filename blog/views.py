@@ -3,6 +3,8 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 
+from datetime import datetime
+
 #render shortcut
 def render(request, template, context_dict=None, **kwargs):
     return render_to_response(
@@ -11,7 +13,7 @@ def render(request, template, context_dict=None, **kwargs):
     )
 
 def index(request):
-    entries = BlogEntry.objects.filter(is_draft=False).order_by('-date_added')[:10]                         
+    entries = BlogEntry.objects.filter(is_draft=False, date_added__lte=datetime.now()).order_by('-date_added')[:10]                         
     return render(request, "blog/home.html", locals())
     
 def more(request):
