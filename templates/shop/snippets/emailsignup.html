@@ -1,7 +1,7 @@
 
 <form action="{% url email_signup %}" type="post" id="email-signup">
 <p>Signup to receive regular emails from ProAdvanced &raquo;</p>
-<input type="text" name="email" id="id_email" value=""/>
+<input type="text" name="email" id="id_email" value="Your email address" onfocus="if(this.value == 'Your email address') { this.value = ''; }"/>
 <input type="submit" value="Signup!" class="button"/>
 <img id="loading" src="/images/loading.gif"/>
 </form>

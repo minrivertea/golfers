@@ -98,7 +98,7 @@
 {% block extrajs %}{% endblock %}
 
 <script type="text/javascript">
-function emailSignupSubmit() {
+	function emailSignupSubmit() {
 		    $('#email-signup').css('opacity', '0.5');
 		    $('#loading').toggle();
 		    $.ajax({  
@@ -114,6 +114,14 @@ function emailSignupSubmit() {
     		}); 
 			return false;	
 		}
+		
+	function clearInput(elem) {
+    		if (elem.value && elem.defaultValue == elem.value) {
+        	elem.value = new String();
+    		}
+
+    		elem.style.color = 'black';
+		};
 
 $(document).ready( function() {
 	$('#email-signup').bind('submit', emailSignupSubmit);
