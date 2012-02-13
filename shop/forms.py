@@ -67,3 +67,6 @@ class ShippingOptions(forms.Form):
 
 class DiscountForm(forms.Form):
     discount_code = forms.CharField(required=True)
+    
+class EmailSignupForm(forms.Form):
+    email = forms.CharField(required=True)

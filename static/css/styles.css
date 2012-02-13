@@ -35,6 +35,49 @@ a:hover, a:active {
   color: #ffaeae;
 }
 
+
+.button {
+
+	background-color: #f1f1f1;
+    /* Firefox 3.6+ */ 
+    background: -moz-linear-gradient(100% 100% 90deg, #e6e6e6, #f1f1f1); 
+    
+    /* Safari 4-5, Chrome 1-9 */ /* -webkit-gradient(<type>, <point> [, <radius>]?, <point> [, <radius>]? [, <stop>]*) */ 
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f1f1f1), to(#e6e6e6)); 
+    
+    /* Safari 5.1+, Chrome 10+ */ 
+    background: -webkit-linear-gradient(#f1f1f1, #e6e6e6); 
+    
+    /* Opera 11.10+ */ 
+    background: -o-linear-gradient(#e6e6e6, #f1f1f1);   
+    
+    border: 1px solid #fff;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: Helvetica, Arial, sans-serif;
+    padding: 10px 15px;
+    text-shadow: 0 1px 1px #fff;
+    text-align: center;
+    cursor: pointer;
+    color: #af2020;
+}
+
+.button:hover {
+  box-shadow: 0 0px 3px #e1e1e1;	
+  border: 1px solid #999;
+}
+
+input.button {
+  color: #af2020;
+  height: auto;	
+  font-family: Helvetica, sans-serif;
+  font-size: 15px;
+}
+
+input.button:hover {
+  color: #F37679;	
+}
+
 div#container {
   padding: 0px 0px 0px 0px;
   width: 960px;
@@ -306,7 +349,7 @@ nav ul li {
     display: block;
     font-weight: bold;
     height: auto;
-    padding: 12px 17px;
+    padding: 10px 13px;
     text-decoration: none;
     text-transform: uppercase;
     text-shadow: 0.5px 0.5px white;
@@ -330,9 +373,8 @@ a.contact:hover {
 div#feature {
     background: none repeat scroll 0 0 #fff;
     border: 8px solid #FFFFFF;
-    border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 0px 0px;
     float: left;
-    width:890px;
     padding: 20px 30px;
 }
 
@@ -558,4 +600,44 @@ div#footer ul li a:link, div#footer ul li a:visited {
 .checkout-button input:hover {
   cursor: pointer;
   color: #ffaeae;	
+}
+
+#email-signup {
+  padding: 15px 30px 15px;
+  background-color: #f6f6f6;
+  float: left;
+  width: 900px;
+  margin-bottom: 30px;
+  border-top: 1px solid #e1e1e1;	
+}
+
+#email-signup #loading {
+  display: none;	
+} 
+
+#email-signup input {
+  float: left;	
+  width: 250px;
+  border: none;
+  border: 1px solid #e1e1e1;
+  padding: 8px 10px;
+  font-size: 15px;
+  font-family: Helvetica, sans-serif;
+  position: relative;
+  top: -3px;
+}
+
+#email-signup input.button {
+  width: 100px;	
+  padding: 8px 6px 6px;
+  border-left: none;
+}
+
+#email-signup p {
+  margin: 0 15px 5px 0;
+  font-size: 18px;
+  color: #AF2020;
+  font-weight: bold;
+  float: left;
+  text-shadow: 1px 1px 0 #fff;	
 }

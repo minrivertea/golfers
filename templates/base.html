@@ -29,8 +29,13 @@
     	
 	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
 	<link href="https://plus.google.com/102021322550266637657" rel="publisher" />
+		    {% if ga_is_on %}
+	    <script src="http://cdn.jquerytools.org/1.2.5/full/jquery.tools.min.js"></script>
+	    {% else %}
+	    <script src="/js/jquery.tools.min.js"></script>
+	    {% endif %}
 {% block extracss %}{% endblock %}
-{% block extrajs %}{% endblock %}
+
  
     
 {% block ga %}
@@ -84,12 +89,38 @@
 	
 	    {% block content %}{% endblock %}
 	<br clear="all"/>
+	{% include 'shop/snippets/emailsignup.html' %}
     {% include 'shop/snippets/footer.html' %}
    
 	</div>
 	</div>
-	
 
+{% block extrajs %}{% endblock %}
+
+<script type="text/javascript">
+function emailSignupSubmit() {
+		    $('#email-signup').css('opacity', '0.5');
+		    $('#loading').toggle();
+		    $.ajax({  
+	    	    type: "POST",  
+	    	    data: $('#email-signup').serialize(), 
+	    	    url: "{% url email_signup %}",  
+	    	    cache: false,  
+	   		    dataType: "html",  
+	    	    success: function(data, textStatus) {
+	    	    	$('form#email-signup').replaceWith(data);
+	    	    	$('#loading').toggle();
+	    	    }
+    		}); 
+			return false;	
+		}
+
+$(document).ready( function() {
+	$('#email-signup').bind('submit', emailSignupSubmit);
+});
+
+
+</script>
 
 
 </body>

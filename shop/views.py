@@ -19,6 +19,8 @@ from PIL import Image
 from cStringIO import StringIO
 import os, md5
 import datetime
+import uuid
+
 
 from golfers.shop.models import *
 from golfers.shop.forms import *
@@ -663,18 +665,30 @@ def tell_a_friend(request, slug):
     return render(request, 'forms/tell_a_friend.html', locals())
 
 
-def admin_stuff(request):
-    if not request.user.is_superuser:
-        return HttpResponseRedirect("/")
+def email_signup(request):
+    if request.method == 'POST':
+        form = EmailSignupForm(request.POST)
+        if form.is_valid():
+            try:
+                existing_signup = get_object_or_404(EmailSignup, email=form.cleaned_data['email'])
+                message = "<div id='email-signup'><p><strong>Looks like you're already signed up!</strong> You don't need to do anything else, and you'll receive regular ProAdvanced emails as normal.</p></div>"
+            except:
+                new_signup = EmailSignup.objects.create(
+                    email = form.cleaned_data['email'],
+                    date_signed_up = datetime.now(),
+                    hashkey = uuid.uuid1().hex,
+                )
+                new_signup.save()
+                message = "<div id='email-signup'><p><strong>Great!</strong> You'll now receive regular updates from ProAdvanced - unsubscribe any time by clicking the link in the email.</p></div>"
+            
+            if request.is_ajax():
+                return HttpResponse(message)
+            
+            else:
+                return render(request, 'shop/emails/signup_confirmed.html', locals())
+                    
+    else:
+        form = EmailSignupForm()
     
-    products = Product.objects.all()
-    orders = Order.objects.all().order_by('-date_confirmed') 
-    paid_orders = []    
-    not_paid_orders = []
-    for order in orders:
-        if order.is_paid == False:
-            not_paid_orders.append((order, order.items.all()))
-        else:
-            paid_orders.append((order, order.items.all()))  
-    
-    return render(request, "admin_stuff.html", locals())
+    url = request.META.get('HTTP_REFERER','/')
+    return HttpResponseRedirect(url)

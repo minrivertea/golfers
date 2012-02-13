@@ -267,7 +267,18 @@ class Page(models.Model):
             url = "/%s/" % (self.slug)
             
         return url 
-       
+
+
+class EmailSignup(models.Model):
+    email = models.EmailField()
+    date_signed_up = models.DateField()
+    date_unsubscribed = models.DateField(blank=True, null=True)
+    hashkey = models.CharField(max_length=256, blank=True, null=True)
+    
+    def __unicode__(self):
+        return self.email
+
+      
 # signals to connect to receipt of PayPal IPNs
 
 def show_me_the_money(sender, **kwargs):

@@ -7,7 +7,6 @@ import shipwire
 urlpatterns = patterns('',
 
     url(r'^$', views.index, name="home"),
-    url(r'^admin-stuff/$', views.admin_stuff, name="admin_stuff"),
     url(r'^contact-us/submit/$', views.contact_us_submit, name="contact_us_submit"),  
     url(r'^golf-nets/$', views.products, name="products"),
     url(r'^testimonials/$', views.testimonials, name="testimonials"),
@@ -25,5 +24,6 @@ urlpatterns = patterns('',
     url(r'^tell-a-friend/(?P<slug>[\w-]+)/$', views.tell_a_friend, name="tell_a_friend"),
     url(r'^currency/$', views.change_currency, name="change_currency"),
     url(r'^calculate_shipping/(\w+)$', shipwire.calculate_shipping, name="calculate_shipping"),
+    url(r'^email_signup/$', views.email_signup, name="email_signup"),
 )
 

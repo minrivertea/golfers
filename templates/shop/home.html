@@ -56,6 +56,10 @@ div.right {
   margin-right: 30px;	
 }
 
+div.box.last {
+  margin-right: 0;	
+}
+
 .reviews .box p {
   font-size: 13px;	
 }
@@ -92,6 +96,12 @@ p.quote strong {
   font-size: 13px;	
 }
 
+div.paypal {
+  background-color: #fff; 
+  float: left; 
+  margin-bottom: 80px;
+  width: 250px;	
+}
 
 
 </style>
@@ -121,15 +131,20 @@ p.quote strong {
 		</div>
 		
 		<div class="reviews">
-			<h3>{% trans 'Testimonials from our happy customers' %} <span><a href="{% url testimonials %}">- {% trans 'see more testimonials' %}</a></span></h3>
+			<h3>{% trans 'Testimonials from Golfers' %} <span><a href="{% url testimonials %}">- {% trans 'see more testimonials' %}</a></span></h3>
 			{% for r in reviews %}
-			<div class="box">
+			<div class="box {% if forloop.last %}last{% endif %}">
 			  <p><em>{{ r.text|safe }}</em><br/><strong>{{ r.owner }}</strong></p>
 			</div>
 			
 			{% endfor %}
-			<div class="paypal" style="background-color: #fff;padding: 0 10px 10px; float: left; margin-bottom: 80px;"><img src="/images/paypal-icon.png"></div>
+			<div class="paypal">
+				
+				<img src="/images/paypal-icon.png">
+			</div>
 		</div>
+		
+		
 	</div>
 </div>
 	
