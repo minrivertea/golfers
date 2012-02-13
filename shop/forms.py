@@ -70,3 +70,7 @@ class DiscountForm(forms.Form):
     
 class EmailSignupForm(forms.Form):
     email = forms.CharField(required=True)
+    
+class NotifyForm(forms.Form):
+    email = forms.CharField(required=True)
+    

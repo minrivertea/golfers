@@ -2,15 +2,40 @@
 {% load thumbnail i18n %}
 
 {% block extrajs %}
-<script type="text/javascript" src="/js/prototype.js"></script>
-<script type="text/javascript" src="/js/scriptaculous.js?load=effects,builder"></script>
-<script type="text/javascript" src="/js/lightbox.js"></script>
+<script type="text/javascript" src="/js/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+<script type="text/javascript">
+
+$('#notify-form').submit(function() {
+		    $('#notify-form').css('opacity', '0.5');
+		    $('#loading').toggle();
+		    $.ajax({  
+	    	    type: "POST",  
+	    	    data: $('#notify-form').serialize(), 
+	    	    url: "{% url notify_signup product.slug %}",  
+	    	    cache: false,  
+	   		    dataType: "html",  
+	    	    success: function(data, textStatus) {
+	    	    	$('form#notify-form').replaceWith(data);
+	    	    	$('#loading').toggle();
+	    	    }
+    		}); 
+			return false;	
+		});
+
+$(document).ready(function() {
+
+	/* Apply fancybox to multiple items */
+	$("a.group").fancybox({});
+	
+});
+
+</script>
 {% endblock %}
 
 {% block metadescription %}{% if product.meta_description %}{{ product.meta_description }}{% else %}{{ product.long_description }}{% endif %}{% endblock %}
 
 {% block extracss %}
-<link rel="stylesheet" href="/css/lightbox.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/css/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />
 <style type="text/css">
   #top {
     width: 100%;
@@ -105,6 +130,46 @@
   .product_photos_small {
     margin-bottom: 20px;	
   }
+
+#notify-form {
+  float: left;
+  width: 320px;
+  background-color: #f6f6f6;
+  padding: 10px 15px 15px;
+  margin: 0 0 20px 0;	
+}  
+
+#top #topright #notify-form p {
+  margin: 0 0 5px 0;	
+  float: left;
+  width: 100%;
+}
+
+#notify-form input {
+  border: none;
+  font-family: Helvetica, sans-serif;
+  font-size: 16px;
+  padding: 7px 8px;
+  border: 1px solid #e1e1e1;
+  float: left;
+  width: 220px;
+}
+
+#notify-form input.button {
+  border-left: none;
+  font-size: 14px;	
+  width: 80px;
+}
+
+#notify-form #loading {
+  display: none;	
+}
+
+#notify-form .message {
+  font-weight: bold;
+  color: #BD1B30;	
+}
+
 </style>
 {% endblock %}
 
@@ -131,44 +196,58 @@
 		
 		<div id="topright">
 			{{ product.long_description|safe }}
+			
+			
+			{% if not prices %}
+				<form action="{% url notify_signup product.slug %}" type="post" id="notify-form">
+					<p>Sorry, this product is not in stock now - would you like to be emailed when it is?</p>
+					<input type="text" name="email" id="id_email"/>
+					<input type="submit" class="button" value="Submit"/>
+					<img src="/images/loading.gif" id="loading"/>
+				</form>
+			{% endif %}
+			
+			
 			<div class="product-photos-small">	
 			{% if product.image_2 %}
-				<a href="{% thumbnail product.image_2 550x550 %}" rel="lightbox[tea]" title="{{ product.image_2_caption }}">
-				<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image_2 80x80 %}"/>
+				<a class="group" href="{% thumbnail product.image_2 550x550 %}" rel="group1" title="{{ product.image_2_caption }}">
+					<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image_2 80x80 %}"/>
 				</a>
 			{% endif %}
+			
 			{% if product.image_3 %}
-				<a href="{% thumbnail product.image_3 550x550 %}" rel="lightbox[tea]" title="{{ product.image_3_caption }}">
+				<a class="group"  href="{% thumbnail product.image_3 550x550 %}" rel="group1" title="{{ product.image_3_caption }}">
 				<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image_3 80x80 %}"/>
 				</a>
 			{% endif %}
 			{% if product.image_4 %}
-				<a href="{% thumbnail product.image_4 550x550 %}" rel="lightbox[tea]" title="{{ product.image_4_caption }}">
+				<a class="group" href="{% thumbnail product.image_4 550x550 %}" rel="group1" title="{{ product.image_4_caption }}">
 				<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image_4 80x80 %}"/>
 				</a>
 			{% endif %}
 			{% if product.image_5 %}
-				<a href="{% thumbnail product.image_5 550x550 %}" rel="lightbox[tea]" title="{{ product.image_5_caption }}">
+				<a class="group"  href="{% thumbnail product.image_5 550x550 %}" rel="group1" title="{{ product.image_5_caption }}">
 				<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image_5 80x80 %}"/>
 				</a>
 			{% endif %}
 			</div>	
 			
 			
-			{% for price in prices %}
-				<div class="prices">
-					<div class="price">
-						{{ price.currency.symbol }}{{ price.price }} 
-						{% if price.original_price %}
-							<span class="strikethrough">{{ price.currency.symbol }}{{ price.original_price }}</span>
-						{% endif %}
+			{% if prices %}
+				{% for price in prices %}
+					<div class="prices">
+						<div class="price">
+							{{ price.currency.symbol }}{{ price.price }} 
+							{% if price.original_price %}
+								<span class="strikethrough">{{ price.currency.symbol }}{{ price.original_price }}</span>
+							{% endif %}
+						</div>
+						<div class="button">
+							<a href="{% url add_to_basket price.id %}">Add to basket</a>
+						</div>
 					</div>
-					<div class="button">
-						<a href="{% url add_to_basket price.id %}">Add to basket</a>
-					</div>
-				</div>
-			{% endfor %}
-				
+				{% endfor %}			
+			{% endif %}				
 			
 		
 		</div>		

@@ -168,7 +168,9 @@ def product_view(request, slug):
     reviews = Review.objects.filter(is_published=True, product=product)
     prices = UniqueProduct.objects.filter(parent_product=product, currency=_get_currency(request))
     others = Product.objects.filter(category="GOL").exclude(id=product.id)
-        
+    
+    notifyform = NotifyForm()
+     
     return render(request, "shop/product_view.html", locals())
     
 def testimonials(request):
@@ -692,3 +694,28 @@ def email_signup(request):
     
     url = request.META.get('HTTP_REFERER','/')
     return HttpResponseRedirect(url)
+    
+def notify_signup(request, slug):
+    product = get_object_or_404(Product, slug=slug)
+    if request.method == 'POST':
+        form = NotifyForm(request.POST)
+        if form.is_valid():
+            new_notify = Notify.objects.create(
+                email = form.cleaned_data['email'],
+                product = product, 
+                date = datetime.now(),
+            )
+            new_notify.save()
+            message = "<div id='notify-form'><span class='message'>Great! We'll notify you by email when this product is available again.</span></div>"
+            
+        if request.is_ajax():
+            return HttpResponse(message)
+        
+        else:
+            url = reverse('product_view', args=[product.slug])
+    
+    url = request.META.get('HTTP_REFERER','/')
+    return HttpResponseRedirect(url) 
+            
+            
+            

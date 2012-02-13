@@ -25,5 +25,6 @@ urlpatterns = patterns('',
     url(r'^currency/$', views.change_currency, name="change_currency"),
     url(r'^calculate_shipping/(\w+)$', shipwire.calculate_shipping, name="calculate_shipping"),
     url(r'^email_signup/$', views.email_signup, name="email_signup"),
+    url(r'^notify_signup/(?P<slug>[\w-]+)/$', views.notify_signup, name="notify_signup"),
 )
 
