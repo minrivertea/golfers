@@ -33,6 +33,7 @@ class PageAdmin(TranslationAdmin):
             'screen': ('/modeltranslation/css/tabbed_translation_fields.css',),
         }
 
+admin.site.register(Notify)
 admin.site.register(EmailSignup)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Review)
