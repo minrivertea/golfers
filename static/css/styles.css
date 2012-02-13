@@ -248,9 +248,10 @@ div#header {
 }
 
 #language {
-  width: auto;
-  float: right;
-  margin: 20px 20px 5px 0;	
+    float: right;
+    margin: 10px 30px;
+    text-align: right;
+    width: 900px;
 }
 
 #language a {
@@ -372,10 +373,10 @@ a.contact:hover {
 
 div#feature {
     background: none repeat scroll 0 0 #fff;
-    border: 8px solid #FFFFFF;
     border-radius: 10px 10px 0px 0px;
     float: left;
     padding: 20px 30px;
+    width: 900px;
 }
 
 div#feature h3 {	
