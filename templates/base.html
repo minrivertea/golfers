@@ -69,30 +69,30 @@
 	    	        <li><a href="/custom/" title="" alt="">{% trans 'Custom' %}</a></li>
 	    	        <li><a href="/contact-us/" title="" alt="">{% trans 'Contact Us' %}</a></li>
 	  			</ul>
-			</div>
+			   </div>
 			
-			<div id="logo">
-				<a title="ProAdvanced Sports Goods" alt="the ProAdvanced logo" href="/">
-					<h1><span>ProAdvanced</span></h1>
-				</a>
-			</div>
-
+				<div id="logo">
+					<a title="ProAdvanced Sports Goods" alt="the ProAdvanced logo" href="/">
+						<h1><span>ProAdvanced</span></h1>
+					</a>
+				</div>
 					
       	</div>
+    </div>
 
-	<div id="container">
-		<div id="language">
-			{% get_current_language as LANGUAGE_CODE %}
-			<a href="{% url changelang 'fr' %}" class="{% if LANGUAGE_CODE == 'fr' %}selected{% endif %}">{% trans 'French' %}</a>
-			<a href="{% url changelang 'en' %}" class="{% if LANGUAGE_CODE == 'en' %}selected{% endif %}">{% trans 'English' %}</a>
-		</div>	    
-	
-	    {% block content %}{% endblock %}
-	<br clear="all"/>
-	{% include 'shop/snippets/emailsignup.html' %}
-    {% include 'shop/snippets/footer.html' %}
+		<div id="container">
+			<div id="language">
+				{% get_current_language as LANGUAGE_CODE %}
+				<a href="{% url changelang 'fr' %}" class="{% if LANGUAGE_CODE == 'fr' %}selected{% endif %}">{% trans 'French' %}</a>
+				<a href="{% url changelang 'en' %}" class="{% if LANGUAGE_CODE == 'en' %}selected{% endif %}">{% trans 'English' %}</a>
+			</div>	    
+		
+		    {% block content %}{% endblock %}
+			{% include 'shop/snippets/emailsignup.html' %}
+		
+    		{% include 'shop/snippets/footer.html' %}
    
-	</div>
+		</div>
 	</div>
 
 {% block extrajs %}{% endblock %}
