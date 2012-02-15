@@ -200,7 +200,7 @@ $(document).ready(function() {
 			
 			{% if not prices %}
 				<form action="{% url notify_signup product.slug %}" type="post" id="notify-form">
-					<p>Sorry, this product is not in stock now - would you like to be emailed when it is?</p>
+					<p>{% trans 'Sorry, this product is not in stock now - would you like to be emailed when it is?' %}</p>
 					<input type="text" name="email" id="id_email"/>
 					<input type="submit" class="button" value="Submit"/>
 					<img src="/images/loading.gif" id="loading"/>

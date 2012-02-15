@@ -155,6 +155,13 @@ def products(request):
 
 def product_view(request, slug):
     try:
+        product = get_object_or_404(Product, slug=slug)
+    except:
+        product = get_object_or_404(Product, slug_fr=slug)
+        
+    
+    
+    try:
         added = request.session['ADDED']
     except:
         added = None
@@ -164,7 +171,7 @@ def product_view(request, slug):
         request.session['ADDED'] = None
     
     
-    product = get_object_or_404(Product, slug=slug)
+    
     reviews = Review.objects.filter(is_published=True, product=product)
     prices = UniqueProduct.objects.filter(parent_product=product, currency=_get_currency(request))
     others = Product.objects.filter(category="GOL").exclude(id=product.id)
