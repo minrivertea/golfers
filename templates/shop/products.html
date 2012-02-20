@@ -18,11 +18,11 @@ span.strikethrough {
 
 {% block content %}
 
-	<div id="feature">
+<div id="feature">
+
 	<h1>{% trans 'Our golf nets' %}</h1>
 
-
-		{% for product, prices in products_and_prices %}
+	{% for product, prices in products_and_prices %}
 	     <div class="{% cycle 'product-promo first' 'product-promo' 'product-promo last' %}">
             <a href="{% url product_view product.slug %}">
             	<img class="product-promo" src="{% thumbnail product.image 210x153 crop %}" alt="{{ product.description }}" title="{{ product.description }}"/>
@@ -32,6 +32,7 @@ span.strikethrough {
       			<a href="{% url product_view product.slug %}" 
       			title="{{ product.name }} - {{ product.description }}">{{ product.name }}</a>
       		</h3>
+    
       		{% for price in prices %}  	
         		{% if forloop.first %}
         			<div class="price">
@@ -43,16 +44,9 @@ span.strikethrough {
 		        {% else %}
     		    {% endif %}
         	{% endfor %}
-	      	<p>{{ product.short_description|safe }}</p>
-
-
-
-	  </div>
-      
-{% endfor %}
-
-
-  </div>
+	      	<p>{{ product.short_description|safe }}</p> 
+		</div>          
+	{% endfor %}
 
 </div>
 {% endblock %}
