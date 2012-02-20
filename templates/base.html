@@ -115,13 +115,32 @@
 			return false;	
 		}
 		
-	function clearInput(elem) {
-    		if (elem.value && elem.defaultValue == elem.value) {
-        	elem.value = new String();
-    		}
-
-    		elem.style.color = 'black';
-		};
+	// clear input on focus
+			var clearMePrevious = '';
+			$('.clearMeFocus').each( function() {
+				if ($(this).val() == '') {
+				    var title = $(this).attr('title');
+				    $(this).val(title);
+				}
+			});
+			$('.clearMeFocus').focus(function()
+			{
+				if($(this).val()==$(this).attr('title'))
+				{
+					clearMePrevious = $(this).val();
+					$(this).val('');
+					$(this).css('color', '#333');
+				}
+			});
+			// if field is empty afterward, add text again
+			$('.clearMeFocus').blur(function()
+			{
+				if($(this).val()=='')
+				{
+					$(this).val(clearMePrevious);
+					$(this).css('color', '#999');
+				}
+			});
 
 $(document).ready( function() {
 	$('#email-signup').bind('submit', emailSignupSubmit);

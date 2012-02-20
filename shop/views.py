@@ -157,9 +157,11 @@ def product_view(request, slug):
     try:
         product = get_object_or_404(Product, slug=slug)
     except:
-        product = get_object_or_404(Product, slug_fr=slug)
-        
-    
+        try:
+            product = get_object_or_404(Product, slug_fr=slug)
+        except:
+            product = get_object_or_404(Product, slug_en=slug)
+
     
     try:
         added = request.session['ADDED']

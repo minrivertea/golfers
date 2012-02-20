@@ -152,13 +152,13 @@ $(document).ready(function() {
   padding: 7px 8px;
   border: 1px solid #e1e1e1;
   float: left;
-  width: 220px;
+  width: 195px;
 }
 
 #notify-form input.button {
   border-left: none;
   font-size: 14px;	
-  width: 80px;
+  width: 105px;
 }
 
 #notify-form #loading {
@@ -201,8 +201,8 @@ $(document).ready(function() {
 			{% if not prices %}
 				<form action="{% url notify_signup product.slug %}" type="post" id="notify-form">
 					<p>{% trans 'Sorry, this product is not in stock now - would you like to be emailed when it is?' %}</p>
-					<input type="text" name="email" id="id_email"/>
-					<input type="submit" class="button" value="Submit"/>
+					<input class="clearMeFocus" type="text" title="Your email address" name="email" id="id_email" value=""/>
+					<input type="submit" class="button" value="Signup now"/>
 					<img src="/images/loading.gif" id="loading"/>
 				</form>
 			{% endif %}
