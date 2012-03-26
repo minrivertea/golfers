@@ -79,7 +79,6 @@ def change_currency(request):
     try:
         basket = get_object_or_404(Basket, id=request.session['BASKET_ID'])
         for item in BasketItem.objects.filter(basket=basket):
-            print "%s" % item
             newup = get_object_or_404(UniqueProduct,
                 is_active=True, 
                 parent_product=item.item.parent_product,
@@ -230,7 +229,6 @@ def contact_us_submit(request):
                           [customer_recipient],
                           fail_silently=False,
             )
-            print "making a cookie"
             request.session['MESSAGE'] = "1"
             return HttpResponseRedirect('/contact-us/') 
     else:
@@ -498,7 +496,7 @@ def order_confirm(request):
         
     order_items = BasketItem.objects.filter(basket=basket)
     
-    total_price = 0
+    total_price = settings.SHIPPING_PRICE_LOW
     
     for item in order_items:
         price = float(item.quantity * item.item.price)

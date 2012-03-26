@@ -169,25 +169,13 @@ div.total span.black a {
 
   <div class="basket-row">
 		<div class="photo"><em>&nbsp;</em></div>
-		<div class="details">{% trans 'Your shipping preference:' %}<br/><img style="float:left;margin-right:10px; position:relative;top:4px;" src="/images/us.png"/>
-			<span style="font-size: 10px; position:relative; top:5px;">{% blocktrans %}We ship within Europe and the UK - for shipping to other countries, please contact us first!{% endblocktrans %}</span></div>
+		<div class="details">
+			<strong>{% trans 'Shipping' %}</strong><br/>
+			<span style="font-size: 14px;">{% trans 'Currently US only' %}</span>
+		</div>
 		<div class="quantity">&nbsp;</div>
 		<div class="total">
-		<form action="" method="post">
-			<ul>
-				<li>
-					<label for="id_shipping_choice_0">
-					<input type="radio" {% ifequal shipping_choice "high" %}checked{% endifequal %} id="id_shipping_choice_0" value="high" name="shipping_choice" /> {% trans 'UPS 1-3 days' %} ({{ currency.symbol }}{{ shipping_price_high|floatformat:2 }})
-					</label>
-				</li>
-				<li>
-					<label for="id_shipping_choice_1">
-					<input type="radio" {% ifnotequal shipping_choice "high" %}checked{% endifnotequal %} id="id_shipping_choice_1" value="low" name="shipping_choice" /> {% trans 'UPS Ground' %} ({{ currency.symbol }}{{ shipping_price_low|floatformat:2 }})
-					</label>
-				</li>
-</ul>
-			<input type="submit" value="{% trans 'Update' %}"/>
-		</form>
+			{{ currency.symbol }}{{ shipping_price_low|floatformat:"2" }}
 		</div>	
   </div>
   

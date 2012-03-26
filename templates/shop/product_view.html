@@ -70,7 +70,7 @@ $(document).ready(function() {
   }
   
   #top .prices {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;	
     margin-top: 20px;
     float: left;
@@ -79,7 +79,7 @@ $(document).ready(function() {
   
   #top .prices .price {
     float: left; 
-    width: 190px;	
+    width: 110px;	
   }
   
   #top .prices .price span.strikethrough {
@@ -93,8 +93,8 @@ $(document).ready(function() {
   }
   
   #top .prices a {
-  	font-size: 16px;
-    padding: 10px 15px;
+  	font-size: 20px;
+    padding: 7px 10px;
     background: -moz-linear-gradient(100% 100% 90deg, #e6e6e6, #f1f1f1); 
     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f1f1f1), to(#e6e6e6)); 
     background: -webkit-linear-gradient(#e6e6e6, #f1f1f1); 
@@ -105,6 +105,12 @@ $(document).ready(function() {
     border-width: 1px;
     box-shadow: 0 1px -1px #666, 0 -1px 0 #666;
     text-shadow: 0 1px 2px #fff;
+  }
+  
+  #top .prices a {
+    float: right;
+    width: 200px;	
+    text-align: center;
   }
   
   #top .prices a:hover {
@@ -236,15 +242,14 @@ $(document).ready(function() {
 			{% if prices %}
 				{% for price in prices %}
 					<div class="prices">
+						<a href="{% url add_to_basket price.id %}">Add to basket</a>
 						<div class="price">
 							{{ price.currency.symbol }}{{ price.price }} 
 							{% if price.original_price %}
 								<span class="strikethrough">{{ price.currency.symbol }}{{ price.original_price }}</span>
 							{% endif %}
 						</div>
-						<div class="button">
-							<a href="{% url add_to_basket price.id %}">Add to basket</a>
-						</div>
+							
 					</div>
 				{% endfor %}			
 			{% endif %}				

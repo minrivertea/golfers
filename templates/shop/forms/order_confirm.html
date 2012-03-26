@@ -4,40 +4,7 @@
 {% block pagetitle %}{% trans 'Order (Step 3 of 4) - Confirm Order' %}{% endblock %}
 
 
-{% block extrajs %}
-<script type="text/javascript">
-
-function calculateShipping() {
-	$.ajax({
-	    url: '{% url calculate_shipping order.id %}',
-	    type: 'GET',
-	    dataType: 'json',
-	    success: function(data) {
-	        $('#quotes').html(data.text);
-	        $('#shipping-price').val(data.cost);
-	        var currentTotal = parseFloat($("#total-cost").text());
-	        var newTotal = parseFloat(currentTotal.toFixed(2)) + parseFloat(data.cost);
-	        $('#total-cost').html(newTotal.toFixed(2));
-	        
-
-	        $('#postage-loading').toggle();
-	    }
-	});
-}
-
-
-$(document).ready( function() {
-	calculateShipping();
-});
-
-
-</script>
-{% endblock %}
-
-
 {% block extracss %}
-<script src="http://cdn.jquerytools.org/1.2.5/full/jquery.tools.min.js"></script>
-
 <style type="text/css">
 
 h1 {
@@ -90,7 +57,7 @@ div.row {
 
 		<input type="hidden" name="item_name_1" value="Shipping"> 
 		<input type="hidden" name="quantity_1" value="1">
-		<input type="hidden" name="amount_1" value="{{ item.cost }}" id="shipping-price">
+		<input type="hidden" name="amount_1" value="{{ shipping_price_low|floatformat:'2' }}" id="shipping-price">
 		 
 		 
 		 {% for thing in basket_items %}
@@ -125,11 +92,11 @@ div.row {
 		  {% endfor %}
 		 
 		  <tr id="quotes">
-		  	<td><em>&nbsp;</em></td>
-		  	<td style="font-size: 12px;"><img style="position: relative; top: 5px; left: -10px;height: 20px; width: 20px;" src="/images/loading.gif" id="postage-loading"/><em>Just checking shipping rates now… please wait</em></td>
-		  	<td>&nbsp;</td>
-		  			  
+		  	<td>{% trans 'Shipping' %}</td>
+		  	<td></td>
+		  	<td>{{ currency.symbol }}{{ shipping_price_low|floatformat:'2' }}</td>	  
 		  </tr>
+		  
 		  <tr>
 		  	<td><strong>{% trans 'TOTAL' %}</strong></td>
 		  	<td>&nbsp;</td>
@@ -140,8 +107,8 @@ div.row {
 	    	</td>		  
 		  </tr>
 		</table>
-		</div>
 	</div>
+</div>
 	
 
 
@@ -178,5 +145,5 @@ div.row {
 
 </div>
 
-</div>
+
 {% endblock %}
