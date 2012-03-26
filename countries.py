@@ -250,7 +250,6 @@ all_countries = [
 ]
 
 # EUROPE, UK and AMERICA
-UNITED_KINGDOM = 'UK'
 UNITED_STATES = 'US'
 INVALID = '--'
 AUSTRIA = 'AT'
@@ -281,8 +280,8 @@ SLOVENIA = 'SI'
 SPAIN = 'ES'
 SWEDEN = 'SE'
 SWITZERLAND = 'CH'
+UNITED_KINGDOM = 'UK'
 COUNTRY_CHOICES = (
-    (UNITED_KINGDOM, u"United Kingdom"),
     (UNITED_STATES, u"USA"),
     (INVALID, u"-----"),
     (AUSTRIA, u"Austria"),
@@ -312,7 +311,8 @@ COUNTRY_CHOICES = (
     (SLOVENIA, u"Slovenia"),
     (SPAIN, u"Spain"),
     (SWEDEN, u"Sweden"),
-    (SWITZERLAND, u"Switzerland"),     
+    (SWITZERLAND, u"Switzerland"),  
+    (UNITED_KINGDOM, u"United Kingdom"),   
 )
 
 
