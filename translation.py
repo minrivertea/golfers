@@ -13,4 +13,5 @@ class PageTranslationOptions(TranslationOptions):
 
 translator.register(Product, ProductTranslationOptions)
 translator.register(Page, PageTranslationOptions)
+translator.register(ShopSettings, ShopSettingsTranslationOptions)
 
