@@ -1,5 +1,5 @@
 from modeltranslation.translator import translator, TranslationOptions
-from shop.models import Product, Page
+from shop.models import Product, Page, ShopSettings
 
 class ShopSettingsTranslationOptions(TranslationOptions):
     field = ('homepage_meta_description', 'homepage_meta_title', 'homepage_benefits_text', 'homepage_video_code')
