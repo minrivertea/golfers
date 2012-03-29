@@ -29,11 +29,10 @@
     	
 	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
 	<link href="https://plus.google.com/102021322550266637657" rel="publisher" />
-		    {% if ga_is_on %}
+	
 	    <script src="http://cdn.jquerytools.org/1.2.5/full/jquery.tools.min.js"></script>
-	    {% else %}
-	    <script src="/js/jquery.tools.min.js"></script>
-	    {% endif %}
+
+	
 {% block extracss %}{% endblock %}
 
  
@@ -144,6 +143,7 @@
 
 $(document).ready( function() {
 	$('#email-signup').bind('submit', emailSignupSubmit);
+
 });
 
 

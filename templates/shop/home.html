@@ -4,6 +4,14 @@
 {% block pagetitle %}{{ shopsettings.homepage_meta_title }}{% endblock %}
 {% block metadescription %}{{ shopsettings.homepage_meta_description }}{% endblock %}
 
+{% block extrajs %}
+<script>
+$(function() {
+$(".scroll").scrollable({ circular: true }).autoscroll({ autoplay: true, interval: 2500 });
+});
+</script>
+{% endblock %}
+
 {% block extracss %}
 <style type="text/css">
 h1 {
@@ -115,6 +123,39 @@ div.paypal {
 }
 
 
+
+/* root element for single scroll */
+	.scroll {
+		position:relative;
+		overflow:hidden;
+		width: 500px;
+		height: 431px;
+		float:left;
+		margin-bottom: 30px;
+	}
+	
+	/* root element for the scroll pics */
+	.scroll .pics {
+		width:20000em;
+		position:absolute;
+		clear:both;
+	}
+	
+	/* single scroll item */
+	.pics div {
+		float:left;
+		cursor:pointer;
+		width:500px !important;
+		height:431px;
+		margin:0px;
+	}
+	
+a.browse {
+  z-index: 20;
+  position: relative;	
+}
+
+
 </style>
 {% endblock %}
 
@@ -129,11 +170,12 @@ div.paypal {
 				{{ product.short_description|safe }}
 				<a class="more" href="{% url product_view product.slug %}">{% trans 'Find out more &raquo;' %} </a>
 				<br/>
+				{% if ga_is_on %}
 				<ul class="social">
 				  <li id="facebook">
 					<div id="fb-root"></div>
 				    <script src="http://connect.facebook.net/en_US/all.js#appId=234100573279411&amp;xfbml=1"></script>
-				    <fb:like href="http://www.pro-advanced.com" send="false" layout="button_count" width="80" show_faces="true" font="">
+				    <fb:like href="http://www.facebook.com/ProAdvancedSports" send="false" layout="button_count" width="80" show_faces="true" font="">
 				    </fb:like>		
 				  </li>
 				  <li id="google">
@@ -145,14 +187,29 @@ div.paypal {
 				    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
 				  })();
 				</script>
-			</li>
+				</li>
 				</ul>
 				<img src="/images/facebook-push.jpg"/>
+				{% endif %}
 
 			</div>
-			<div class="left">
-				<a href="{% url product_view product.slug %}"><img class="main" src="{% thumbnail product.image 500x500 %}"></a>
+			<div class="left">  
+				    
+				<div class="scroll">
+					<div class="pics">
+						<div style="background-image:url({% thumbnail product.image 500x500 %})"></div>
+						<div style="background-image:url(images/home1.jpg)"></div>
+						<div style="background-image:url(/images/home3.jpg)"></div>
+					</div>
+				</div>
+			
+				<button class="prev"></button>
+				<button class="next"></button>
+				<br clear="all"/>
+				       
 			</div>
+			
+			
 		{% endfor %}
 	
 		<div class="video">
