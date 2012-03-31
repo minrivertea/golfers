@@ -57,7 +57,7 @@ div.row {
 
 		<input type="hidden" name="item_name_1" value="Shipping"> 
 		<input type="hidden" name="quantity_1" value="1">
-		<input type="hidden" name="amount_1" value="{{ shipping_price_low|floatformat:'2' }}" id="shipping-price">
+		<input type="hidden" name="amount_1" value="{{ shipping_price|floatformat:'2' }}" id="shipping-price">
 		 
 		 
 		 {% for thing in basket_items %}
@@ -94,7 +94,7 @@ div.row {
 		  <tr id="quotes">
 		  	<td>{% trans 'Shipping' %}</td>
 		  	<td>FEDEX Home Delivery/UPS Ground</td>
-		  	<td>{{ currency.symbol }}{{ shipping_price_low|floatformat:'2' }}</td>	  
+		  	<td>{{ currency.symbol }}{{ shipping_price|floatformat:'2' }}</td>	  
 		  </tr>
 		  
 		  <tr>

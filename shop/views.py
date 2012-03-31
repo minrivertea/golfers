@@ -331,16 +331,6 @@ def basket(request):
     basket = get_object_or_404(Basket, id=request.session['BASKET_ID'])
     basket_items = BasketItem.objects.filter(basket=basket)
     
-    # set the default values for shipping and discount
-    try:
-        if request.session['SHIPPING'] == "high":
-            shipping_price = float(settings.SHIPPING_PRICE_HIGH)
-            shipping_choice = request.session['SHIPPING']
-        else: 
-            shipping_price = float(settings.SHIPPING_PRICE_LOW)
-    except:
-        shipping_price = float(settings.SHIPPING_PRICE_LOW)
-    
     try:
         discount = get_object_or_404(Discount, pk=request.session['DISCOUNT_ID'])
     except:
@@ -374,13 +364,16 @@ def basket(request):
 
     
     # calculate the value of the basket and shipping
-    total_price = shipping_price                         
+    total_price = 0   
+    shipping_price = 0                      
     for item in basket_items:
+        shipping_price += (item.quantity * float(settings.SHIPPING_PRICE_LOW)) # shipping cost is per item
         price = float(item.quantity * item.item.price)
         if discount:
             price = price - (price*float(discount.discount_value))
-        total_price += price   
-
+        total_price += price 
+  
+    total_price += shipping_price
     
     shipping_form = ShippingOptions()
     discount_form = DiscountForm()
@@ -496,13 +489,16 @@ def order_confirm(request):
         
     order_items = BasketItem.objects.filter(basket=basket)
     
-    total_price = settings.SHIPPING_PRICE_LOW
-    
+    total_price = 0
+    shipping_price = 0
     for item in order_items:
+        shipping_price += (item.quantity * float(settings.SHIPPING_PRICE_LOW)) # shipping cost is per item
         price = float(item.quantity * item.item.price)
         if order.discount:
             price = price - (price*float(order.discount.discount_value))
         total_price += price
+    
+    total_price += shipping_price
         
     if request.method == 'POST': 
         form = OrderCheckDetailsForm(request.POST)

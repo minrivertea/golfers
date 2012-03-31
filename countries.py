@@ -315,6 +315,11 @@ COUNTRY_CHOICES = (
     (UNITED_KINGDOM, u"United Kingdom"),   
 )
 
+# AMERICA ONLY
+UNITED_STATES = 'US'
+US_ONLY = (
+    (UNITED_STATES, u"USA"),
+)
 
 # these are the states in America
 US_STATES = (
