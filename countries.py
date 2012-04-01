@@ -1,6 +1,6 @@
 # a big list of all countries just for use if necessary
 
-all_countries = [
+ALL_COUNTRIES = [
 ('INVALID', '--------'),
 ('AF', 'Afghanistan'),
 ('AL', 'Albania'),

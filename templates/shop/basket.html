@@ -161,23 +161,36 @@ div.total span.black a {
 
 	<div class="quantity">{{ thing.quantity }} <a href="{% url increase_quantity thing.item.id %}">+</a>{% ifequal thing.quantity 1 %}{% else %} <a href="{% url reduce_quantity thing.item.id %}">-</a>{% endifequal %} </div>
 	
-	<div class="total">{{ thing.item.currency.symbol }}{{ thing.get_price }}</div>
+	<div class="total">{{ currency.symbol }}{{ thing.get_price }}</div>
 		
   </div>
 {% endfor %}
 
-
-  <div class="basket-row">
-		<div class="photo"><em>&nbsp;</em></div>
-		<div class="details">
-			<strong>{% trans 'Shipping' %}</strong><br/>
-			<span style="font-size: 14px;">{% trans 'USA Only - FEDEX Home Delivery/UPS Ground' %}</span>
-		</div>
-		<div class="quantity">&nbsp;</div>
-		<div class="total">
-			{{ currency.symbol }}{{ shipping_price|floatformat:"2" }}
-		</div>	
-  </div>
+{% if shopsettings.use_shipwire %}
+	  <div class="basket-row">
+			<div class="photo"><em>&nbsp;</em></div>
+			<div class="details">
+				<strong>{% trans 'Shipping' %}</strong><br/>
+				<span style="font-size: 14px;">{% trans "We'll calculate accurate shipping rates after the next step, when we know where to send your products!" %}</span>
+			</div>
+			<div class="quantity">&nbsp;</div>
+			<div class="total">
+				
+			</div>	
+	  </div>
+{% else %}
+	  <div class="basket-row">
+			<div class="photo"><em>&nbsp;</em></div>
+			<div class="details">
+				<strong>{% trans 'Shipping' %}</strong><br/>
+				<span style="font-size: 14px;">{{ shopsettings.get_shipping_country_choices_display }}{% trans ' - FEDEX Home Delivery/UPS Ground' %}</span>
+			</div>
+			<div class="quantity">&nbsp;</div>
+			<div class="total">
+				{{ currency.symbol }}{{ shipping_price|floatformat:"2" }}
+			</div>	
+	  </div>
+{% endif %}
   
 
   <div class="basket-row">

@@ -31,17 +31,24 @@ ORDER_STATUS = (
 
 
 
+COUNTRY_OPTIONS = (
+    (u'US_ONLY', u'USA Only'),
+    (u'COUNTRY_CHOICES', u'US and Europe'),
+    (u'ALL_COUNTRIES', u'Worldwide'),
+)
+
+
+
 class ShopSettings(models.Model):
     homepage_meta_description = models.CharField(max_length=200)
     homepage_meta_title = models.CharField(max_length=200)
     homepage_benefits_text = tinymce_models.HTMLField()
     homepage_video_code = models.TextField(blank=True, null=True)
     ga_script = models.TextField(blank=True, null=True)
-    #use_shipwire = models.BooleanField(default=False, help_text="Check this to use Shipwire automatic shipping rates")
-    #flatrate_shipping_cost = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True,
-    #    help_text="Optional (used if shipwire not active) - a flat-rate shipping fee. eg. enter '29.99' or '34'")
-    #shipping_country_choices = models.CharField(max_length=20, choices=COUNTRY_OPTIONS, db_index=True,
-    #    help_text="The country options that will be displayed to users when they fill in their address")
+    use_shipwire = models.BooleanField(default=False, 
+        help_text="Check this to use Shipwire automatic shipping rates. If this is unchecked, you MUST give a flatrate shipping price below!!")
+    flatrate_shipping_cost = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True,
+        help_text="Optional (used if shipwire not active) - a flat-rate shipping fee. eg. enter '29.99' or '34'. This should be in dollars USD.")
     
 
 

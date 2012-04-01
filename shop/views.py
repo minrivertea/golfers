@@ -41,6 +41,29 @@ def render(request, template, context_dict=None, **kwargs):
                               **kwargs
     )
 
+def _get_settings():
+    shopsettings = ShopSettings.objects.all()[0]
+    return shopsettings
+
+def _get_shipping_rate(request):
+    if _get_settings().use_shipwire == False:
+        try:
+            shipping_rate = _get_settings().flatrate_shipping_cost 
+        except:
+            shipping_rate = settings.SHIPPING_PRICE_LOW
+    
+    else:
+        shipping_rate = 0
+    
+    if _get_currency(request).code == 'GBP':
+        shipping_rate = float(shipping_rate) * 0.6
+    
+    if _get_currency(request).code == 'EUR':
+        shipping_rate = float(shipping_rate) * 0.7
+        
+    
+    return shipping_rate
+
 def changelang(request, code):
     from django.utils.translation import check_for_language, activate, to_locale, get_language
     next = request.REQUEST.get('next', None)
@@ -338,20 +361,8 @@ def basket(request):
     
     # if someone is submitting a discount code or changing their shipping preference
     if request.method == 'POST':
-        shipping_form = ShippingOptions(request.POST)
         discount_form = DiscountForm(request.POST)
-        
-        # if it's the shipping form...
-        if shipping_form.is_valid():
-            shipping_choice = shipping_form.cleaned_data['shipping_choice']
-            if shipping_choice == "high":
-                shipping_price = float(settings.SHIPPING_PRICE_HIGH)
-                request.session['SHIPPING'] = "high"
-            else:
-                shipping_price == float(settings.SHIPPING_PRICE_LOW)
-                request.session['SHIPPING'] = None
-                
-        
+                   
         # if it's the discount form....
         if discount_form.is_valid():
             discount_code = discount_form.cleaned_data['discount_code']
@@ -365,15 +376,16 @@ def basket(request):
     
     # calculate the value of the basket and shipping
     total_price = 0   
-    shipping_price = 0                      
+    shipping_price = 0
+                         
     for item in basket_items:
-        shipping_price += (item.quantity * float(settings.SHIPPING_PRICE_LOW)) # shipping cost is per item
+        shipping_price += (item.quantity * _get_shipping_rate(request)) # shipping cost is per item
         price = float(item.quantity * item.item.price)
         if discount:
             price = price - (price*float(discount.discount_value))
         total_price += price 
   
-    total_price += shipping_price
+    total_price += float(shipping_price)
     
     shipping_form = ShippingOptions()
     discount_form = DiscountForm()
@@ -492,13 +504,13 @@ def order_confirm(request):
     total_price = 0
     shipping_price = 0
     for item in order_items:
-        shipping_price += (item.quantity * float(settings.SHIPPING_PRICE_LOW)) # shipping cost is per item
+        shipping_price += (item.quantity * _get_shipping_rate(request)) # shipping cost is per item
         price = float(item.quantity * item.item.price)
         if order.discount:
             price = price - (price*float(order.discount.discount_value))
         total_price += price
     
-    total_price += shipping_price
+    total_price += float(shipping_price)
         
     if request.method == 'POST': 
         form = OrderCheckDetailsForm(request.POST)
@@ -519,7 +531,7 @@ def order_confirm(request):
     else:
         form = PayPalPaymentsForm()
 
-    return render(request, 'shop/forms/order_confirm.html', locals())
+    return render(request, 'shop/forms/order_confirm_shipwire.html', locals())
    
     
     

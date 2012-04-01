@@ -2,11 +2,13 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 
-from golfers.shop.models import Address, Order, Discount, Shopper
+from golfers.shop.models import Address, Order, Discount, Shopper, ShopSettings
 from golfers.countries import US_STATES, COUNTRY_CHOICES, US_ONLY
 
 from django.contrib.flatpages.models import FlatPage
 from tinymce.widgets import TinyMCE
+
+
 
 class FlatPageForm(ModelForm):
     content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
@@ -20,9 +22,10 @@ class AddressAddForm(ModelForm):
     class Meta:
         model = Address
         exclude = ('owner', 'is_preferred',)
-            
+     
     
 class OrderCheckDetailsForm(forms.Form):
+    
     email = forms.EmailField(error_messages={'required': '* Please give an email address', 'invalid': '* Please enter a valid e-mail address.'})
     first_name = forms.CharField(max_length=200, required=True, error_messages={'required': '* Please give your first name'})
     last_name = forms.CharField(max_length=200, required=True, error_messages={'required': '* Please give your surname'})
@@ -31,9 +34,9 @@ class OrderCheckDetailsForm(forms.Form):
     address_line_2 = forms.CharField(max_length=200, required=False)
     town_city = forms.CharField(max_length=200, required=False)
     state = forms.ChoiceField(choices=US_STATES, required=False)
-    postcode = forms.CharField(max_length=200, required=False)
+    postcode = forms.CharField(max_length=200, required=False) 
     country = forms.ChoiceField(choices=US_ONLY, required=False)
-    
+
     def clean(self):
         cleaned_data = self.cleaned_data
         postcode = cleaned_data.get("postcode")

@@ -44,7 +44,6 @@ def calculate_shipping(request, order_id):
     	     'shipwire_username': shipwire_username,
     	     'currency_code': currency.code,
     	})
-    print data
     
     req = urllib2.Request(url, data)
     response = urllib2.urlopen(req)
@@ -77,6 +76,7 @@ def calculate_shipping(request, order_id):
     text = render_to_string('shop/snippets/shipping_quote.html', {'quotes': quotes[:1], 'currency': currency})
     
     quote = quotes[0]
+
     
     data = {'text': text, 'cost': quote.cost}
     json =  simplejson.dumps(data, cls=DjangoJSONEncoder)  
