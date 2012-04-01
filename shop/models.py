@@ -309,29 +309,14 @@ def show_me_the_money(sender, **kwargs):
     order.is_paid = True
     order.save()
     
-    # create and send an email to the customer
-    recipient = order.owner.email
-    body = render_to_string('shop/emails/order_confirm_customer.txt', {
-    	        'order': order
-    	        })
-    subject_line = "Order confirmed - Pro-Advanced.com" 
-    email_sender = settings.SITE_EMAIL
-      
-    send_mail(
-                  subject_line, 
-                  body, 
-                  email_sender,
-                  [recipient], 
-                  fail_silently=False
-     )
-     
-     # create and send an email to admin
-    recipient = settings.SITE_EMAIL
+    # first create and send an email to admin
     body = render_to_string('shop/emails/order_confirm_admin.txt', {
     	        'order': order, 
     	        })
+    
+    recipient = settings.SITE_EMAIL
     subject_line = "NEW ORDER - %s" % order.invoice_id      
-    email_sender = settings.SITE_EMAIL
+    email_sender = settings.PAYPAL_RECEIVER_EMAIL
       
     send_mail(
                   subject_line, 
@@ -339,7 +324,25 @@ def show_me_the_money(sender, **kwargs):
                   email_sender,
                   [recipient], 
                   fail_silently=False
-     )  
+    ) 
+     
+    
+    # create and send an email to the customer
+    body = render_to_string('shop/emails/order_confirm_customer.txt', {
+    	        'order': order,
+    })
+    
+    recipient = order.owner.email
+    subject_line = "Order confirmed - Pro-Advanced.com" 
+    email_sender = settings.PAYPAL_RECEIVER_EMAIL
+      
+    send_mail(
+                  subject_line, 
+                  body, 
+                  email_sender,
+                  [recipient], 
+                  fail_silently=False
+    )  
 payment_was_successful.connect(show_me_the_money)    
 
     
@@ -349,13 +352,14 @@ def payment_flagged(sender, **kwargs):
     order.status = Order.STATUS_PAYMENT_FLAGGED
     order.save()
 
-     # create and send an email to me
-    invoice_id = order.invoice_id
-    email = order.owner.email
+    # create and send email to site owner only
+    body = render_to_string('shop/emails/order_confirm_admin.txt', {
+    	'order': order, 
+    })
+    
     recipient = settings.SITE_EMAIL
-    body = render_to_string('shop/emails/order_confirm_admin.txt', {'email': email, 'invoice_id': invoice_id, 'order_items': order.items.all()})
     subject_line = "FLAGGED ORDER - %s" % invoice_id 
-    email_sender = settings.SITE_EMAIL
+    email_sender = settings.PAYPAL_RECEIVER_EMAIL
       
     send_mail(
                   subject_line, 
