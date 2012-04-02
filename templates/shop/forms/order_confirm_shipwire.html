@@ -81,13 +81,17 @@ div.row {
 <h1>{% trans 'Please confirm your order' %}</h1>
 
 
-    <form method="post" action="{{ paypal_submit_url }}">
+    <form id="paypal" method="post" action="{{ paypal_submit_url }}">
 
 		<input type="hidden" name="cmd" value="_cart"> 
 		<input type="hidden" name="upload" value="1"> 
 		<input type="hidden" name="business" value="{{ paypal_receiver_email }}">
 		<input type="hidden" name="currency_code" value="{{ currency.code }}">
 		<input type="hidden" name="address_override" value="1">
+		
+		<input type="hidden" name="first_name" value="{{ order.owner.first_name }}">
+		<input type="hidden" name="last_name" value="{{ order.owner.last_name }}">
+		<input type="hidden" name="email" value="{{ order.owner.email }}">
 		
 		<input type="hidden" name="address1" value="{{ order.address.house_name_number }}, {{ order.address.address_line_1 }}">		
 		<input type="hidden" name="address2" value="{{ order.address.address_line_2 }}">
@@ -107,18 +111,18 @@ div.row {
 
 		<input type="hidden" name="item_name_1" value="Shipping"> 
 		<input type="hidden" name="quantity_1" value="1">
-		<input type="hidden" name="amount_1" value="{% if shopsettings.use_shipwire %}{% else %}{{ shipping_cost_low|floatformat:'2' }}{% endif %}" id="shipping-price">
+		<input type="hidden" name="amount_1" value="{% if shopsettings.use_shipwire %}{% else %}{{ shopsettings.flatrate_shipping_cost|floatformat:'2' }}{% endif %}" id="shipping-price">
 		 
 		 
-		 {% for thing in basket_items %}
-		<input type="hidden" name="item_name_{{ forloop.counter|add:"1" }}" value="{{ thing.item.parent_product.name }} {{ thing.item.parent_product.category }} -  ({{ thing.item.weight|floatformat }}{{ thing.item.weight_unit }})"> 
-		<input type="hidden" name="quantity_{{ forloop.counter|add:"1" }}" value="{{ thing.quantity }}">
-		<input type="hidden" name="amount_{{ forloop.counter|add:"1" }}" value="{{ thing.item.price }}">
-		{% if order.discount %}
-		<input type="hidden" name="discount_rate_{{ forloop.counter|add:"1" }}" value="{{ order.discount.discount_value|cut:"0." }}">
-		{% endif %}
-		 {% endfor %}
+		{% for thing in basket_items %}
+			<input type="hidden" name="item_name_{{ forloop.counter|add:"1" }}" value="{{ thing.item.parent_product.name }}"> 
+			<input type="hidden" name="quantity_{{ forloop.counter|add:"1" }}" value="{{ thing.quantity }}">
+			<input type="hidden" name="amount_{{ forloop.counter|add:"1" }}" value="{{ thing.item.price }}">
+		{% endfor %}
 		
+		{% if order.discount %}
+			<input type="hidden" name="discount_rate_{{ forloop.counter|add:"1" }}" value="{{ order.discount.discount_value|cut:"0." }}">
+		{% endif %}
 		
 <div class="row">
 	<div class="row-label">
