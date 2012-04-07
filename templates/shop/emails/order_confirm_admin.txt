@@ -4,6 +4,15 @@ New order from {{ order.owner.email }}
 	{{ item }}
 {% endfor %}
 
+{{ order.address.house_name_number }}
+{{ order.address.address_line_1 }}
+{{ order.address.address_line_2 }}
+{{ order.address.town_city }}
+{{ order.address.state }}
+{{ order.address.postcode }}
+{{ order.address.get_country_display }}
+
+
 INVOICE ID: {{ order.invoice_id }}
 
 ORDER STATUS: {{ order.get_order_status_display }}
