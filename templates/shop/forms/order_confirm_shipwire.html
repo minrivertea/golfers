@@ -93,12 +93,7 @@ div.row {
 		<input type="hidden" name="last_name" value="{{ order.owner.last_name }}">
 		<input type="hidden" name="email" value="{{ order.owner.email }}">
 		
-		<input type="hidden" name="address1" value="{{ order.address.house_name_number }}, {{ order.address.address_line_1 }}">		
-		<input type="hidden" name="address2" value="{{ order.address.address_line_2 }}">
-		<input type="hidden" name="city" value="{{ order.address.town_city }}">
-		<input type="hidden" name="state" value="{{ order.address.state }}">
-		<input type="hidden" name="country" value="{{ order.address.country }}">
-		<input type="hidden" name="zip" value="{{ order.address.postcode }}">
+
 		<input TYPE="hidden" NAME="return" value="{{ paypal_return_url }}">
 		<input TYPE="hidden" NAME="cancel" value="{{ paypal_notify_url }}">
 		<input TYPE="hidden" NAME="notify_url" value="{{ paypal_notify_url }}">
