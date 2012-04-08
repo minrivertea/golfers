@@ -11,6 +11,7 @@ New order from {{ order.owner.email }}
 {{ order.address.state }}
 {{ order.address.postcode }}
 {{ order.address.get_country_display }}
+tel: {{ order.address.phone }}
 
 
 INVOICE ID: {{ order.invoice_id }}
