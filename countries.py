@@ -317,8 +317,10 @@ COUNTRY_CHOICES = (
 
 # AMERICA ONLY
 UNITED_STATES = 'US'
+CANADA = 'CA'
 US_ONLY = (
     (UNITED_STATES, u"USA"),
+    (CANADA, u'Canada'),
 )
 
 # these are the states in America
