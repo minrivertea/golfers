@@ -443,6 +443,7 @@ def order_check_details(request):
                 state = form.cleaned_data['state'],
                 postcode = form.cleaned_data['postcode'],
                 country = form.cleaned_data['country'],
+                phone = form.cleaned_data['phone'],
             )
             
             # create an order object
@@ -481,6 +482,7 @@ def order_check_details(request):
              postcode = request.POST['postcode']
              first_name = request.POST['first_name']
              last_name = request.POST['last_name']
+             phone = request.POST['phone']
 
 
     else:     

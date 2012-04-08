@@ -187,6 +187,7 @@ div.row {
 		{% if order.address.state %}{{ order.address.state }}<br/>{% endif %}
 		{{ order.address.postcode }}<br/>
 		{{ order.address.get_country_display }}<br/>
+		{% if order.address.phone %}<strong>tel:</strong> {{ order.address.phone }}<br/>{% endif %}
 		({{ shopper.email }})<br/>
 		<a style="font-size: 12px; font-weight: bold;" href="{% url order_check_details %}">&laquo; change your address</a>
 		<br/>

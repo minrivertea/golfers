@@ -73,6 +73,13 @@ span.red {
   color: red;	
 }
 
+span.help {
+    color: #666666;
+    font-size: 12px;
+    left: 220px;
+    position: relative;	
+}
+
 
 </style>
 {% endblock %}
@@ -184,7 +191,7 @@ span.red {
 		<option value="PA">Pennsylvania</option>
 		<option value="RI">Rhode Island</option>
 		<option value="SC">South Carolina</option>
-		<option value="South Dakota">SD</option>
+		<option value="SD">South Dakota</option>
 		<option value="TN">Tennessee</option>
 		<option value="TX">Texas</option>
 		<option value="UT">Utah</option>
@@ -204,6 +211,12 @@ span.red {
       <p>
       	<label for="id_country">{% trans 'Country' %}</label>
       	{{ form.country }}
+      </p>
+      
+      <p>
+     	<label for="id_phone">{% trans 'Your phone number' %}</label>
+      	<input id="id_phone" type="text" name="phone" maxlength="20" value="{{ phone }}" />
+      	<span class="help">{% trans 'Please provide a valid phone number for fast-track shipping' %}</span> 
       </p>
       
  	</div> 
