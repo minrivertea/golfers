@@ -108,7 +108,7 @@ PAYPAL_RECEIVER_EMAIL = ""
 
 # language stuff
 USE_I18N = True
-USE_L10N = True
+USE_L10N = False
 gettext = lambda s: s
 LANGUAGE_CODE = 'en'
 LANGUAGES = (
