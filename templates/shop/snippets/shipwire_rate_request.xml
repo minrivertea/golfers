@@ -15,7 +15,7 @@
         </AddressInfo>
         {% for item in order.items.all %}
         <Item num="{{ forloop.counter }}">
-            <Code>{{ item.item.parent_product.slug }}</Code>
+            <Code>{{ item.item.parent_product.shipwire_id }}</Code>
             <Quantity>{{ item.quantity }}</Quantity>
         </Item>
         {% endfor %}

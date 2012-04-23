@@ -45,9 +45,13 @@ def calculate_shipping(request, order_id):
     	     'currency_code': currency.code,
     	})
     
+    print data
+    
     req = urllib2.Request(url, data)
     response = urllib2.urlopen(req)
     the_page = response.read()
+    
+    print the_page
     
     # this will parse the response
     tree = etree.XML(the_page)
