@@ -87,6 +87,8 @@ div.row {
 		<input type="hidden" name="upload" value="1"> 
 		<input type="hidden" name="business" value="{{ paypal_receiver_email }}">
 		<input type="hidden" name="currency_code" value="{{ currency.code }}">
+		{% get_current_language as LANGUAGE_CODE %}
+		<input type="hidden" name="lc" value="{{ LANGUAGE_CODE }}">
 		
 		
 		<input type="hidden" name="first_name" value="{{ order.owner.first_name }}">
