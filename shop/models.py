@@ -49,8 +49,15 @@ class ShopSettings(models.Model):
         help_text="Check this to use Shipwire automatic shipping rates. If this is unchecked, you MUST give a flatrate shipping price below!!")
     flatrate_shipping_cost = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True,
         help_text="Optional (used if shipwire not active) - a flat-rate shipping fee. eg. enter '29.99' or '34'. This should be in dollars USD.")
+    homepage_rotating_images = models.ManyToManyField('Image', blank=True, null=True, 
+        help_text="Select the images you want to appear in the homepage rotating block")
     
 
+class Image(models.Model):
+    image = models.ImageField(upload_to='images/homepage')
+
+    def __unicode__(self):
+        return str(self.image)
 
 class Product(models.Model):
     name = models.CharField(max_length=200, help_text="The product name")

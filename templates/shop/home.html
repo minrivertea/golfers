@@ -197,8 +197,13 @@ a.browse {
 				    
 				<div class="scroll">
 					<div class="pics">
+					    {% for image in shopsettings.homepage_rotating_images.all %}
+					       <div style="background-image:url({% thumbnail image.image 500x500 crop='center' %});"></div>
+					    {% endfor %}
+					    {% if not shopsettings.homepage_rotating_images.all %}
 						<div style="background-image:url({% thumbnail product.image 500x500 %})"></div>
 						<div style="background-image:url(/images/home3.jpg)"></div>
+						{% endif %}
 					</div>
 				</div>
 			
