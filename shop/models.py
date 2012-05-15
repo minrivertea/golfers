@@ -120,6 +120,7 @@ class Currency(models.Model):
     def __unicode__(self):
         return self.code
 
+
 class UniqueProduct(models.Model):
     original_price = models.DecimalField(help_text="An earlier higher price that won't be paid", 
         max_digits=8, decimal_places=2, null=True, blank=True)

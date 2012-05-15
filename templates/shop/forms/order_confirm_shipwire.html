@@ -35,8 +35,12 @@
 			        $('#postage-loading').toggle();
 			    },
 			    error:function (xhr, ajaxOptions, thrownError){
-			    	var invoiceID = $('input#id_invoice').val();
-			    	shippingError(invoiceID);
+			    	$('#shipping-price').val({{ shopsettings.flatrate_shipping_cost }});
+			        $('#quotes').html('<td>{% trans "Shipping" %}</td><td>Sent using standard ground mail <br/>Delivered in 3-5 days</td><td>{{ currency.symbol }}{{ shopsettings.flatrate_shipping_cost }}</td>');
+			        var currentTotal = parseFloat($("#total-cost").text());
+			        var newTotal = parseFloat(currentTotal.toFixed(2)) + parseFloat({{ shopsettings.flatrate_shipping_cost }});
+			        $('#total-cost').html(newTotal.toFixed(2));
+			        $('#postage-loading').toggle();
                 }  
 			});
 		}
@@ -144,7 +148,7 @@ div.row {
 		 {% if shopsettings.use_shipwire %}
 		  <tr id="quotes">
 		  	<td><em>&nbsp;</em></td>
-		  	<td style="font-size: 12px;"><img style="position: relative; top: 5px; left: -10px;height: 20px; width: 20px;" src="/images/loading.gif" id="postage-loading"/><em>Just checking shipping rates now… please wait</em></td>
+		  	<td style="font-size: 12px;"><img style="position: relative; top: 5px; left: -10px;height: 20px; width: 20px;" src="/images/loading.gif" id="postage-loading"/><em>{% trans 'Just calculating shipping rates now… please wait' %}</em></td>
 		  	<td>&nbsp;</td>
 		  			  
 		  </tr>
