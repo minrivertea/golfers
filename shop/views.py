@@ -436,6 +436,7 @@ def order_check_details(request):
             # create an address based on the info they provided           
             address = Address.objects.create(
                 owner = shopper,
+                house_name_number = '', # legacy
                 address_line_1 = form.cleaned_data['address_line_1'],
                 address_line_2 = form.cleaned_data['address_line_2'],
                 town_city = form.cleaned_data['town_city'],
