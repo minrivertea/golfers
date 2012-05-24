@@ -170,7 +170,11 @@ a.browse {
 				{{ product.short_description|safe }}
 				<a class="more" href="{% url product_view product.slug %}">{% trans 'Find out more &raquo;' %} </a>
 				<br/>
+				{% include 'shop/snippets/social.html' %}
+				
 				{% if ga_is_on %}
+				
+				
 				<ul class="social">
 				  <li id="facebook">
 					<div id="fb-root"></div>

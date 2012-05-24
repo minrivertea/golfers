@@ -29,7 +29,6 @@ class OrderCheckDetailsForm(forms.Form):
     email = forms.EmailField(error_messages={'required': '* Please give an email address', 'invalid': '* Please enter a valid e-mail address.'})
     first_name = forms.CharField(max_length=200, required=True, error_messages={'required': '* Please give your first name'})
     last_name = forms.CharField(max_length=200, required=True, error_messages={'required': '* Please give your surname'})
-    house_name_number = forms.CharField(max_length=200, required=False)
     address_line_1 = forms.CharField(max_length=200, required=False)
     address_line_2 = forms.CharField(max_length=200, required=False)
     town_city = forms.CharField(max_length=200, required=False)
@@ -41,15 +40,15 @@ class OrderCheckDetailsForm(forms.Form):
     def clean(self):
         cleaned_data = self.cleaned_data
         postcode = cleaned_data.get("postcode")
-        house_name_number = cleaned_data.get("house_name_number")
+        address_line_1 = cleaned_data.get('address_line_1')
         if not postcode:
-             if not house_name_number:
-                 raise forms.ValidationError("* You must provide a postcode and house name or number")
+             if not address_line_1:
+                 raise forms.ValidationError("* You must provide a postcode and the first line of your address")
              else:
                  raise forms.ValidationError("* You must provide a postcode")
         
-        if not house_name_number:
-                raise forms.ValidationError("* You must provide a house name or number")
+        if not address_line_1:
+                raise forms.ValidationError("* You must provide the first line of your address")
         
         
         return cleaned_data

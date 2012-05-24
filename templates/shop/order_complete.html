@@ -13,6 +13,10 @@
 </div>
 {% endblock %}
 
+{% if shopsettings.order_complete_js_codes %}
+{{ shopsettings.order_complete_js_codes|safe %}
+{% endif %}
+
 
 {% block google_conversion_code %}
 <!-- Google Code for ReadyNet conv Conversion Page -->

@@ -51,6 +51,9 @@ class ShopSettings(models.Model):
         help_text="Optional (used if shipwire not active) - a flat-rate shipping fee. eg. enter '29.99' or '34'. This should be in dollars USD.")
     homepage_rotating_images = models.ManyToManyField('Image', blank=True, null=True, 
         help_text="Select the images you want to appear in the homepage rotating block")
+    order_complete_js_codes = models.TextField(blank=True, null=True, 
+        help_text="Copy and paste the javascript tracking codes here. Make sure you include the opening and closing <script></script> tags.")
+        
     
 
 class Image(models.Model):
@@ -149,7 +152,7 @@ class Shopper(models.Model):
             
 class Address(models.Model):
     owner = models.ForeignKey(Shopper)
-    house_name_number = models.CharField(max_length=200)
+    house_name_number = models.CharField(max_length=200, blank=True, null=True)
     address_line_1 = models.CharField(max_length=200, blank=True, null=True)
     address_line_2 = models.CharField(max_length=200, blank=True, null=True)
     town_city = models.CharField(max_length=200)

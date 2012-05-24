@@ -436,7 +436,6 @@ def order_check_details(request):
             # create an address based on the info they provided           
             address = Address.objects.create(
                 owner = shopper,
-                house_name_number = form.cleaned_data['house_name_number'],
                 address_line_1 = form.cleaned_data['address_line_1'],
                 address_line_2 = form.cleaned_data['address_line_2'],
                 town_city = form.cleaned_data['town_city'],
@@ -474,7 +473,6 @@ def order_check_details(request):
         # if the form has errors...
         else:
              email = request.POST['email']
-             house_name_number = request.POST['house_name_number']
              address_line_1 = request.POST['address_line_1']
              address_line_2 = request.POST['address_line_2']
              town_city = request.POST['town_city']

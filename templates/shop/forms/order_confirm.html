@@ -57,7 +57,7 @@ div.row {
 		
 		
 		<input type="hidden" name="address2" value="{{ order.address.address_line_2 }}">
-		<input type="hidden" name="address1" value="{{ order.address.house_name_number }}, {{ order.address.address_line_1 }}">		
+		<input type="hidden" name="address1" value="{{ order.address.address_line_1 }}">		
 		<input type="hidden" name="address2" value="{{ order.address.address_line_2 }}">
 		<input type="hidden" name="city" value="{{ order.address.town_city }}">
 		<input type="hidden" name="country" value="{{ order.address.country }}">
@@ -106,7 +106,7 @@ div.row {
 		<input type="hidden" name="currency_code" value="{{ currency.code }}">
 		<input type="hidden" name="address_override" value="1">
 		
-		<input type="hidden" name="address1" value="{{ order.address.house_name_number }}, {{ order.address.address_line_1 }}">		
+		<input type="hidden" name="address1" value="{{ order.address.address_line_1 }}">		
 		<input type="hidden" name="address2" value="{{ order.address.address_line_2 }}">
 		<input type="hidden" name="city" value="{{ order.address.town_city }}">
 		<input type="hidden" name="state" value="{{ order.address.state }}">
@@ -188,7 +188,6 @@ div.row {
 	
 	<div class="row-box">
 	    
-		{{ order.address.house_name_number }}<br/>
 		{{ order.address.address_line_1 }}<br/>
 		{% if order.address.address_line_2 %}{{ order.address.address_line_2 }}<br/>{% endif %}
 		{% if order.address.town_city %}{{ order.address.town_city }}<br/>{% endif %}

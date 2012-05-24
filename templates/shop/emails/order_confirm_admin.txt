@@ -4,7 +4,6 @@ New order from {{ order.owner.email }}
 	{{ item }}
 {% endfor %}
 
-{{ order.address.house_name_number }}
 {{ order.address.address_line_1 }}
 {{ order.address.address_line_2 }}
 {{ order.address.town_city }}

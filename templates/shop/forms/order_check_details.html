@@ -114,7 +114,7 @@ span.help {
     	<div class="row-box">
     	<p class="intro">{% trans 'Please give your name and email - just in case we need to contact you about your order.' %}</p>
     		<p><label for="id_first_name">{% trans 'First name ' %}</label><input type="text" name="first_name" id="id_first_name" value="{{ first_name }}"/></p>
-    		<p><label for="id_last_name">{% trans 'Surname' %}</label><input type="text" name="last_name" id="id_last_name" value="{{ last_name }}"/></p>
+    		<p><label for="id_last_name">{% trans 'Last name' %}</label><input type="text" name="last_name" id="id_last_name" value="{{ last_name }}"/></p>
     		<p><label for="id_email">{% trans 'Email address' %}</label><input type="text" name="email" id="id_email" value="{{ email }}"/></p>	
     	</div>
     </div>
@@ -128,9 +128,6 @@ span.help {
     	<div class="row-box">
     		<p class="intro">{% blocktrans %}Please make sure this is a valid address in the USA, UK or EU. For delivery to other countries outside US/UK/EU, please <a href="/contact-us/">contact us</a> (<a href="/shipping/" target="_blank">find out why</a>){% endblocktrans %}</p>
 
-      <p>
-      <label for="id_house_name_number">{% trans 'House name number:' %}</label>
-      <input id="id_house_name_number" type="text" name="house_name_number" maxlength="200" value="{{ house_name_number }}"/></p>
 	  {{ form.address_line_1.error }}
 	  <p>
 	  <label for="id_address_line_1">{% trans 'Address line 1:' %}</label>

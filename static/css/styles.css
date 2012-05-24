@@ -270,6 +270,7 @@ div#logo {
     position: relative;
     top: -10px;
     width: 300px;
+    height: 75px;
 }
 
 div#contact {
@@ -280,8 +281,8 @@ div#contact {
 }
 
 div#logo h1 {
-  background: url('/images/logo.png') no-repeat scroll 0 0 transparent;
-  height: 75px;	
+  background: url('/images/logo2.png') no-repeat scroll 0 0 transparent;
+  height: 90px;	
   margin: 0;
   border-bottom: none;
 }
@@ -641,3 +642,37 @@ div#footer ul li a:link, div#footer ul li a:visited {
   float: left;
   text-shadow: 1px 1px 0 #fff;	
 }
+
+
+#follow {
+  float: left;
+  width: 100%;
+  margin: 20px 0 0 0;   
+}
+
+
+#follow a {
+  height: 32px;
+  width: 32px;
+  float: left;
+  margin: 0 5px 0 0;
+  display: block;
+  background: url('/images/social.png') no-repeat 0 0;;	
+}
+
+#follow a:hover {
+  opacity: 0.8;	
+}
+
+#follow a.tw {
+  background-position: -32px 0px;	
+}
+
+#follow a.yt {
+  background-position: -192px 0px;	
+}
+
+#follow a.pin {
+  background-position: -160px 0px;	
+}
+
