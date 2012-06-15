@@ -20,16 +20,6 @@ PRODUCT_CATEGORY = (
     (u'POS', u'Postage'),
 )
 
-# these are the statuses of an order
-ORDER_STATUS = (
-    (u'1', u'Created not paid'),
-    (u'2', u'Paid'),
-    (u'3', u'Shipped'),
-    (u'4', u'Address Problem'),
-    (u'5', u'Payment flagged'),
-)
-
-
 
 COUNTRY_OPTIONS = (
     (u'US_ONLY', u'USA Only'),
@@ -368,7 +358,11 @@ payment_was_successful.connect(show_me_the_money)
 def payment_flagged(sender, **kwargs):
     ipn_obj = sender
     order = get_object_or_404(Order, invoice_id=ipn_obj.invoice)
+    if order.status == Order.STATUS_PAYMENT_FLAGGED:
+        return
+        
     order.status = Order.STATUS_PAYMENT_FLAGGED
+    order.date_paid = ipn_obj.payment_date
     order.save()
 
     # create and send email to site owner only
@@ -377,7 +371,7 @@ def payment_flagged(sender, **kwargs):
     })
     
     recipient = settings.SITE_EMAIL
-    subject_line = "FLAGGED ORDER - %s" % invoice_id 
+    subject_line = "FLAGGED ORDER - %s" % order.invoice_id 
     email_sender = settings.PAYPAL_RECEIVER_EMAIL
       
     send_mail(

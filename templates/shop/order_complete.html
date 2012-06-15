@@ -21,9 +21,9 @@
 {% endblock %}
 
 {% if shopsettings.order_complete_js_codes %}
-{% block extrajs %}
-{{ shopsettings.order_complete_js_codes|safe }}
-{% endblock %}
+    {% block extrajs %}
+        {{ shopsettings.order_complete_js_codes|safe }}
+    {% endblock %}
 {% endif %}
 
 
