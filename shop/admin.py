@@ -5,6 +5,7 @@ from modeltranslation.admin import TranslationAdmin
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('invoice_id', 'is_paid', 'owner', 'status') 
+    list_filter = ('is_paid', )
 
 class UniqueProductAdmin(admin.ModelAdmin):
     list_display = ('parent_product', 'price', 'currency')
