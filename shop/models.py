@@ -358,11 +358,12 @@ payment_was_successful.connect(show_me_the_money)
 def payment_flagged(sender, **kwargs):
     ipn_obj = sender
     order = get_object_or_404(Order, invoice_id=ipn_obj.invoice)
+    
+    # this prevents double emails being sent...
     if order.status == Order.STATUS_PAYMENT_FLAGGED:
         return
-        
+         
     order.status = Order.STATUS_PAYMENT_FLAGGED
-    order.date_paid = ipn_obj.payment_date
     order.save()
 
     # create and send email to site owner only
