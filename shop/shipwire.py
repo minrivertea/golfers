@@ -76,7 +76,10 @@ def calculate_shipping(request, order_id):
     
     text = render_to_string('shop/snippets/shipping_quote.html', {'quotes': quotes[:1], 'currency': currency})
     
-    quote = quotes[0]
+    try:
+        quote = quotes[0]
+    except IndexError:
+        return HttpResponse(status=500)
 
     
     data = {'text': text, 'cost': quote.cost}
