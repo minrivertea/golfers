@@ -351,7 +351,11 @@ def increase_quantity(request, productID):
 
 
 def basket(request):
-    basket = get_object_or_404(Basket, id=request.session['BASKET_ID'])
+    try:
+        basket = get_object_or_404(Basket, id=request.session['BASKET_ID'])
+    except:
+        basket = None
+        
     basket_items = BasketItem.objects.filter(basket=basket)
     
     try:
