@@ -49,6 +49,8 @@ def calculate_shipping(request, order_id):
     response = urllib2.urlopen(req)
     the_page = response.read()
 
+
+    print the_page
     
     # this will parse the response
     tree = etree.XML(the_page)
@@ -76,10 +78,8 @@ def calculate_shipping(request, order_id):
     
     text = render_to_string('shop/snippets/shipping_quote.html', {'quotes': quotes[:1], 'currency': currency})
     
-    try:
-        quote = quotes[0]
-    except IndexError:
-        return HttpResponse(status=500)
+    quote = quotes[0]
+
 
     
     data = {'text': text, 'cost': quote.cost}
