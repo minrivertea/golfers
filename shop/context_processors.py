@@ -1,6 +1,7 @@
 from django.conf import settings
 from golfers.shop.models import *
 from golfers.shop.views import GetCountry
+from golfers.countries import EUROPE
 
 def common(request):
     from golfers import settings
@@ -13,11 +14,25 @@ def common(request):
     context['ga_is_on'] = settings.GA_IS_ON
     context['shipping_price_low'] = settings.SHIPPING_PRICE_LOW
     context['shipping_price_high'] = settings.SHIPPING_PRICE_HIGH
+    context['countrycode'] = GetCountry(request)
+    
     try:
         code = request.session['CURRENCY']
         context['currency'] = Currency.objects.get(code=code)
     except:
-        context['currency'] = Currency.objects.get(code='USD')
+        country = 'US' #GetCountry(request)['countryCode']
+        currencycode = None
+        if country == 'UK':
+            currencycode = 'GBP'
+        
+        if country in EUROPE:
+            currencycode = 'EUR'
+        
+        if not currencycode:
+            currencycode = 'USD'
+        
+        context['currency'] = Currency.objects.get(code=currencycode)
+        request.session['CURRENCY'] = currencycode
         
     try:
         s = ShopSettings.objects.all()

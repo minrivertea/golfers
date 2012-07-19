@@ -36,9 +36,9 @@ span.strikethrough {
       		{% for price in prices %}  	
         		{% if forloop.first %}
         			<div class="price">
-        			{{ price.currency.symbol }}{{ price.price|floatformat }} 
+        			{{ currency.symbol }}{{ price.price|floatformat }} 
         			{% if price.original_price %}
-					<span class="strikethrough">{{ price.currency.symbol }}{{ price.original_price }}</span>
+					<span class="strikethrough">{{ currency.symbol }}{{ price.original_price }}</span>
 					{% endif %}
             		</div>
 		        {% else %}

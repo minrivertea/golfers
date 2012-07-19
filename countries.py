@@ -282,6 +282,9 @@ SPAIN = 'ES'
 SWEDEN = 'SE'
 SWITZERLAND = 'CH'
 UNITED_KINGDOM = 'UK'
+
+
+
 COUNTRY_CHOICES = (
     (UNITED_STATES, u"USA"),
     (INVALID, u"-----"),
@@ -380,5 +383,8 @@ US_STATES = (
   (u'WY', u'Wyoming'),
 )
 
+
+EUROPE = ('AT', 'BE', 'BG', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT',
+    'NL', 'NO', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'CH')
 
 

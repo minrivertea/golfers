@@ -199,7 +199,9 @@ div.total span.black a {
 		<div class="quantity">&nbsp;</div>
 		<div class="total">
 		{% if discount %}
-		<span class="red">{% blocktrans %}Your discount code is worth {{ discount.discount_value|cut:"0." }}% off!{% endblocktrans %}</span> 
+		  {% with discount.discount_value|cut:"0." as dis %}
+		<span class="red">{% blocktrans %}Your discount code is worth {{ dis }}% off!{% endblocktrans %}</span> 
+		  {% endwith %}
 		<span class="black"><a href="{% url clear_discount %}">{% trans 'Clear discount' %}</a></span>
 		{% else %}
 		<form action="" method="post">
