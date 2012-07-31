@@ -502,7 +502,7 @@ def order_confirm(request):
         basket = get_object_or_404(Basket, id=request.session['BASKET_ID'])
         order = Order.objects.get(invoice_id=request.session['ORDER_ID'])
     except:
-        return render(request, "shop/order_problem.html", locals())
+        return render(request, "shop/order-problem.html", locals())
         
     order_items = BasketItem.objects.filter(basket=basket)
     

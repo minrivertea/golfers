@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf8"?>
 <!DOCTYPE RateRequest SYSTEM "http://www.shipwire.com/exec/download/RateRequest.dtd">
 <RateRequest currency="{{ currency_code }}">
     <Username>{{ shipwire_username }}</Username>
@@ -7,7 +7,7 @@
         <Warehouse>00</Warehouse>
         <AddressInfo type="ship">
             <Address1>{{ order.address.house_name_number }} </Address1>
-            <Address2>{{ order.address.address_line_1 }}</Address2>
+            <Address2>{{ order.address.address_line_1|safe }}</Address2>
             <City>{{ order.address.town_city }}</City>
             <State>{{ order.address.state }}</State>
             <Country>{{ order.address.country }}</Country>

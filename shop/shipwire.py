@@ -44,13 +44,12 @@ def calculate_shipping(request, order_id):
     	     'shipwire_username': shipwire_username,
     	     'currency_code': currency.code,
     	})
-    
+    	
+    data = data.encode('utf-8', 'replace') # important for handling weird chatacters
+
     req = urllib2.Request(url, data)
     response = urllib2.urlopen(req)
     the_page = response.read()
-
-
-    print the_page
     
     # this will parse the response
     tree = etree.XML(the_page)
