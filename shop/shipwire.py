@@ -79,9 +79,13 @@ def calculate_shipping(request, order_id):
     
     quote = quotes[0]
 
-
+    if order.discount:
+        discount_amount = int(quote.cost)*order.discount.discount_value
+        cost = quote.cost - discount_amount
+    else:
+        cost = quote.cost
     
-    data = {'text': text, 'cost': quote.cost}
+    data = {'text': text, 'cost': cost}
     json =  simplejson.dumps(data, cls=DjangoJSONEncoder)  
         
     
