@@ -81,7 +81,7 @@ def calculate_shipping(request, order_id):
 
     if order.discount:
         discount_amount = int(quote.cost)*order.discount.discount_value
-        cost = quote.cost - discount_amount
+        cost = (quote.cost - discount_amount)
     else:
         cost = quote.cost
     
