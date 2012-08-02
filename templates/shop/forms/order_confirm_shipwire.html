@@ -28,7 +28,7 @@
 			    dataType: 'json',
 			    success: function(data) {
 			        $('#quotes').html(data.text);
-			        $('#shipping-price').val(data.cost);
+			        $('#shipping-price').val(data.original_cost);
 			        var currentTotal = parseFloat($("#total-cost").text());
 			        var newTotal = parseFloat(currentTotal.toFixed(2)) + parseFloat(data.cost);
 			        $('#total-cost').html(newTotal.toFixed(2));
