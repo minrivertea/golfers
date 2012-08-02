@@ -86,6 +86,10 @@ def calculate_shipping(request, order_id):
     else:
         cost = quote.cost
     
+    print cost
+    cost = ("%.2f" % cost)
+    print cost
+    
     data = {'text': text, 'cost': cost}
     json =  simplejson.dumps(data, cls=DjangoJSONEncoder)  
         
