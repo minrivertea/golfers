@@ -75,22 +75,24 @@ def calculate_shipping(request, order_id):
                 #quotes.append(text)
     
     
-    text = render_to_string('shop/snippets/shipping_quote.html', {'quotes': quotes[:1], 'currency': currency})
+    
     
     quote = quotes[0]
     
 
     if order.discount:
+        original_cost = quote.cost
         discount_amount = float(quote.cost) * float(order.discount.discount_value)
         cost = float(quote.cost) - float(discount_amount)
     else:
+        original_cost = quote.cost
         cost = quote.cost
     
-    print cost
     cost = ("%.2f" % cost)
-    print cost
+
+    text = render_to_string('shop/snippets/shipping_quote.html', {'quotes': quotes[:1], 'currency': currency})
     
-    data = {'text': text, 'cost': cost}
+    data = {'text': text, 'cost': cost, 'original_cost': original_cost}
     json =  simplejson.dumps(data, cls=DjangoJSONEncoder)  
         
     
