@@ -121,7 +121,8 @@ div.row {
 		{% endfor %}
 		
 		{% if order.discount %}
-			<input type="hidden" name="discount_rate_{{ forloop.counter|add:"1" }}" value="{{ order.discount.discount_value|cut:"0." }}">
+			<input type="hidden" name="discount_rate_1" value="{{ order.discount.discount_value|cut:"0." }}">
+			<input type="hidden" name="discount_rate_2" value="{{ order.discount.discount_value|cut:"0." }}">
 		{% endif %}
 		
 <div class="row">
