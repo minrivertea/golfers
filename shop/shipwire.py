@@ -84,11 +84,12 @@ def calculate_shipping(request, order_id):
         original_cost = quote.cost
         discount_amount = float(quote.cost) * float(order.discount.discount_value)
         cost = float(quote.cost) - float(discount_amount)
+        cost = ("%.2f" % cost)
     else:
         original_cost = quote.cost
         cost = quote.cost
     
-    cost = ("%.2f" % cost)
+   
 
     text = render_to_string('shop/snippets/shipping_quote.html', {'quotes': quotes[:1], 'currency': currency})
     
