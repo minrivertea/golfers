@@ -216,25 +216,42 @@ $(document).ready(function() {
 			
 			<div class="product-photos-small">	
 			{% if product.image_2 %}
-				<a class="group" href="{% thumbnail product.image_2 550x550 %}" rel="group1" title="{{ product.image_2_caption }}">
-					<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image_2 80x80 %}"/>
+				{% thumbnail product.image_2 "500x500" crop="center" as im_large %}
+				<a class="group" href="{{ im_large.url }}" rel="group1" title="{{ product.image_2_caption }}">
+					{% thumbnail product.image_2 "80x80" crop="center" as im %}
+					<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
+					{% endthumbnail %}
 				</a>
+				{% endthumbnail %}
 			{% endif %}
 			
 			{% if product.image_3 %}
-				<a class="group"  href="{% thumbnail product.image_3 550x550 %}" rel="group1" title="{{ product.image_3_caption }}">
-				<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image_3 80x80 %}"/>
+			    {% thumbnail product.image_3 "500x500" crop="center" as im_large %}
+				<a class="group"  href="{{ im_large.url }}" rel="group1" title="{{ product.image_3_caption }}">
+				    {% thumbnail product.image_3 "80x80" crop="center" as im %}
+				    <img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
+				    {% endthumbnail %}
+				
 				</a>
+				{% endthumbnail %}
 			{% endif %}
 			{% if product.image_4 %}
-				<a class="group" href="{% thumbnail product.image_4 550x550 %}" rel="group1" title="{{ product.image_4_caption }}">
-				<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image_4 80x80 %}"/>
+			    {% thumbnail product.image_4 "500x500" crop="center" as im_large %}
+				<a class="group" href="{{ im_large.url }}" rel="group1" title="{{ product.image_4_caption }}">
+				    {% thumbnail product.image_4 "80x80" crop="center" as im %}
+				    <img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
+				    {% endthumbnail %}
 				</a>
+				{% endthumbnail %}
 			{% endif %}
 			{% if product.image_5 %}
-				<a class="group"  href="{% thumbnail product.image_5 550x550 %}" rel="group1" title="{{ product.image_5_caption }}">
-				<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{% thumbnail product.image_5 80x80 %}"/>
+			    {% thumbnail product.image_5 "500x500" crop="center" as im_large %}
+				<a class="group"  href="{{ im_large.url }}" rel="group1" title="{{ product.image_5_caption }}">
+				    {% thumbnail product.image_5 "80x80" crop="center" as im %}
+				<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
+				{% endthumbnail %}
 				</a>
+				{% endthumbnail %}
 			{% endif %}
 			</div>	
 			
