@@ -2,8 +2,8 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 
-from golfers.shop.models import Address, Order, Discount, Shopper, ShopSettings
-from golfers.countries import US_STATES, COUNTRY_CHOICES, US_ONLY
+from shop.models import Address, Order, Discount, Shopper, ShopSettings
+from countries import US_STATES, COUNTRY_CHOICES, US_ONLY
 
 from django.contrib.flatpages.models import FlatPage
 from tinymce.widgets import TinyMCE

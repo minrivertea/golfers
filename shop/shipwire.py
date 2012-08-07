@@ -22,8 +22,8 @@ from cStringIO import StringIO
 import os, md5
 import datetime
 
-from golfers.shop.models import *
-from golfers.shop.forms import *
+from shop.models import *
+from shop.forms import *
 
 
 def calculate_shipping(request, order_id):

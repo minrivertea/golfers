@@ -8,9 +8,9 @@ from django.conf import settings
 from datetime import datetime
 from tinymce import models as tinymce_models
 
-from golfers.slugify import smart_slugify
+from slugify import smart_slugify
 from paypal.standard.ipn.signals import payment_was_successful, payment_was_flagged
-from golfers.countries import *
+from countries import *
 
 
 # these are the categories of products on the site.

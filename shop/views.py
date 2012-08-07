@@ -22,8 +22,8 @@ import datetime
 import uuid
 
 
-from golfers.shop.models import *
-from golfers.shop.forms import *
+from shop.models import *
+from shop.forms import *
 
 
 

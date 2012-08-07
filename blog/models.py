@@ -1,5 +1,4 @@
 from django.db import models
-from sorl.thumbnail.fields import ImageWithThumbnailsField
 from tinymce import models as tinymce_models
 
 

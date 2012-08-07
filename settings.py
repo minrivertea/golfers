@@ -53,9 +53,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.debug',
     'django.core.context_processors.request',
     'django.core.context_processors.i18n',
-    'golfers.shop.context_processors.get_basket',
-    'golfers.shop.context_processors.get_basket_quantity',
-    'golfers.shop.context_processors.common',
+    'shop.context_processors.get_basket',
+    'shop.context_processors.get_basket_quantity',
+    'shop.context_processors.common',
 )
 
 
@@ -73,7 +73,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 
-ROOT_URLCONF = 'golfers.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_PATH, "templates/")

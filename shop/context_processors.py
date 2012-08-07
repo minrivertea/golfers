@@ -1,10 +1,10 @@
 from django.conf import settings
-from golfers.shop.models import *
-from golfers.shop.views import GetCountry
-from golfers.countries import EUROPE
+from shop.models import *
+from shop.views import GetCountry
+from countries import EUROPE
 
 def common(request):
-    from golfers import settings
+    import settings
     context = {}
     context['paypal_return_url'] = settings.PAYPAL_RETURN_URL
     context['paypal_notify_url'] = settings.PAYPAL_NOTIFY_URL

@@ -34,12 +34,12 @@ sitemaps = {
 }
 
 urlpatterns = patterns('',
-    (r'^', include('golfers.shop.urls')),
+    (r'^', include('shop.urls')),
     (r'^admin/', include(admin.site.urls)),
     url(r'^changelang/(?P<code>[\w-]+)/$', changelang, name="changelang"),
     (r'^paypal/ipn/', include('paypal.standard.ipn.urls')),
     (r'^tinymce/', include('tinymce.urls')),
-    (r'^blog/', include('golfers.blog.urls')),
+    (r'^blog/', include('blog.urls')),
     (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
     (r'^robots\.txt$', direct_to_template, {'template': 'robots.txt', 'mimetype': 'text/plain'}),
     (r'^thefind_a2d56656ceb493db14b4154e1efd631d\.html$', direct_to_template, 
