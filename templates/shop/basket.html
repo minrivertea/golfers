@@ -149,7 +149,9 @@ div.total span.black a {
   <div class="basket-row">
     <div class="remove"></div>
 	<div class="photo">
-		<img src="{% thumbnail thing.item.parent_product.image 100x100 %}"/><br/>
+	    {% thumbnail thing.item.parent_product.image "100x100" crop="center" as im %}
+		<img src="{{ im.url }}"/><br/>
+		{% endthumbnail %}
 	</div>
 
 	<div class="details">

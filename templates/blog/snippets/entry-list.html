@@ -5,7 +5,9 @@
   
   <div class="entry{% if forloop.last %} last{% endif %}">
 	<div class="image">
-		<img src="{% thumbnail thing.promo_image 120x120 crop %}"/>
+	   {% thumbnail thing.promo_image "120x120" crop="center" as im %}
+		<img src="{{ im.url }}"/>
+	   {% endthumbnail %}
   	</div>
   	<div class="text">
   	<span class="entry-meta">{{ thing.date_added|date:"d M Y" }}</span>

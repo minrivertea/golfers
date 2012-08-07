@@ -58,7 +58,9 @@ div#entry-content img {
 			<p class="date"><em>{{ entry.date_added|date:"D d M Y" }}</em></p>
 			<p><em>{{ entry.summary }}</em></p>
 			
-			<img src="{% thumbnail entry.promo_image 250x250 %}">
+			{% thumbnail entry.promo_image "250x250" crop="center" as im %}
+			<img src="{{ im.url }">
+			{% endthumbnail %}
 			
 			<p>{{ entry.content|safe }}</p>
 
