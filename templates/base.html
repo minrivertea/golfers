@@ -89,6 +89,7 @@
 		<div id="container">
 			<div id="language">
 				{% get_current_language as LANGUAGE_CODE %}
+				<a href="{% url changelang 'it' %}" class="{% if LANGUAGE_CODE == 'it' %}selected{% endif %}">{% trans 'Italian' %}</a>
 				<a href="{% url changelang 'fr' %}" class="{% if LANGUAGE_CODE == 'fr' %}selected{% endif %}">{% trans 'French' %}</a>
 				<a href="{% url changelang 'en' %}" class="{% if LANGUAGE_CODE == 'en' %}selected{% endif %}">{% trans 'English' %}</a>
 			</div>	    

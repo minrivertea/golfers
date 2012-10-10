@@ -121,10 +121,13 @@ def GetCountry(request):
     apikey = settings.IPINFO_APIKEY 
     ip = request.META.get('REMOTE_ADDR')
     baseurl = "http://api.ipinfodb.com/v3/ip-country/?key=%s&ip=%s&format=json" % (apikey, ip)
-    urlobj = urllib2.urlopen(baseurl)
+    try:
+        urlobj = urllib2.urlopen(baseurl, timeout=1)
+    except urllib2.URLError, e:
+        print e.reason
+        return None
     
     # get the data
-    url = baseurl + "?" + apikey + "?"
     data = urlobj.read()
     urlobj.close()
     datadict = simplejson.loads(data)

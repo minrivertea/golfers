@@ -20,7 +20,11 @@ def common(request):
         code = request.session['CURRENCY']
         context['currency'] = Currency.objects.get(code=code)
     except:
-        country = GetCountry(request)['countryCode']
+        try:
+            country = GetCountry(request)['countryCode']
+        except:
+            country = 'US'
+            
         currencycode = None
         if country == 'UK':
             currencycode = 'GBP'
