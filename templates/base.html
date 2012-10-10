@@ -55,6 +55,8 @@
 	<div id="container-header">
 	    <div id="header">
 	          
+	          
+	          
 	          <div id="basket">
 	            <div id="inner">
 		          	<img src="/images/cart.png"> 
@@ -62,8 +64,16 @@
 			          		{{ basket_quantity }} item{% plural %}{{ basket_quantity }} items
 			          	{% endblocktrans %}
 		          		- <a href="{% url basket %}">{% trans 'checkout now!' %}</a>
-		          	</div>
+		        </div>
+		        <div id="currency">
+		          	Change your currency:&nbsp;&nbsp;&nbsp;
+		          	<a href="{% url change_currency %}?curr=usd" {% if currency.code == 'USD' %}class="selected"{% endif %}>$</a>
+		          	<a href="{% url change_currency %}?curr=eur" {% if currency.code == 'EUR' %}class="selected"{% endif %}>&euro;</a>
+		          	<a href="{% url change_currency %}?curr=gbp" {% if currency.code == 'GBP' %}class="selected"{% endif %}>&pound;</a>
+	            </div>
 	          </div>
+	          
+	          
 	          
 	     	  <div id="nav">
 	    	    <ul>

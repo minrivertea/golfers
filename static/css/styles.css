@@ -203,7 +203,7 @@ div#header {
     width: auto;
     position: relative;
     top: 20px;
-    right: 50px;
+    right: 20px;
 }
 
 #currency a {
@@ -223,7 +223,7 @@ div#header {
 
 #currency a.us img {position: relative; right: 48px;}
 
-#currency a.strong {
+#currency a.selected {
   font-weight: bold;
   color: #fff;
   opacity: 1;	
