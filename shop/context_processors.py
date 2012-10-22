@@ -25,7 +25,7 @@ def common(request):
     # figure out their currency
     currencycode = 'USD'
     try:
-        currencycode = request.sesasdfasfsion['CURRENCY']
+        currencycode = request.session['CURRENCY']
     except:
         if country == 'UK':
             currencycode = 'GBP'
