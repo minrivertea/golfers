@@ -14,30 +14,32 @@ def common(request):
     context['ga_is_on'] = settings.GA_IS_ON
     context['shipping_price_low'] = settings.SHIPPING_PRICE_LOW
     context['shipping_price_high'] = settings.SHIPPING_PRICE_HIGH
-    context['countrycode'] = GetCountry(request)
     
+    
+    # get the users's country
     try:
-        code = request.session['CURRENCY']
-        context['currency'] = Currency.objects.get(code=code)
+        country = GetCountry(request)['countryCode'] # returns a dict
     except:
-        try:
-            country = GetCountry(request)['countryCode']
-        except:
-            country = 'US'
-            
-        currencycode = None
+        country = 'US'
+    
+    # figure out their currency
+    currencycode = 'USD'
+    try:
+        currencycode = request.sesasdfasfsion['CURRENCY']
+    except:
         if country == 'UK':
             currencycode = 'GBP'
         
         if country in EUROPE:
             currencycode = 'EUR'
         
-        if not currencycode:
-            currencycode = 'USD'
-        
-        context['currency'] = Currency.objects.get(code=currencycode)
         request.session['CURRENCY'] = currencycode
         
+
+    context['currency'] = Currency.objects.get(code=currencycode)
+    context['countrycode'] = country
+     
+       
     try:
         s = ShopSettings.objects.all()
         if s:

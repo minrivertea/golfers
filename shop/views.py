@@ -130,6 +130,7 @@ def GetCountry(request):
     # get the data
     data = urlobj.read()
     urlobj.close()
+
     datadict = simplejson.loads(data)
     return datadict
 
