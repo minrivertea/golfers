@@ -163,12 +163,11 @@ a.browse {
 
 <div id="feature-container">
 	<div id="feature">	
-		{% for product in featured %}	
 			<div class="right">
-				<h1>{{ product.name }}</h1>	
-				<p class="super-short">{{ product.super_short_description }}</p>
-				{{ product.short_description|safe }}
-				<a class="more" href="{% url product_view product.slug %}">{% trans 'Find out more &raquo;' %} </a>
+				<h1>{{ featured.name }}</h1>	
+				<p class="super-short">{{ featured.super_short_description }}</p>
+				{{ featured.short_description|safe }}
+				<a class="more" href="{% url product_view featured.slug %}">{% trans 'Find out more &raquo;' %} </a>
 				<br/>
 				{% include 'shop/snippets/social.html' %}
 				
@@ -200,8 +199,6 @@ a.browse {
 				       
 			</div>
 			
-			
-		{% endfor %}
 	
 		<div class="video">
 			<div class="benefits">

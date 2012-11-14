@@ -1,8 +1,27 @@
 from shop.models import *
+from django import forms
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
+from countries import UK_EU_US_CA
 
 
+class ProductForm(forms.ModelForm):
+    featured_in_countries = forms.MultipleChoiceField(choices=UK_EU_US_CA, widget=forms.SelectMultiple)
+    class Meta:
+        model = Product
+    
+    
+    def clean(self):
+        if self.cleaned_data.get('featured_in_countries'):
+            new_featured_list = ""
+            for x in self.cleaned_data.get('featured_in_countries'):
+                new = "".join((x, ','))
+                new_featured_list = "".join((new_featured_list, new))
+            
+            self.cleaned_data['featured_in_countries'] = str(new_featured_list)
+        return self.cleaned_data
+    
+    
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('invoice_id', 'is_paid', 'owner', 'status') 
     list_filter = ('is_paid', )
@@ -13,6 +32,9 @@ class UniqueProductAdmin(admin.ModelAdmin):
 
 class ProductAdmin(TranslationAdmin):
     #prepopulated_fields = {"slug": ("name",)}
+    form = ProductForm
+    list_display = ('name', 'is_active', 'is_featured', 'featured_in_countries')
+    
     class Media:
         js = (
             '/modeltranslation/js/force_jquery.js',

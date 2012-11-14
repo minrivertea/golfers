@@ -282,10 +282,7 @@ SPAIN = 'ES'
 SWEDEN = 'SE'
 SWITZERLAND = 'CH'
 UNITED_KINGDOM = 'UK'
-
-
-
-COUNTRY_CHOICES = (
+UK_EU_US_CA = (
     (UNITED_STATES, u"USA"),
     (INVALID, u"-----"),
     (AUSTRIA, u"Austria"),
@@ -320,10 +317,10 @@ COUNTRY_CHOICES = (
     (UNITED_KINGDOM, u"United Kingdom"),   
 )
 
-# AMERICA ONLY
+# NORTH AMERICA
 UNITED_STATES = 'US'
 CANADA = 'CA'
-US_ONLY = (
+NORTH_AMERICA = (
     (UNITED_STATES, u"USA"),
     (CANADA, u'Canada'),
 )

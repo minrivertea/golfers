@@ -21,14 +21,6 @@ PRODUCT_CATEGORY = (
 )
 
 
-COUNTRY_OPTIONS = (
-    (u'US_ONLY', u'USA Only'),
-    (u'COUNTRY_CHOICES', u'US and Europe'),
-    (u'ALL_COUNTRIES', u'Worldwide'),
-)
-
-
-
 class ShopSettings(models.Model):
     homepage_meta_description = models.CharField(max_length=200)
     homepage_meta_title = models.CharField(max_length=200)
@@ -51,6 +43,31 @@ class Image(models.Model):
 
     def __unicode__(self):
         return str(self.image)
+
+
+class SeparatedValuesField(models.TextField):
+    __metaclass__ = models.SubfieldBase
+
+    def __init__(self, *args, **kwargs):
+        self.token = kwargs.pop('token', ',')
+        super(SeparatedValuesField, self).__init__(*args, **kwargs)
+
+    def to_python(self, value):
+        if not value: return
+        if isinstance(value, list):
+            return value
+        return value.split(self.token)
+
+    def get_db_prep_value(self, value):
+        if not value: return
+        assert(isinstance(value, list) or isinstance(value, tuple))
+        return self.token.join([unicode(s) for s in value])
+
+    def value_to_string(self, obj):
+        value = self._get_val_from_obj(obj)
+        return self.get_db_prep_value(value)
+
+
 
 class Product(models.Model):
     name = models.CharField(max_length=200, help_text="The product name")
@@ -86,6 +103,7 @@ class Product(models.Model):
     category = models.CharField(max_length=20, choices=PRODUCT_CATEGORIES, db_index=True)
     shipwire_id = models.CharField(max_length=200, help_text="The Shipwire Product Code")
     is_featured = models.BooleanField(default=False, help_text="If ticked, it will appear on homepage")
+    featured_in_countries = SeparatedValuesField(max_length=256, blank=True, null=True)
     is_active = models.BooleanField(default=True, help_text="If checked, product will appear on the site")
         
     def __unicode__(self):
@@ -148,7 +166,7 @@ class Address(models.Model):
     town_city = models.CharField(max_length=200)
     state = models.CharField(max_length=100, choices=US_STATES, blank=True, null=True)
     postcode = models.CharField(max_length=200)
-    country = models.CharField(max_length=3, choices=COUNTRY_CHOICES)
+    country = models.CharField(max_length=3, choices=UK_EU_US_CA)
     phone = models.CharField(max_length=20)
     
     def __unicode__(self):
@@ -188,6 +206,7 @@ class Discount(models.Model):
     def __unicode__(self):
         return "%s (%s)" % (self.name, self.discount_code)
     
+
 class Order(models.Model):
     items = models.ManyToManyField(BasketItem)
     is_confirmed_by_user = models.BooleanField(default=False)

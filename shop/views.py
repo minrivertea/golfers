@@ -145,8 +145,14 @@ def index(request):
             request.session['BASKET_ID'] = basket.id
     else:
         pass
-        
-    featured = Product.objects.filter(is_featured=True) 
+    
+       
+    featured_products = Product.objects.filter(is_featured=True, featured_in_countries__contains='US')#GetCountry(request)['countryCode']) 
+    if featured_products.count() < 1:
+        featured_products = Product.objects.filter(is_featured=True, featured_in_countries__isnull=True)
+    
+    featured = featured_products[0]
+    
     return render(request, "shop/home.html", locals())
 
 
