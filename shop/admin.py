@@ -6,19 +6,19 @@ from countries import UK_EU_US_CA
 
 
 class ProductForm(forms.ModelForm):
-    featured_in_countries = forms.MultipleChoiceField(choices=UK_EU_US_CA, widget=forms.SelectMultiple)
+    only_available_in = forms.MultipleChoiceField(choices=UK_EU_US_CA, widget=forms.SelectMultiple, required=False)
     class Meta:
         model = Product
     
     
     def clean(self):
-        if self.cleaned_data.get('featured_in_countries'):
+        if self.cleaned_data.get('only_available_in'):
             new_featured_list = ""
-            for x in self.cleaned_data.get('featured_in_countries'):
+            for x in self.cleaned_data.get('only_available_in'):
                 new = "".join((x, ','))
                 new_featured_list = "".join((new_featured_list, new))
             
-            self.cleaned_data['featured_in_countries'] = str(new_featured_list)
+            self.cleaned_data['only_available_in'] = str(new_featured_list)
         return self.cleaned_data
     
     
@@ -33,7 +33,7 @@ class UniqueProductAdmin(admin.ModelAdmin):
 class ProductAdmin(TranslationAdmin):
     #prepopulated_fields = {"slug": ("name",)}
     form = ProductForm
-    list_display = ('name', 'is_active', 'is_featured', 'featured_in_countries')
+    list_display = ('name', 'is_active', 'is_featured', 'only_available_in')
     
     class Media:
         js = (

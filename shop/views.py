@@ -147,9 +147,9 @@ def index(request):
         pass
     
        
-    featured_products = Product.objects.filter(is_featured=True, featured_in_countries__contains='US')#GetCountry(request)['countryCode']) 
+    featured_products = Product.objects.filter(is_featured=True, only_available_in__contains=GetCountry(request)['countryCode']) 
     if featured_products.count() < 1:
-        featured_products = Product.objects.filter(is_featured=True, featured_in_countries__isnull=True)
+        featured_products = Product.objects.filter(is_featured=True, only_available_in__isnull=True)
     
     featured = featured_products[0]
     
@@ -176,11 +176,13 @@ def page(request, slug, sub_page=None):
 
 def products(request):            
 
+    
     products = Product.objects.filter()
     prices = UniqueProduct.objects.filter(currency=_get_currency(request))
     products_and_prices = []
     for product in products:
-        products_and_prices.append((product, prices.filter(parent_product=product)))
+        if product.only_available_in is None or GetCountry(request)['countryCode'] in product.only_available_in:
+            products_and_prices.append((product, prices.filter(parent_product=product)))
 
     return render(request, "shop/products.html", locals())
 
