@@ -1,6 +1,6 @@
 {% load thumbnail %}
 
-  {% for thing in entries %}
+  {% for thing in entries.object_list %}
   
   
   <div class="entry{% if forloop.last %} last{% endif %}">
@@ -21,3 +21,20 @@
   </div>
 
   {% endfor %}
+  
+  
+<div class="pagination">
+    <span class="step-links">
+        {% if entries.has_previous %}
+            <a href="?page={{ entries.previous_page_number }}">&laquo; Newer</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+        {% endif %}
+
+        <span class="current">
+            Page {{ entries.number }} of {{ entries.paginator.num_pages }} 
+        </span>
+
+        {% if entries.has_next %}
+            &nbsp;&nbsp;|&nbsp;&nbsp;<a href="?page={{ entries.next_page_number }}">Older &raquo;</a>
+        {% endif %}
+    </span>
+</div>

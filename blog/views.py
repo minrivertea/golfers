@@ -2,6 +2,7 @@ from blog.models import BlogEntry
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse, Http404
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
 from datetime import datetime
 
@@ -13,28 +14,23 @@ def render(request, template, context_dict=None, **kwargs):
     )
 
 def index(request):
-    entries = BlogEntry.objects.filter(is_draft=False, date_added__lte=datetime.now()).order_by('-date_added')[:10]                         
-    return render(request, "blog/home.html", locals())
+    entries_list = BlogEntry.objects.filter(is_draft=False, date_added__lte=datetime.now()).order_by('-date_added')[:10]   
     
-def more(request):
-    entries = BlogEntry.objects.filter(is_draft=False).order_by('-date_added')  
-    return render(request, "blog/more.html", locals())
-    
-def even_more(request):
-    entries = BlogEntry.objects.all().filter(is_draft=False).order_by('-date_added')
-    cool_shit = CoolShit.objects.all().order_by('-date_added')
-    latest = []         
-    for entry in entries:
-        latest.append(dict(
-                           date=entry.date_added,
-                           type=entry.get_type(),
-                           summary=entry.summary,
-                           slug=entry.slug,
-                           title=unicode(entry.title))
-                           ) 
-    latest_things = sorted(latest, reverse=True, key=lambda k: k['date']) 
-    return render(request, "blog/even_more.html", locals())
-    
+    paginator = Paginator(entries_list, 2) # Show 25 contacts per page
+
+    # Make sure page request is an int. If not, deliver first page.
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    # If page request (9999) is out of range, deliver last page of results.
+    try:
+        entries = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        entries = paginator.page(paginator.num_pages)
+                          
+    return render(request, "blog/home.html", locals())    
     
 def blog_entry(request, slug):
     entry = get_object_or_404(BlogEntry, slug=slug)
