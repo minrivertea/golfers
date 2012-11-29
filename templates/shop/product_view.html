@@ -197,7 +197,7 @@ $(document).ready(function() {
 
 	<div id="top">
 		<div id="topleft">
-		{% thumbnail product.image "500x500" crop="center" as im %}
+		{% thumbnail product.image "500" crop="center" as im %}
 		<img class="main" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
 		{% endthumbnail %}
 		</div>
