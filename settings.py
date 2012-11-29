@@ -121,8 +121,8 @@ LANGUAGES = (
 LOCALE_PATHS = (
     os.path.join(PROJECT_PATH, "locale")
 )
-
 MODELTRANSLATION_TRANSLATION_REGISTRY = "translation"
+
 
 
 GA_IS_ON = True

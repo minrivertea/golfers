@@ -218,7 +218,7 @@ $(document).ready(function() {
 			
 			<div class="product-photos-small">	
 			{% if product.image_2 %}
-				{% thumbnail product.image_2 "500x500" crop="center" as im_large %}
+				{% thumbnail product.image_2 "500" crop="" as im_large %}
 				<a class="group" href="{{ im_large.url }}" rel="group1" title="{{ product.image_2_caption }}">
 					{% thumbnail product.image_2 "80x80" crop="center" as im %}
 					<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
@@ -228,7 +228,7 @@ $(document).ready(function() {
 			{% endif %}
 			
 			{% if product.image_3 %}
-			    {% thumbnail product.image_3 "500x500" crop="center" as im_large %}
+			    {% thumbnail product.image_3 "500" crop="" as im_large %}
 				<a class="group"  href="{{ im_large.url }}" rel="group1" title="{{ product.image_3_caption }}">
 				    {% thumbnail product.image_3 "80x80" crop="center" as im %}
 				    <img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
@@ -238,7 +238,7 @@ $(document).ready(function() {
 				{% endthumbnail %}
 			{% endif %}
 			{% if product.image_4 %}
-			    {% thumbnail product.image_4 "500x500" crop="center" as im_large %}
+			    {% thumbnail product.image_4 "500" crop="" as im_large %}
 				<a class="group" href="{{ im_large.url }}" rel="group1" title="{{ product.image_4_caption }}">
 				    {% thumbnail product.image_4 "80x80" crop="center" as im %}
 				    <img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
@@ -247,7 +247,7 @@ $(document).ready(function() {
 				{% endthumbnail %}
 			{% endif %}
 			{% if product.image_5 %}
-			    {% thumbnail product.image_5 "500x500" crop="center" as im_large %}
+			    {% thumbnail product.image_5 "500" crop="" as im_large %}
 				<a class="group"  href="{{ im_large.url }}" rel="group1" title="{{ product.image_5_caption }}">
 				    {% thumbnail product.image_5 "80x80" crop="center" as im %}
 				<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
