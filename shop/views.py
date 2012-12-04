@@ -136,7 +136,7 @@ def GetCountry(request):
     return datadict
 
 def index(request):
-    photos = Photo.objects.filter(published=True).order_by('?')[:1]
+    
     
     if request.user.is_anonymous():
         try:
@@ -161,6 +161,10 @@ def index(request):
     other_reviews = Review.objects.filter(is_published=True).exclude(product=featured)
     reviews = list(chain(featured_reviews, other_reviews))[:2]
     
+    
+    featured_photos = Photo.objects.filter(published=True, related_product=featured)
+    other_photos = Photo.objects.filter(published=True).exclude(related_product=featured)
+    photos = list(chain(featured_photos, other_photos))[:1]
     
     return render(request, "shop/home.html", locals())
 
