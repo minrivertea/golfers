@@ -153,7 +153,7 @@ def index(request):
         try:
             featured = Product.objects.filter(is_featured=True, only_available_in__isnull=True)[0]
         except:
-            featured = None
+            featured = Product.objects.filter(is_active=True)[0]
     
     return render(request, "shop/home.html", locals())
 
