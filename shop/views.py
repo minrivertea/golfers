@@ -20,6 +20,7 @@ from cStringIO import StringIO
 import os, md5
 import datetime
 import uuid
+from itertools import chain
 
 
 from shop.models import *
@@ -136,7 +137,7 @@ def GetCountry(request):
 
 def index(request):
     photos = Photo.objects.filter(published=True).order_by('?')[:1]
-    reviews = Review.objects.filter(is_published=True)[:2]
+    
     if request.user.is_anonymous():
         try:
             basket =  get_object_or_404(Basket, id=request.session['BASKET_ID'])
@@ -154,6 +155,12 @@ def index(request):
             featured = Product.objects.filter(is_featured=True, only_available_in__isnull=True)[0]
         except:
             featured = Product.objects.filter(is_active=True)[0]
+    
+    
+    featured_reviews = Review.objects.filter(is_published=True, product=featured)
+    other_reviews = Review.objects.filter(is_published=True).exclude(product=featured)
+    reviews = list(chain(featured_reviews, other_reviews))[:2]
+    
     
     return render(request, "shop/home.html", locals())
 
