@@ -147,11 +147,13 @@ def index(request):
         pass
     
        
-    featured_products = Product.objects.filter(is_featured=True, only_available_in__contains=GetCountry(request)['countryCode']) 
-    if featured_products.count() < 1:
-        featured_products = Product.objects.filter(is_featured=True, only_available_in__isnull=True)
-    
-    featured = featured_products[0]
+    try:
+        featured = Product.objects.filter(is_featured=True, only_available_in__contains=GetCountry(request)['countryCode'])[0] 
+    except:
+        try:
+            featured = Product.objects.filter(is_featured=True, only_available_in__isnull=True)[0]
+        except:
+            featured = None
     
     return render(request, "shop/home.html", locals())
 
