@@ -103,6 +103,10 @@ class Product(models.Model):
     category = models.CharField(max_length=20, choices=PRODUCT_CATEGORIES, db_index=True)
     shipwire_id = models.CharField(max_length=200, help_text="The Shipwire Product Code")
     is_featured = models.BooleanField(default=False, help_text="If ticked, it will appear on homepage")
+    featured_homepage_content = models.TextField(null=True, blank=True,
+        help_text='If this product is featured, this is the content that appears above the reviews')
+    featured_homepage_video = models.TextField(null=True, blank=True,
+        help_text='The video that appears on the homepage if this is the featured product.')
     only_available_in = SeparatedValuesField(max_length=256, blank=True, null=True)
     is_active = models.BooleanField(default=True, help_text="If checked, product will appear on the site")
         
