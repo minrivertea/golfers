@@ -183,14 +183,18 @@ def page(request, slug, sub_page=None):
     
 
 def products(request):            
-
-    
+    countrycode = GetCountry(request)['countryCode']
     products = Product.objects.filter()
     prices = UniqueProduct.objects.filter(currency=_get_currency(request))
     products_and_prices = []
     for product in products:
-        if product.only_available_in is None or GetCountry(request)['countryCode'] in product.only_available_in:
+        
+        if countrycode not in UK_EU_US_CA:
             products_and_prices.append((product, prices.filter(parent_product=product)))
+        else:
+            if product.only_available_in is None or countrycode in product.only_available_in: 
+                products_and_prices.append((product, prices.filter(parent_product=product)))        
+        
 
     return render(request, "shop/products.html", locals())
 
@@ -311,7 +315,7 @@ def add_to_basket(request, productID):
 
 
 def remove_from_basket(request, productID):
-    product = get_object_or_404(UniqueProduct, id=productID)
+    up = get_object_or_404(UniqueProduct, id=productID)
     if request.user.is_anonymous:
         #try to find out if they alread have a session cookie open with a basket
         try:
@@ -321,11 +325,14 @@ def remove_from_basket(request, productID):
         except BasketDoesNotExist:
             pass
     
-    item = BasketItem.objects.get(
-        basket=basket,
-        item=product,
-    )
-    item.delete()
+    try:
+        item = BasketItem.objects.get(
+            basket=basket,
+            item=up,
+        )
+        item.delete()
+    except:
+        pass
     
     return HttpResponseRedirect('/basket/') # Redirect after POST
     
