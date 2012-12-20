@@ -25,6 +25,7 @@ from itertools import chain
 
 from shop.models import *
 from shop.forms import *
+from countries import EU_NA_SHORT
 
 
 
@@ -189,7 +190,7 @@ def products(request):
     products_and_prices = []
     for product in products:
         
-        if countrycode not in UK_EU_US_CA:
+        if countrycode not in EU_NA_SHORT:
             products_and_prices.append((product, prices.filter(parent_product=product)))
         else:
             if product.only_available_in is None or countrycode in product.only_available_in: 
