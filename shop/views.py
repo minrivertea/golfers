@@ -148,14 +148,22 @@ def index(request):
     else:
         pass
     
-       
+    
+    # THIS IS MESSY, BUT THE WAY RENAN WANTS IT...
+    # first, try to see if there's a product only featured in this country   
     try:
         featured = Product.objects.filter(is_featured=True, only_available_in__contains=GetCountry(request)['countryCode'])[0] 
     except:
+        # otherwise, see if there's a product that has an empty 'Only Available In' list, and is featured
         try:
             featured = Product.objects.filter(is_featured=True, only_available_in__isnull=True)[0]
         except:
-            featured = Product.objects.filter(is_active=True)[0]
+            # last ditch, make the pro-return net the default, even if it's not featured
+            try:
+                featured = Product.objects.get(slug="proreturn-golf-practice-net")        
+            except:
+                # if we can't find the pro-return net for some reason, show any other product.
+                featured = Product.objects.filter(is_active=True)[0]
     
     
     featured_reviews = Review.objects.filter(is_published=True, product=featured)
