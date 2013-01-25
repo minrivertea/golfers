@@ -192,7 +192,10 @@ def page(request, slug, sub_page=None):
     
 
 def products(request):            
-    countrycode = GetCountry(request)['countryCode']
+    try:
+        countrycode = GetCountry(request)['countryCode']
+    except:
+        countrycode = 'US'
     products = Product.objects.filter()
     prices = UniqueProduct.objects.filter(currency=_get_currency(request))
     products_and_prices = []
