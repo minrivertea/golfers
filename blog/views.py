@@ -16,7 +16,7 @@ def render(request, template, context_dict=None, **kwargs):
 def index(request):
     entries_list = BlogEntry.objects.filter(is_draft=False, date_added__lte=datetime.now()).order_by('-date_added')[:10]   
     
-    paginator = Paginator(entries_list, 10) # Show 25 contacts per page
+    paginator = Paginator(entries_list, 10) # Show 10 blogs per page
 
     # Make sure page request is an int. If not, deliver first page.
     try:
@@ -31,6 +31,7 @@ def index(request):
         entries = paginator.page(paginator.num_pages)
                           
     return render(request, "blog/home.html", locals())    
+    
     
 def blog_entry(request, slug):
     entry = get_object_or_404(BlogEntry, slug=slug)

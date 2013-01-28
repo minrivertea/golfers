@@ -152,11 +152,11 @@ def index(request):
     # THIS IS MESSY, BUT THE WAY RENAN WANTS IT...
     # first, try to see if there's a product only featured in this country   
     try:
-        featured = Product.objects.filter(is_featured=True, only_available_in__contains=GetCountry(request)['countryCode'])[0] 
+        featured = Product.objects.filter(is_featured=True, only_available_in__contains=GetCountry(request)['countryCode'], is_active=True)[0] 
     except:
         # otherwise, see if there's a product that has an empty 'Only Available In' list, and is featured
         try:
-            featured = Product.objects.filter(is_featured=True, only_available_in__isnull=True)[0]
+            featured = Product.objects.filter(is_featured=True, only_available_in__isnull=True, is_active=True)[0]
         except:
             # last ditch, make the pro-return net the default, even if it's not featured
             try:
@@ -196,7 +196,7 @@ def products(request):
         countrycode = GetCountry(request)['countryCode']
     except:
         countrycode = 'US'
-    products = Product.objects.filter()
+    products = Product.objects.filter(is_active=True)
     prices = UniqueProduct.objects.filter(currency=_get_currency(request))
     products_and_prices = []
     for product in products:
@@ -234,7 +234,7 @@ def product_view(request, slug):
     
     reviews = Review.objects.filter(is_published=True, product=product)
     prices = UniqueProduct.objects.filter(parent_product=product, currency=_get_currency(request), is_active=True)
-    others = Product.objects.filter(category="GOL").exclude(id=product.id)
+    others = Product.objects.filter(category="GOL", is_active=True).exclude(id=product.id)
     
     notifyform = NotifyForm()
      
@@ -664,67 +664,7 @@ def photos(request):
         photos = Photo.objects.filter(published=True).order_by('-id')[:10]
     
     return render(request, 'shop/photos.html', locals())
-       
-def tell_a_friend(request, slug):
-    tea = get_object_or_404(Product, slug=slug)
-    if request.method == 'POST':
-        form = TellAFriendForm(request.POST)
-        if form.is_valid():
-            
-            # get cleaned data from form submission
-            sender = form.cleaned_data['sender']
-            message = form.cleaned_data['message']
-            recipient = form.cleaned_data['recipient']
-            
-            # create email
-            if message:
-                body = render_to_string('emails/custom_tell_friend.txt', {'message': message, 'slug': tea.slug})
-            else:
-                body = render_to_string('emails/tell_friend.txt', {'sender': sender, 'slug': tea.slug})
-            
-            subject_line = "%s tea on minrivertea.com" % tea.name
-                
-            send_mail(
-                          subject_line, 
-                          body, 
-                          sender,
-                          [recipient], 
-                          fail_silently=False
-            )
-            
-            # create the referrer/referee objects
-            try:
-                referrer = get_object_or_404(Shopper, email=sender)
-                referrer.number_referred += 1
-                referrer.save()
-            except:
-                referrer = Shopper.objects.create(email=sender, number_referred=1)
-                referrer.save()
-            
-            referee = Referee.objects.create(
-                    product=tea,
-                    email=recipient,
-                    referred_by=referrer,
-                    )
-            referee.save()
-                  
-            # send them back to the tea page with a message saying "thanks"      
-            message = "We've sent an email to %s letting them know about this tea - thanks for your help!" % recipient
-            prices = UniqueProduct.objects.filter(parent_product=tea)
-            others = Product.objects.filter(category="TEA").exclude(id=tea.id)
-            return render(request, 'tea_view.html', locals())
-
-        else:
-            if form.non_field_errors():
-                non_field_errors = form.non_field_errors()
-            else:
-                errors = form.errors
-             
-
-    else:
-        form = TellAFriendForm()
-    return render(request, 'forms/tell_a_friend.html', locals())
-
+      
 
 def email_signup(request):
     if request.method == 'POST':
