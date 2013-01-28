@@ -14,7 +14,7 @@ def render(request, template, context_dict=None, **kwargs):
     )
 
 def index(request):
-    entries_list = BlogEntry.objects.filter(is_draft=False, date_added__lte=datetime.now()).order_by('-date_added')[:10]   
+    entries_list = BlogEntry.objects.filter(is_draft=False, date_added__lte=datetime.now()).order_by('-date_added')  
     
     paginator = Paginator(entries_list, 10) # Show 10 blogs per page
 
