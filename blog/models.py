@@ -3,7 +3,7 @@ from tinymce import models as tinymce_models
 
 
 class BlogEntry(models.Model):
-    slug = models.SlugField(max_length=80, help_text="Forms part of the URL - no spaces or special characters")
+    slug = models.SlugField(max_length=80, help_text="Forms part of the URL - no spaces or special characters", unique=True)
     promo_image = models.ImageField(upload_to='images/blog-photos')
     date_added = models.DateField()
     is_draft = models.BooleanField(default=True, help_text="Uncheck this box if you want to publish this blog")
