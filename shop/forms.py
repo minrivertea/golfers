@@ -3,7 +3,7 @@ from django.forms import ModelForm
 from django.contrib.auth.models import User
 
 from shop.models import Address, Order, Discount, Shopper, ShopSettings
-from countries import US_STATES, UK_EU_US_CA, NORTH_AMERICA
+from countries import US_STATES, UK_EU_US_CA, NORTH_AMERICA, ALL_COUNTRIES
 
 from django.contrib.flatpages.models import FlatPage
 from tinymce.widgets import TinyMCE
@@ -34,7 +34,7 @@ class OrderCheckDetailsForm(forms.Form):
     town_city = forms.CharField(max_length=200, required=False)
     state = forms.ChoiceField(choices=US_STATES, required=False)
     postcode = forms.CharField(max_length=200, required=False) 
-    country = forms.ChoiceField(choices=UK_EU_US_CA, required=False)
+    country = forms.ChoiceField(choices=ALL_COUNTRIES, required=False)
     phone = forms.CharField(max_length=100, required=False)
 
     def clean(self):

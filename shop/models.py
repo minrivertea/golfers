@@ -170,7 +170,7 @@ class Address(models.Model):
     town_city = models.CharField(max_length=200)
     state = models.CharField(max_length=100, choices=US_STATES, blank=True, null=True)
     postcode = models.CharField(max_length=200)
-    country = models.CharField(max_length=3, choices=UK_EU_US_CA)
+    country = models.CharField(max_length=3, choices=ALL_COUNTRIES)
     phone = models.CharField(max_length=20)
     
     def __unicode__(self):
