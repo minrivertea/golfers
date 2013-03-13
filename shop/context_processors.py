@@ -19,7 +19,7 @@ def common(request):
     # get the users's country
     try:
         country = GetCountry(request)['countryCode'] # returns a dict
-    except:
+    except:    
         country = 'US'
     
     # figure out their currency

@@ -177,7 +177,7 @@ $(document).ready(function() {
 }
 
 #top #topright p.preorder {
-  background: red;
+  background: #BD1B30;
   padding: 5px 10px;
   color: #fff;
   float: left;
@@ -277,20 +277,22 @@ $(document).ready(function() {
 							{% if price.original_price %}
 								<span class="strikethrough">{{ price.currency.symbol }}{{ price.original_price }}</span>
 							{% endif %}
-						</div>
-						{% if not price.is_active %}
-                            
+						</div> 
+
                             {% if price.parent_product.slug == 'proreturn-golf-practice-net' %}
                                 {% if countrycode == 'US' or countrycode == 'CA' %}
-                                    <p class="preorder">{% trans 'The ProReturn Net will be shipped last week of March using UPS Ground (3-5 working days).' %}</p>
+                                    <p class="preorder">{% trans 'The ProReturn Net will be shipped in the last week of March 2013 using UPS Ground (3-5 working days).' %}</p>
                                 {% endif %}
                             {% endif %}
 
                             {% if price.parent_product.slug == 'proapproach-popup-net' %}
-                                <p class="preorder">{% trans 'This product will be shipped in mid-May (US/Canada) and end-of May in Europe.' %}</p>
+                                {% if countrycode == 'US' or countrycode == 'CA' %}
+                                <p class="preorder">{% trans 'This product will be shipped in mid-May 2013 for US/Canada' %}</p>
+                                {% else %}
+                                <p class="preorder">{% trans 'This product will be shipped at the end-of May 2013 in Europe.' %}</p>
+                                {% endif %}
                             {% endif %}
 
-                        {% endif %}
 					</div>
 				{% endfor %}		      
 			{% endif %}				
