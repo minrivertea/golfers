@@ -288,7 +288,8 @@ $(document).ready(function() {
                             {% if price.parent_product.slug == 'proapproach-popup-net' %}
                                 {% if countrycode == 'US' or countrycode == 'CA' %}
                                 <p class="preorder">{% trans 'This product will be shipped in mid-May 2013 for US/Canada' %}</p>
-                                {% else %}
+                                {% endif %}
+                                {% if countrycode in european_countries %}
                                 <p class="preorder">{% trans 'This product will be shipped at the end-of May 2013 in Europe.' %}</p>
                                 {% endif %}
                             {% endif %}

@@ -196,6 +196,7 @@ def products(request):
         countrycode = GetCountry(request)['countryCode']
     except:
         countrycode = 'US'
+    
     products = Product.objects.filter(is_active=True)
     prices = UniqueProduct.objects.filter(currency=_get_currency(request))
     products_and_prices = []
