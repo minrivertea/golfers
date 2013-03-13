@@ -115,7 +115,11 @@ class Product(models.Model):
         return self.name
       
     def get_absolute_url(self):
-        return "/products/%s/" % self.slug   
+        return "/products/%s/" % self.slug  
+    
+    class Meta:
+
+        ordering = ['-is_active']
 
 class Review(models.Model):
     product = models.ForeignKey(Product)

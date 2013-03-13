@@ -14,7 +14,7 @@ def common(request):
     context['ga_is_on'] = settings.GA_IS_ON
     context['shipping_price_low'] = settings.SHIPPING_PRICE_LOW
     context['shipping_price_high'] = settings.SHIPPING_PRICE_HIGH
-    context['european_countries'] = countries.EUROPE
+    context['european_countries'] = EUROPE
     
     # get the users's country
     try:
