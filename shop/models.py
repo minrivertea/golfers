@@ -180,7 +180,7 @@ class Address(models.Model):
         
 class Basket(models.Model):
     date_modified = models.DateTimeField()
-    owner = models.ForeignKey(Shopper, null=True) #can delete this
+    owner = models.ForeignKey(Shopper, null=True) # TODO - can delete this
     
     def __unicode__(self):
         return str(self.date_modified)
@@ -249,6 +249,7 @@ class Order(models.Model):
         return self.invoice_id
         
 
+# TODO - delete this whole model
 class Photo(models.Model):
     name = models.CharField(max_length=200)
     shopper = models.ForeignKey(Shopper)
@@ -260,7 +261,7 @@ class Photo(models.Model):
     def __unicode__(self):
         return self.name
 
-
+# TODO - delete this whole model
 class Referee(models.Model):
     email = models.EmailField()
     product = models.ForeignKey(Product)
@@ -305,7 +306,7 @@ class Page(models.Model):
             
         return url 
 
-
+# TODO - delete this whole model
 class EmailSignup(models.Model):
     email = models.EmailField()
     date_signed_up = models.DateField()
@@ -316,6 +317,7 @@ class EmailSignup(models.Model):
         return self.email
 
 
+# TODO - delete this whole model
 class Notify(models.Model):
     email = models.EmailField()
     name = models.CharField(max_length=200, blank=True, null=True)
