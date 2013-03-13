@@ -33,7 +33,7 @@ class UniqueProductAdmin(admin.ModelAdmin):
 class ProductAdmin(TranslationAdmin):
     #prepopulated_fields = {"slug": ("name",)}
     form = ProductForm
-    list_display = ('name', 'is_active', 'is_featured', 'only_available_in')
+    list_display = ('name', 'is_active', 'is_featured', 'list_position', 'only_available_in')
     
     class Media:
         js = (
