@@ -7,6 +7,7 @@ from countries import US_STATES, UK_EU_US_CA, NORTH_AMERICA, ALL_COUNTRIES
 
 from django.contrib.flatpages.models import FlatPage
 from tinymce.widgets import TinyMCE
+from captcha.fields import CaptchaField
 
 
 
@@ -59,6 +60,8 @@ class ContactForm(forms.Form):
     your_email = forms.EmailField(required=True, error_messages={'required': 'Please enter a valid email address'})
     your_message = forms.CharField(widget=forms.Textarea, required=False)
     country = forms.CharField(required=True)
+    captcha = CaptchaField()
+
 
 SHIPPING_CHOICES = (
     (u'high', u'UPS Fast'),

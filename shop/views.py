@@ -10,6 +10,8 @@ from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.utils import simplejson
 from django.db.models import Q
+from django.utils.translation import ugettext as _
+
 
 import urllib
 import urllib2
@@ -184,7 +186,9 @@ def page(request, slug, sub_page=None):
     template = "shop/page.html"
     
     page = get_object_or_404(Page, slug=slug)
-        
+    if page.slug == _('contact-us'):
+        form = ContactForm()
+
     if page.template:
         template = page.template
     
@@ -290,7 +294,7 @@ def contact_us_submit(request):
                           fail_silently=False,
             )
             request.session['MESSAGE'] = "1"
-            return HttpResponseRedirect('/contact-us/') 
+            return HttpResponseRedirect('/contact-us/')
     else:
         form = ContactForm() 
     

@@ -98,6 +98,16 @@ div.left p.help-text {
     top: 10px;
 }
 
+div.left p.help-text.captcha {
+    left: 110px;
+    margin-bottom: 40px;
+}
+
+div.left input#id_captcha_1 {
+  width: 200px;  
+  margin: 0 30px 10px 0; 
+}
+
 </style>
 {% endblock %}
 
@@ -129,7 +139,9 @@ div.left p.help-text {
 
 		<h2>Send us a message</h2>
 				<form action="/contact-us/submit/" method="post">
+				
 				<p>
+				{{ form.your_name.errors }}
 				<label for="id_your_name">Your name:</label> 
 				<input type="text" name="your_name" id="id_your_name" />
 				</p>
@@ -148,6 +160,11 @@ div.left p.help-text {
 				<label for="id_your_message">Your message:</label> 
 				<textarea id="id_your_message" rows="10" cols="40" name="your_message"></textarea>
 				</p>
+				<label>&nbsp;</label>
+
+				{{ form.captcha }}
+				<p class="help-text captcha {% if form.captcha.errors %}red{% endif %}">Please fill in the captcha - it helps reduce spam.</p>
+
 				<input class="submit-button" value="Submit &raquo;" type="submit">
 				<p class="help-text">
 					* We will never share, sell or spam your email address

@@ -36,6 +36,7 @@ sitemaps = {
 urlpatterns = patterns('',
     (r'^', include('shop.urls')),
     (r'^admin/', include(admin.site.urls)),
+    (r'^captcha/', include('captcha.urls')),
     url(r'^changelang/(?P<code>[\w-]+)/$', changelang, name="changelang"),
     (r'^paypal/ipn/', include('paypal.standard.ipn.urls')),
     (r'^tinymce/', include('tinymce.urls')),

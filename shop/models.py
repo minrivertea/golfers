@@ -109,7 +109,8 @@ class Product(models.Model):
         help_text='The video that appears on the homepage if this is the featured product.')
     only_available_in = SeparatedValuesField(max_length=256, blank=True, null=True)
     is_active = models.BooleanField(default=True, help_text="If checked, product will appear on the site")
-    list_position = models.IntegerField(null=True, blank=True)
+    list_position = models.IntegerField(null=True, blank=True,
+        help_text='The position it will appear in listing pages. For example, write 1 and the item appears first')
         
     def __unicode__(self):
         return self.name
