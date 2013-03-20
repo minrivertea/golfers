@@ -99,8 +99,8 @@ INSTALLED_APPS = (
 
 # DJANGO-CAPTCHA
 # -----------------------------------------------
-CAPTCHA_FONT_SIZE = 35
-CAPTCHA_LETTER_ROTATION = None
+#CAPTCHA_FONT_SIZE = 35
+#CAPTCHA_LETTER_ROTATION = None
 
 # Random app information for different things
 ACCOUNT_ACTIVATION_DAYS = 7
