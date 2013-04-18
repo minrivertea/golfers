@@ -1,15 +1,14 @@
 from django.conf import settings
 from shop.models import *
 from shop.views import GetCountry
-from countries import EUROPE
+from countries import EUROPE, EUROPE_INCLUDING_UK
 
 def common(request):
     import settings
     context = {}
     context['paypal_return_url'] = settings.PAYPAL_RETURN_URL
     context['paypal_notify_url'] = settings.PAYPAL_NOTIFY_URL
-    context['paypal_business_name'] = settings.PAYPAL_BUSINESS_NAME
-    context['paypal_receiver_email'] = settings.PAYPAL_RECEIVER_EMAIL
+    context['paypal_business_name'] = settings.PAYPAL_BUSINESS_NAME    
     context['paypal_submit_url'] = settings.PAYPAL_SUBMIT_URL
     context['ga_is_on'] = settings.GA_IS_ON
     context['shipping_price_low'] = settings.SHIPPING_PRICE_LOW
@@ -21,6 +20,19 @@ def common(request):
         country = GetCountry(request)['countryCode'] # returns a dict
     except:    
         country = 'US'
+    
+    if country == '-':
+        country = 'UK'
+    print "COUNTRY IS %s" % country
+    
+    # change paypal account depending on location
+    if country in EUROPE_INCLUDING_UK:
+        context['paypal_receiver_email'] = settings.PAYPAL_RECEIVER_EMAIL
+    else:
+        context['paypal_receiver_email'] = settings.PAYPAL_RECEIVER_EMAIL_INTERNATIONAL
+
+
+    
     
     # figure out their currency
     currencycode = 'USD'
