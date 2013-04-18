@@ -21,10 +21,6 @@ def common(request):
     except:    
         country = 'US'
     
-    if country == '-':
-        country = 'UK'
-    print "COUNTRY IS %s" % country
-    
     # change paypal account depending on location
     if country in EUROPE_INCLUDING_UK:
         context['paypal_receiver_email'] = settings.PAYPAL_RECEIVER_EMAIL
