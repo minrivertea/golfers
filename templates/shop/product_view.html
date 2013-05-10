@@ -281,13 +281,13 @@ $(document).ready(function() {
 
                             {% if price.parent_product.slug == 'proreturn-golf-practice-net' %}
                                 {% if countrycode == 'US' or countrycode == 'CA' %}
-                                    <p class="preorder">{% trans 'The ProReturn Net will be shipped in mid-May for customers in the US and Canada using UPS Ground (3-5 working days). Thanks for your patience!' %}</p>
+                                    <p class="preorder">{% trans 'The ProReturn Net will start shipping on 5/6 June for customers in the US and Canada using UPS Ground (3-5 working days). Thanks for your patience!' %}</p>
                                 {% endif %}
                             {% endif %}
 
                             {% if price.parent_product.slug == 'proapproach-popup-net' %}
                                 {% if countrycode == 'US' or countrycode == 'CA' %}
-                                <p class="preorder">{% trans 'This product will be shipped in mid-May 2013 for US/Canada' %}</p>
+                                <p class="preorder">{% trans 'This product will start shipping on 5/6 June for customers in US/Canada' %}</p>
                                 {% endif %}
                                 {% if countrycode in european_countries %}
                                 <p class="preorder">{% trans 'This product will be shipped at the end-of May 2013 in Europe.' %}</p>
