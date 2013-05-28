@@ -45,7 +45,7 @@ def calculate_shipping(request, order_id):
     	     'currency_code': currency.code,
     	})
     	
-    data = data.encode('utf-8', 'replace') # important for handling weird chatacters
+    data = data.encode('utf-8', 'replace') # important for handling weird characters like accents in French
 
     req = urllib2.Request(url, data)
     response = urllib2.urlopen(req)

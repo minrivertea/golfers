@@ -10,7 +10,7 @@
             <Address2>{{ order.address.address_line_1|safe }}</Address2>
             <City>{{ order.address.town_city }}</City>
             <State>{{ order.address.state }}</State>
-            <Country>{{ order.address.country }}</Country>
+            <Country>{% if order.address.country %}{{ order.address.country }}{% else %}US{% endif %}</Country>
             <Zip>{{ order.address.postcode }}</Zip>
         </AddressInfo>
         {% for item in order.items.all %}
