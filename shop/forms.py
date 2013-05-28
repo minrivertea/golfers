@@ -42,6 +42,7 @@ class OrderCheckDetailsForm(forms.Form):
         cleaned_data = self.cleaned_data
         postcode = cleaned_data.get("postcode")
         address_line_1 = cleaned_data.get('address_line_1')
+        country = cleaned_data.get("country")
         if not postcode:
              if not address_line_1:
                  raise forms.ValidationError("* You must provide a postcode and the first line of your address")
@@ -50,6 +51,8 @@ class OrderCheckDetailsForm(forms.Form):
         
         if not address_line_1:
                 raise forms.ValidationError("* You must provide the first line of your address")
+        if country == 'INVALID':
+            raise forms.ValidationError('Please provide your country')
         
         
         return cleaned_data
