@@ -36,7 +36,7 @@ class OrderCheckDetailsForm(forms.Form):
     state = forms.ChoiceField(choices=US_STATES, required=False)
     postcode = forms.CharField(max_length=200, required=False) 
     country = forms.ChoiceField(choices=ALL_COUNTRIES, required=True)
-    phone = forms.CharField(max_length=100, required=False)
+    phone = forms.CharField(max_length=100, required=True)
 
     def clean(self):
         cleaned_data = self.cleaned_data
