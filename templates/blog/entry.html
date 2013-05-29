@@ -59,7 +59,7 @@ div#entry-content img {
 			<p><em>{{ entry.summary }}</em></p>
 			
 			{% thumbnail entry.promo_image "250x250" crop="center" as im %}
-			<img src="{{ im.url }">
+			 <img src="{{ im.url }}">
 			{% endthumbnail %}
 			
 			<p>{{ entry.content|safe }}</p>
