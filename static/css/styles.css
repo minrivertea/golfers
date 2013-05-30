@@ -683,6 +683,6 @@ div#footer ul li a:link, div#footer ul li a:visited {
 
 #infobar {
   width: 100%;
-  padding: 10px;
+  padding: 10px 0;
   background: pink;   
 }
