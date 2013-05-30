@@ -238,8 +238,7 @@ def product_view(request, slug):
     
     
     reviews = Review.objects.filter(is_published=True, product=product)
-    currency = RequestContext(request).get("currency")
-    prices = UniqueProduct.objects.filter(parent_product=product, currency=currency)
+    prices = UniqueProduct.objects.filter(parent_product=product, currency=_get_currency(request))
     others = Product.objects.filter(category="GOL", is_active=True).exclude(id=product.id)
     
     notifyform = NotifyForm()

@@ -2,6 +2,7 @@ from django.conf import settings
 from shop.models import *
 from shop.views import GetCountry
 from countries import EUROPE, EUROPE_INCLUDING_UK
+from shop.views import _get_currency
 
 def common(request):
     import settings
@@ -22,6 +23,8 @@ def common(request):
     except:    
         country = 'US'
     
+    
+    country = 'FR'
     context['countrycode'] = country
         
         
@@ -35,15 +38,17 @@ def common(request):
     
     
     # figure out their currency
-    currencycode = 'USD'
+    currency = _get_currency(request)
+    
+    # NOW FORCE UK / EU SPECIFIC CURRENCIES
     if country == 'UK':
-        currencycode = 'GBP'
+        currency = Currency.objects.get(code='GBP')
     
     if country in EUROPE:
-        currencycode = 'EUR'        
+        currency = Currency.objects.get(code='EUR')     
         
-    request.session['CURRENCY'] = currencycode
-    context['currency'] = Currency.objects.get(code=currencycode)
+    request.session['CURRENCY'] = currency.code
+    context['currency'] = currency
     
      
        
