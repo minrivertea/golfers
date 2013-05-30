@@ -14,12 +14,15 @@ def common(request):
     context['shipping_price_low'] = settings.SHIPPING_PRICE_LOW
     context['shipping_price_high'] = settings.SHIPPING_PRICE_HIGH
     context['european_countries'] = EUROPE
+    context['debug'] = settings.DEBUG
     
     # get the users's country
     try:
         country = GetCountry(request)['countryCode'] # returns a dict
     except:    
         country = 'US'
+    
+    country = 'UK'
     
     # change paypal account depending on location
     if country in EUROPE_INCLUDING_UK:

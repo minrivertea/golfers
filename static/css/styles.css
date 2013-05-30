@@ -676,3 +676,13 @@ div#footer ul li a:link, div#footer ul li a:visited {
   background-position: -160px 0px;	
 }
 
+.container {
+  width: 960px;
+  margin: 0 auto;   
+}
+
+#infobar {
+  width: 100%;
+  padding: 10px;
+  background: pink;   
+}

@@ -52,6 +52,13 @@
 </head>
 
 <body>	
+
+    {% if request.user.is_superuser %}
+    <div id="infobar">
+        <div class="container">{{ countrycode }} | {{ paypal_receiver_email }}</div>
+    </div>
+    {% endif %}
+
 	<div id="container-header">
 	    <div id="header">
 	          
