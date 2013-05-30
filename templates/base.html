@@ -72,12 +72,18 @@
 			          	{% endblocktrans %}
 		          		- <a href="{% url basket %}">{% trans 'checkout now!' %}</a>
 		        </div>
+		        
+		        {% if countrycode in european_countries %}
+		        {% else %}
 		        <div id="currency">
 		          	Change your currency:&nbsp;&nbsp;&nbsp;
 		          	<a href="{% url change_currency %}?curr=usd" {% if currency.code == 'USD' %}class="selected"{% endif %}>$</a>
 		          	<a href="{% url change_currency %}?curr=eur" {% if currency.code == 'EUR' %}class="selected"{% endif %}>&euro;</a>
 		          	<a href="{% url change_currency %}?curr=gbp" {% if currency.code == 'GBP' %}class="selected"{% endif %}>&pound;</a>
 	            </div>
+	            {% endif %}
+	          
+	          
 	          </div>
 	          
 	          

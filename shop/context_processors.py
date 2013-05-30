@@ -21,6 +21,10 @@ def common(request):
         country = GetCountry(request)['countryCode'] # returns a dict
     except:    
         country = 'US'
+    
+    context['countrycode'] = country
+        
+        
         
     # change paypal account depending on location
     if country in EUROPE_INCLUDING_UK:
@@ -28,25 +32,19 @@ def common(request):
     else:
         context['paypal_receiver_email'] = settings.PAYPAL_RECEIVER_EMAIL_INTERNATIONAL
 
-
     
     
     # figure out their currency
     currencycode = 'USD'
-    try:
-        currencycode = request.session['CURRENCY']
-    except:
-        if country == 'UK':
-            currencycode = 'GBP'
+    if country == 'UK':
+        currencycode = 'GBP'
+    
+    if country in EUROPE:
+        currencycode = 'EUR'        
         
-        if country in EUROPE:
-            currencycode = 'EUR'
-        
-        request.session['CURRENCY'] = currencycode
-        
-
+    request.session['CURRENCY'] = currencycode
     context['currency'] = Currency.objects.get(code=currencycode)
-    context['countrycode'] = country
+    
      
        
     try:
