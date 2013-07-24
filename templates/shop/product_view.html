@@ -186,6 +186,10 @@ $(document).ready(function() {
   border-radius: 5px;
 }
 
+.red {
+  color: red;   
+}
+
 </style>
 {% endblock %}
 
@@ -273,23 +277,22 @@ $(document).ready(function() {
 					<div class="prices">
 						<a href="{% url add_to_basket price.id %}">Add to basket</a>
 						<div class="price">
-						
-						  {% if product.slug == _('proreturn-golf-practice-net') %}
-							{% if countrycode in europe_and_uk or countrycode == 'UK' %}
-							<p>Please note that we are currently out of stock until end of August. You can pre-order now with free shipping.</p>
-							{% endif %}
-					       {% endif %}
-							
+													
 							{{ price.currency.symbol }}{{ price.price }} 
 							{% if price.original_price %}
 								<span class="strikethrough">{{ price.currency.symbol }}{{ price.original_price }}</span>
 							{% endif %}
-						</div> 
-
+						</div> 						
 					</div>
 				{% endfor %}		      
 			{% endif %}				
 			
+			
+			{% if product.slug == _('proreturn-golf-practice-net') %}
+				{% if countrycode in europe_and_uk or countrycode == 'UK' %}
+				    <p class="red">{% trans 'Please note that we are currently out of stock until end of August. You can pre-order now with free shipping.' %}</p>
+				{% endif %}
+		    {% endif %}
 		
 		</div>		
 		
