@@ -21,6 +21,9 @@
 		});
 		}
 		
+		
+		{% if countrycode in european_countries or countrycode == 'UK' %}
+		{% else %}
 		function calculateShipping() {
 			$.ajax({
 			    url: '{% url calculate_shipping order.id %}',
@@ -43,7 +46,8 @@
 			        $('#postage-loading').toggle();
                 }  
 			});
-		}
+		 }
+		 {% endif %}
 		
 		
 		$(document).ready( function() {
@@ -111,7 +115,13 @@ div.row {
 
 		<input type="hidden" name="item_name_1" value="Shipping"> 
 		<input type="hidden" name="quantity_1" value="1">
+		
+		
+		{% if countrycode in european_countries or countrycode == 'UK' %}
+		  <input type="hidden" name="amount_1" value="0.00" id="shipping-price">
+		{% else %}
 		<input type="hidden" name="amount_1" value="{% if shopsettings.use_shipwire %}{% else %}{{ shopsettings.flatrate_shipping_cost|floatformat:'2' }}{% endif %}" id="shipping-price">
+		{% endif %}
 		 
 		 
 		{% for thing in basket_items %}
@@ -134,10 +144,10 @@ div.row {
 
 		{% for thing in basket_items %}
 		  <tr>
-	    	<td width="200px">
+	    	<td width="300px">
 	    		{{ thing.quantity }} X {{ thing.item.parent_product.name }}
 	    	</td>
-	    	<td width="350px">
+	    	<td width="320px">
 	
 	    	</td>
 	    	<td>{{ thing.item.currency.symbol }}{{ thing.get_price }}</td>
@@ -147,8 +157,20 @@ div.row {
 		 
 		 {% if shopsettings.use_shipwire %}
 		  <tr id="quotes">
-		  	<td><em>&nbsp;</em></td>
-		  	<td style="font-size: 12px;"><img style="position: relative; top: 5px; left: -10px;height: 20px; width: 20px;" src="/images/loading.gif" id="postage-loading"/><em>{% trans 'Just calculating shipping rates now… please wait' %}</em></td>
+		  	<td>
+		  	   {% if countrycode in european_countries or countrycode == 'UK' %}
+		  	   <em>Shipping is free for this order</em>
+		  	   {% else %}
+		  	   <em>&nbsp;</em>
+		  	   {% endif %}
+		  	</td>
+		  	   
+		  	<td style="font-size: 12px; text-align: left;">
+		  	   {% if countrycode in european_countries or countrycode == 'UK' %}
+		  	   {% else %}
+		  	   <img style="position: relative; top: 5px; left: -10px;height: 20px; width: 20px;" src="/images/loading.gif" id="postage-loading"/><em>{% trans 'Just calculating shipping rates now… please wait' %}</em>
+		  	   {% endif %}
+		  	</td>
 		  	<td>&nbsp;</td>
 		  			  
 		  </tr>

@@ -273,6 +273,13 @@ $(document).ready(function() {
 					<div class="prices">
 						<a href="{% url add_to_basket price.id %}">Add to basket</a>
 						<div class="price">
+						
+						  {% if product.slug == _('proreturn-golf-practice-net') %}
+							{% if countrycode in european_countries or countrycode == 'UK' %}
+							<p>Please note that we are currently out of stock until end of August. You can pre-order now with free shipping.</p>
+							{% endif %}
+					       {% endif %}
+							
 							{{ price.currency.symbol }}{{ price.price }} 
 							{% if price.original_price %}
 								<span class="strikethrough">{{ price.currency.symbol }}{{ price.original_price }}</span>
