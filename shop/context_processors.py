@@ -23,7 +23,7 @@ def common(request):
         country = GetCountry(request)['countryCode'] # returns a dict
     except:    
         country = 'US'
-    country = 'UK'
+
     context['countrycode'] = country
         
         
