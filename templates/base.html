@@ -67,9 +67,7 @@
 	          <div id="basket">
 	            <div id="inner">
 		          	<img src="/images/cart.png"> 
-			          	{% blocktrans count basket_quantity as counter %}
-			          		{{ basket_quantity }} item{% plural %}{{ basket_quantity }} items
-			          	{% endblocktrans %}
+			          	{{ basket_quantity }} {% blocktrans count basket_quantity as counter %}item{% plural %}{{ basket_quantity }}items{% endblocktrans %}
 		          		- <a href="{% url basket %}">{% trans 'checkout now!' %}</a>
 		        </div>
 		        

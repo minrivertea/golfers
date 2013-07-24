@@ -137,11 +137,7 @@ div.total span.black a {
 {% else %}
 
 <p class="introduction">
-	{% blocktrans count basket_quantity as counter %}
-	You currently have {{ basket_quantity }} item in your basket
-	{% plural %}
-	You currently have {{ basket_quantity }} items in your basket
-	{% endblocktrans %}
+	{% blocktrans count basket_quantity as counter %}You currently have {{ basket_quantity }} item in your basket{% plural %}You currently have {{ basket_quantity }} items in your basket{% endblocktrans %}
 </p>
 
       
