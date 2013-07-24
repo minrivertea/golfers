@@ -22,7 +22,7 @@
 		}
 		
 		
-		{% if countrycode in european_countries or countrycode == 'UK' %}
+		{% if countrycode in europe_and_uk or countrycode == 'UK' %}
 		{% else %}
 		function calculateShipping() {
 			$.ajax({
@@ -117,7 +117,7 @@ div.row {
 		<input type="hidden" name="quantity_1" value="1">
 		
 		
-		{% if countrycode in european_countries or countrycode == 'UK' %}
+		{% if countrycode in europe_and_uk or countrycode == 'UK' %}
 		  <input type="hidden" name="amount_1" value="0.00" id="shipping-price">
 		{% else %}
 		<input type="hidden" name="amount_1" value="{% if shopsettings.use_shipwire %}{% else %}{{ shopsettings.flatrate_shipping_cost|floatformat:'2' }}{% endif %}" id="shipping-price">
@@ -158,7 +158,7 @@ div.row {
 		 {% if shopsettings.use_shipwire %}
 		  <tr id="quotes">
 		  	<td>
-		  	   {% if countrycode in european_countries or countrycode == 'UK' %}
+		  	   {% if countrycode in europe_and_uk or countrycode == 'UK' %}
 		  	   <em>Shipping is free for this order</em>
 		  	   {% else %}
 		  	   <em>&nbsp;</em>
@@ -166,7 +166,7 @@ div.row {
 		  	</td>
 		  	   
 		  	<td style="font-size: 12px; text-align: left;">
-		  	   {% if countrycode in european_countries or countrycode == 'UK' %}
+		  	   {% if countrycode in europe_and_uk or countrycode == 'UK' %}
 		  	   {% else %}
 		  	   <img style="position: relative; top: 5px; left: -10px;height: 20px; width: 20px;" src="/images/loading.gif" id="postage-loading"/><em>{% trans 'Just calculating shipping rates now… please wait' %}</em>
 		  	   {% endif %}

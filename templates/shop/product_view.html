@@ -275,7 +275,7 @@ $(document).ready(function() {
 						<div class="price">
 						
 						  {% if product.slug == _('proreturn-golf-practice-net') %}
-							{% if countrycode in european_countries or countrycode == 'UK' %}
+							{% if countrycode in europe_and_uk or countrycode == 'UK' %}
 							<p>Please note that we are currently out of stock until end of August. You can pre-order now with free shipping.</p>
 							{% endif %}
 					       {% endif %}

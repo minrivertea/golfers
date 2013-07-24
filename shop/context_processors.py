@@ -15,6 +15,7 @@ def common(request):
     context['shipping_price_low'] = settings.SHIPPING_PRICE_LOW
     context['shipping_price_high'] = settings.SHIPPING_PRICE_HIGH
     context['european_countries'] = EUROPE
+    context['europe_and_uk'] = EUROPE_INCLUDING_UK
     context['debug'] = settings.DEBUG
     
     # get the users's country
