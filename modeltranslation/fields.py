@@ -1,15 +1,36 @@
 # -*- coding: utf-8 -*-
-import sys
-from warnings import warn
-
-from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
-from django.db.models.fields import Field, CharField, TextField
+from django.db.models import fields
 
-from modeltranslation.settings import *
-from modeltranslation.utils import (get_language,
-                                    build_localized_fieldname,
-                                    build_localized_verbose_name)
+from modeltranslation import settings as mt_settings
+from modeltranslation.utils import (
+    get_language, build_localized_fieldname, build_localized_verbose_name, resolution_order)
+
+
+SUPPORTED_FIELDS = (
+    fields.CharField,
+    # Above implies also CommaSeparatedIntegerField, EmailField, FilePathField, SlugField
+    # and URLField as they are subclasses of CharField.
+    fields.TextField,
+    fields.IntegerField,
+    # Above implies also BigIntegerField, SmallIntegerField, PositiveIntegerField and
+    # PositiveSmallIntegerField, as they are subclasses of IntegerField.
+    fields.BooleanField,
+    fields.NullBooleanField,
+    fields.FloatField,
+    fields.DecimalField,
+    fields.IPAddressField,
+    fields.DateField,
+    fields.DateTimeField,
+    fields.TimeField,
+    fields.files.FileField,
+    fields.files.ImageField,
+    fields.related.ForeignKey,
+)
+try:
+    SUPPORTED_FIELDS += (fields.GenericIPAddressField,)  # Django 1.4+ only
+except AttributeError:
+    pass
 
 
 def create_translation_field(model, field_name, lang):
@@ -22,20 +43,29 @@ def create_translation_field(model, field_name, lang):
 
         MODELTRANSLATION_CUSTOM_FIELDS = ('MyField', 'MyOtherField',)
 
-    If the class is neither a subclass of CharField or TextField, nor
+    If the class is neither a subclass of fields in ``SUPPORTED_FIELDS``, nor
     in ``CUSTOM_FIELDS`` an ``ImproperlyConfigured`` exception will be raised.
     """
     field = model._meta.get_field(field_name)
     cls_name = field.__class__.__name__
-    # No subclass required for text-like fields
-    if not (isinstance(field, (CharField, TextField)) or\
-            cls_name in CUSTOM_FIELDS):
-        raise ImproperlyConfigured('%s is not supported by '
-                                   'modeltranslation.' % cls_name)
-    return TranslationField(translated_field=field, language=lang)
+    if not (isinstance(field, SUPPORTED_FIELDS) or cls_name in mt_settings.CUSTOM_FIELDS):
+        raise ImproperlyConfigured(
+            '%s is not supported by modeltranslation.' % cls_name)
+    translation_class = field_factory(field.__class__)
+    return translation_class(translated_field=field, language=lang)
 
 
-class TranslationField(Field):
+def field_factory(baseclass):
+    class TranslationFieldSpecific(TranslationField, baseclass):
+        pass
+
+    # Reflect baseclass name of returned subclass
+    TranslationFieldSpecific.__name__ = 'Translation%s' % baseclass.__name__
+
+    return TranslationFieldSpecific
+
+
+class TranslationField(object):
     """
     The translation field functions as a proxy to the original field which is
     wrapped.
@@ -57,106 +87,164 @@ class TranslationField(Field):
         # Update the dict of this field with the content of the original one
         # This might be a bit radical?! Seems to work though...
         self.__dict__.update(translated_field.__dict__)
-        self._post_init(translated_field, language)
 
-    def _post_init(self, translated_field, language):
-        """Common init for subclasses of TranslationField."""
         # Store the originally wrapped field for later
         self.translated_field = translated_field
         self.language = language
 
         # Translation are always optional (for now - maybe add some parameters
         # to the translation options for configuring this)
-        self.null = True
+
+        if not isinstance(self, fields.BooleanField):
+            # TODO: Do we really want to enforce null *at all*? Shouldn't this
+            # better honour the null setting of the translated field?
+            self.null = True
         self.blank = True
 
         # Adjust the name of this field to reflect the language
-        self.attname = build_localized_fieldname(self.translated_field.name,
-                                                 self.language)
+        self.attname = build_localized_fieldname(self.translated_field.name, self.language)
         self.name = self.attname
 
         # Copy the verbose name and append a language suffix
         # (will show up e.g. in the admin).
-        self.verbose_name =\
-        build_localized_verbose_name(translated_field.verbose_name, language)
+        self.verbose_name = build_localized_verbose_name(translated_field.verbose_name, language)
 
-    def pre_save(self, model_instance, add):
-        val = super(TranslationField, self).pre_save(model_instance, add)
-        if DEFAULT_LANGUAGE == self.language and not add:
-            # Rule is: 3. Assigning a value to a translation field of the
-            # default language also updates the original field
-            model_instance.__dict__[self.translated_field.attname] = val
-        return val
+        # ForeignKey support - rewrite related_name
+        if self.rel and self.related and not self.rel.is_hidden():
+            import copy
+            current = self.related.get_accessor_name()
+            self.rel = copy.copy(self.rel)  # Since fields cannot share the same rel object.
+            # self.related doesn't need to be copied, as it will be recreated in
+            # ``RelatedField.do_related_class``
 
-    def get_prep_value(self, value):
-        if value == '':
-            value = None
-        return self.translated_field.get_prep_value(value)
+            if self.rel.related_name is None:
+                # For implicit related_name use different query field name
+                loc_related_query_name = build_localized_fieldname(
+                    self.related_query_name(), self.language)
+                self.related_query_name = lambda: loc_related_query_name
+            self.rel.related_name = build_localized_fieldname(current, self.language)
+            self.rel.field = self  # Django 1.6
+            if hasattr(self.rel.to._meta, '_related_objects_cache'):
+                del self.rel.to._meta._related_objects_cache
 
-    def get_prep_lookup(self, lookup_type, value):
-        return self.translated_field.get_prep_lookup(lookup_type, value)
+    # Django 1.5 changed definition of __hash__ for fields to be fine with hash requirements.
+    # It spoiled our machinery, since TranslationField has the same creation_counter as its
+    # original field and fields didn't get added to sets.
+    # So here we override __eq__ and __hash__ to fix the issue while retaining fine with
+    # http://docs.python.org/2.7/reference/datamodel.html#object.__hash__
+    def __eq__(self, other):
+        if isinstance(other, fields.Field):
+            return (self.creation_counter == other.creation_counter and
+                    self.language == getattr(other, 'language', None))
+        return super(TranslationField, self).__eq__(other)
 
-    def to_python(self, value):
-        return self.translated_field.to_python(value)
+    def __ne__(self, other):
+        return not self.__eq__(other)
 
-    def get_internal_type(self):
-        return self.translated_field.get_internal_type()
+    def __hash__(self):
+        return hash((self.creation_counter, self.language))
+
+    def get_attname_column(self):
+        attname = self.get_attname()
+        if self.translated_field.db_column:
+            column = build_localized_fieldname(self.translated_field.db_column)
+        else:
+            column = attname
+        return attname, column
+
+    def save_form_data(self, instance, data):
+        # Allow 3rd-party apps forms to be saved using only translated field name.
+        # When translated field (e.g. 'name') is specified and translation field (e.g. 'name_en')
+        # not, we assume that form was saved without knowledge of modeltranslation and we make
+        # things right:
+        # Translated field is saved first, settings respective translation field value. Then
+        # translation field is being saved without value - and we handle this here (only for
+        # active language).
+        if self.language == get_language() and getattr(instance, self.name) and not data:
+            return
+        super(TranslationField, self).save_form_data(instance, data)
 
     def south_field_triple(self):
-        """Returns a suitable description of this field for South."""
+        """
+        Returns a suitable description of this field for South.
+        """
         # We'll just introspect the _actual_ field.
         from south.modelsinspector import introspector
-        field_class = '%s.%s' % (self.translated_field.__class__.__module__,
-                                 self.translated_field.__class__.__name__)
+        try:
+            # Check if the field provides its own 'field_class':
+            field_class = self.translated_field.south_field_triple()[0]
+        except AttributeError:
+            field_class = '%s.%s' % (self.translated_field.__class__.__module__,
+                                     self.translated_field.__class__.__name__)
         args, kwargs = introspector(self)
         # That's our definition!
         return (field_class, args, kwargs)
 
-    def formfield(self, *args, **kwargs):
-        """Preserves the widget of the translated field."""
-        trans_formfield = self.translated_field.formfield(*args, **kwargs)
-        defaults = {'widget': type(trans_formfield.widget)}
-        defaults.update(kwargs)
-        return super(TranslationField, self).formfield(*args, **defaults)
-
 
 class TranslationFieldDescriptor(object):
-    """A descriptor used for the original translated field."""
-    def __init__(self, name, initial_val="", fallback_value=None):
+    """
+    A descriptor used for the original translated field.
+    """
+    def __init__(self, field, fallback_value=None, fallback_languages=None):
         """
         The ``name`` is the name of the field (which is not available in the
         descriptor by default - this is Python behaviour).
         """
-        self.name = name
-        self.val = initial_val
+        self.field = field
         self.fallback_value = fallback_value
+        self.fallback_languages = fallback_languages
+
+    def __set__(self, instance, value):
+        if getattr(instance, '_mt_init', False):
+            # When assignment takes place in model instance constructor, don't set value.
+            # This is essential for only/defer to work, but I think it's sensible anyway.
+            return
+        lang = get_language()
+        loc_field_name = build_localized_fieldname(self.field.name, lang)
+        # also update the translation field of the current language
+        setattr(instance, loc_field_name, value)
+
+    def __get__(self, instance, owner):
+        if instance is None:
+            return self
+        langs = resolution_order(get_language(), self.fallback_languages)
+        for lang in langs:
+            loc_field_name = build_localized_fieldname(self.field.name, lang)
+            val = getattr(instance, loc_field_name, None)
+            # Here we check only for None and '', because e.g. 0 should not fall back.
+            if val is not None and val != '':
+                return val
+        if self.fallback_value is None or not mt_settings.ENABLE_FALLBACKS:
+            return self.field.get_default()
+        else:
+            return self.fallback_value
+
+
+class TranslatedRelationIdDescriptor(object):
+    """
+    A descriptor used for the original '_id' attribute of a translated
+    ForeignKey field.
+    """
+    def __init__(self, field_name, fallback_languages):
+        self.field_name = field_name  # The name of the original field (excluding '_id')
+        self.fallback_languages = fallback_languages
 
     def __set__(self, instance, value):
         lang = get_language()
-        loc_field_name = build_localized_fieldname(self.name, lang)
-        # also update the translation field of the current language
-        setattr(instance, loc_field_name, value)
-        # update the original field via the __dict__ to prevent calling the
-        # descriptor
-        instance.__dict__[self.name] = value
+        loc_field_name = build_localized_fieldname(self.field_name, lang)
+        # Localized field name with '_id'
+        loc_attname = instance._meta.get_field(loc_field_name).get_attname()
+        setattr(instance, loc_attname, value)
 
     def __get__(self, instance, owner):
-        if not instance:
-            raise ValueError(u"Translation field '%s' can only be accessed "
-                              "via an instance not via a class." % self.name)
-        loc_field_name = build_localized_fieldname(self.name,
-                                                   get_language())
-        if hasattr(instance, loc_field_name):
-            if getattr(instance, loc_field_name):
-                return getattr(instance, loc_field_name)
-            elif self.fallback_value is None:
-                return self.get_default_instance(instance)
-            else:
-                return self.fallback_value
-
-    def get_default_instance(self, instance):
-        """
-        Returns default instance of the field. Supposed to be overidden by
-        related subclasses.
-        """
-        return instance.__dict__[self.name]
+        if instance is None:
+            return self
+        langs = resolution_order(get_language(), self.fallback_languages)
+        for lang in langs:
+            loc_field_name = build_localized_fieldname(self.field_name, lang)
+            # Localized field name with '_id'
+            loc_attname = instance._meta.get_field(loc_field_name).get_attname()
+            val = getattr(instance, loc_attname, None)
+            if val is not None:
+                return val
+        return None
