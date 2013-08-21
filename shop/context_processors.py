@@ -24,7 +24,7 @@ def common(request):
     except:    
         country = 'US'
 
-    context['countrycode'] = country
+    context['countrycode'] = 'FR' #country
         
         
         
