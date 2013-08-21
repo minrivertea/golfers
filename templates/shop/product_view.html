@@ -292,6 +292,12 @@ $(document).ready(function() {
 				{% if countrycode in europe_and_uk or countrycode == 'UK' %}
 				    <p class="red">{% trans 'Please note that we are currently out of stock until end of August. You can pre-order now with free shipping.' %}</p>
 				{% endif %}
+				
+				{% get_current_language as LANG %}
+				{% if countrycode == 'FR' and LANG == 'fr' %}
+				    <p class="red">Nous sommes en rupture de stock jusqu'au 1er Septembre 2013. Payez aujourd'hui et beneficiex d'une livraison gratuite en France metropolitaine. Merci pour votre patience.</p>
+				{% endif %}
+				
 		    {% endif %}
 		
 		</div>		
