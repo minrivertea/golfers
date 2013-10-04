@@ -593,7 +593,10 @@ def order_confirm(request):
     
     
 def order_complete(request):
-        
+    
+    # SET A COOKIE TO SHOW WE'VE CONVERTED THIS ORDER IN GOOGLE. STOPS DUPLICATE CONVERSIONS
+    request.session['ORDER_CONVERTED'] = order.id
+    
     # the user should be logged in here, so we'll find their Shopper object
     # or redirect them to home if they're not logged in
     try:
@@ -602,9 +605,20 @@ def order_complete(request):
         shopper = None
     
     try:
-        order = get_object_or_404(Order, invoice_id=request.session['ORDER_ID'])
+        order = get_object_or_404(Order, id=request.GET.get('order'))
     except:
-        pass
+        try:
+            order = get_object_or_404(Order, invoice_id=request.session['ORDER_ID'])
+        except:
+            pass
+    
+    if order:
+        order_converted = False
+        if request.session['ORDER_CONVERTED'] is not None:
+            # SET A COOKIE TO SHOW WE'VE CONVERTED THIS ORDER IN GOOGLE. STOPS DUPLICATE CONVERSIONS
+            request.session['ORDER_CONVERTED'] = order.id
+            order_converted = True
+    
         
     # this line should reset the basket cookie. basically, if 
     # the user ends up here, they need to have a new basket

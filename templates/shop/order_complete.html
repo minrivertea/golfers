@@ -12,8 +12,6 @@
 
 {% if order %}remember to quote this order ID : <strong>{{ order.invoice_id }}</strong>{% else %} get in touch immediately.{% endif %}
 
-
-
 </p>
 
 
@@ -26,7 +24,7 @@
     {% endblock %}
 {% endif %}
 
-
+{% if not order_converted %}
 {% block google_conversion_code %}
 <!-- Google Code for ReadyNet conv Conversion Page -->
 <script type="text/javascript">
@@ -36,7 +34,7 @@ var google_conversion_language = "en";
 var google_conversion_format = "3";
 var google_conversion_color = "ffffff";
 var google_conversion_label = "yBiTCNro5gIQ1qTj4wM";
-var google_conversion_value = 0;
+var google_conversion_value = {% if order %}{{ order.get_total_value|floatformat:"2" }}{% else %}0{% endif %};
 if (199) {
  google_conversion_value = 199;
 }
@@ -50,3 +48,4 @@ if (199) {
 </div>
 </noscript>
 {% endblock %}
+{% endif %}

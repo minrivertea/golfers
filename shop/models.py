@@ -251,6 +251,21 @@ class Order(models.Model):
         discount_amount = total_price * self.discount.discount_value
         return discount_amount
     
+    def get_total_value(self):
+        
+        value = 0
+        items = self.items.all()
+        currency = Currency.objects.get(code='USD')
+        for i in items:
+            
+            if i.item.currency != currency:
+                new_item = UniqueProduct.objects.get(currency=currency, parent_product=i.item.parent_product)
+                value += new_item.price
+            else:
+                value += i.item.price
+        
+        return value
+    
     def __unicode__(self):
         return self.invoice_id
         

@@ -21,6 +21,8 @@ def common(request):
     # get the users's country
     try:
         country = GetCountry(request)['countryCode']
+        if country == '-':
+            country = 'US'
     except:    
         country = 'US'
 

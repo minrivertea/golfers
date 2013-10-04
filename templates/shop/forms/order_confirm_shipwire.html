@@ -98,7 +98,7 @@ div.row {
 		<input type="hidden" name="email" value="{{ order.owner.email }}">
 		
 
-		<input TYPE="hidden" NAME="return" value="{{ paypal_return_url }}">
+		<input TYPE="hidden" NAME="return" value="{{ paypal_return_url }}?order={{ order.id }}">
 		<input TYPE="hidden" NAME="cancel" value="{{ paypal_notify_url }}">
 		<input TYPE="hidden" NAME="notify_url" value="{{ paypal_notify_url }}">
 		<input type="hidden" id="id_no_shipping" value="1" name="no_shipping">
