@@ -3,6 +3,11 @@ from django import forms
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
 from countries import UK_EU_US_CA
+from django.http import HttpResponse
+
+
+import StringIO
+import csv
 
 
 class ProductForm(forms.ModelForm):
@@ -45,6 +50,34 @@ class ProductAdmin(TranslationAdmin):
             'screen': ('/modeltranslation/css/tabbed_translation_fields.css',),
         }
 
+class EmailSignupAdmin(admin.ModelAdmin):
+    
+    def signuplist_export(self, request):
+    
+        signups = EmailSignup.objects.all()
+    
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="email-signups.csv"'
+        
+        # create a CSV file with details of all the orders
+        writer = csv.writer(response)
+        writer.writerow(['Email Address', 'Date Signed Up', 'Date Unsubscribed', 'Hashkey'])
+        for x in signups:
+            writer.writerow([x.email, x.date_signed_up, x.date_unsubscribed, x.hashkey])
+        
+    
+        return response
+    
+    def get_urls(self):
+        from django.conf.urls.defaults import patterns, url
+        urls = super(EmailSignupAdmin, self).get_urls()
+        my_urls = patterns('',
+                url(r'^signuplist_export/$', self.admin_site.admin_view(self.signuplist_export),
+                    name="signuplist_export"),
+        )
+        return my_urls + urls
+    
+
 class PageAdmin(TranslationAdmin):
     class Media:
         js = (
@@ -57,7 +90,7 @@ class PageAdmin(TranslationAdmin):
         }
 
 admin.site.register(Notify)
-admin.site.register(EmailSignup)
+admin.site.register(EmailSignup, EmailSignupAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Review)
 admin.site.register(Image)
