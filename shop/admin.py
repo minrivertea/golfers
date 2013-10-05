@@ -4,7 +4,7 @@ from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
 from countries import UK_EU_US_CA
 from django.http import HttpResponse
-
+from django.utils.encoding import smart_unicode, smart_str
 
 import StringIO
 import csv
@@ -76,7 +76,36 @@ class EmailSignupAdmin(admin.ModelAdmin):
                     name="signuplist_export"),
         )
         return my_urls + urls
+   
+   
+class AddressAdmin(admin.ModelAdmin):
     
+    def addresslist_export(self, request):
+    
+        addresses = Address.objects.all()
+    
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="address-list.csv"'
+        
+        # create a CSV file with details of all the orders
+        writer = csv.writer(response)
+        writer.writerow(['Owner', 'House Name Number', 'Address Line 1', 'Address Line 2', 'Town or City', 'State', 'Postcode', 'Country', 'Phone'])
+        for x in addresses:
+            writer.writerow([smart_str(x.owner), smart_str(x.house_name_number), smart_str(x.address_line_1), smart_str(x.address_line_2), smart_str(x.town_city),
+            smart_str(x.state), smart_str(x.postcode), smart_str(x.get_country_display), smart_str(x.phone)])
+        
+    
+        return response
+    
+    def get_urls(self):
+        from django.conf.urls.defaults import patterns, url
+        urls = super(AddressAdmin, self).get_urls()
+        my_urls = patterns('',
+                url(r'^addresslist_export/$', self.admin_site.admin_view(self.addresslist_export),
+                    name="addresslist_export"),
+        )
+        return my_urls + urls
+         
 
 class PageAdmin(TranslationAdmin):
     class Media:
@@ -100,6 +129,6 @@ admin.site.register(UniqueProduct, UniqueProductAdmin)
 admin.site.register(Page, PageAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Discount)
-admin.site.register(Address)
+admin.site.register(Address, AddressAdmin)
 
 
