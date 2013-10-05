@@ -1,0 +1,15 @@
+{% extends "admin/change_list.html" %}
+{% load admin_urls i18n %}
+
+{% block object-tools %}
+
+<p>
+<a href="{% url admin:addresslist_export %}" class="button">Download CSV list</a>
+</p>
+
+      {% if has_add_permission %}
+        <ul class="object-tools">
+
+        </ul>
+      {% endif %}
+{% endblock %}
