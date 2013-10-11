@@ -91,8 +91,9 @@ class AddressAdmin(admin.ModelAdmin):
         writer = csv.writer(response)
         writer.writerow(['Owner', 'House Name Number', 'Address Line 1', 'Address Line 2', 'Town or City', 'State', 'Postcode', 'Country', 'Phone'])
         for x in addresses:
+            country = x.get_country_display()
             writer.writerow([smart_str(x.owner), smart_str(x.house_name_number), smart_str(x.address_line_1), smart_str(x.address_line_2), smart_str(x.town_city),
-            smart_str(x.state), smart_str(x.postcode), smart_str(x.get_country_display), smart_str(x.phone)])
+            smart_str(x.state), smart_str(x.postcode), country, smart_str(x.phone)])
         
     
         return response
