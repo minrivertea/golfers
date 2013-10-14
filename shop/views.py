@@ -243,8 +243,9 @@ def product_view(request, slug):
     recommended = []
     recommended.append(get_object_or_404(Product, id=8))
     
-    for p in Product.objects.filter(is_active=True).exclude(id__in=[product.id, 8])[:3]:
-        recommended.append(p)
+    for p in UniqueProduct.objects.filter(is_active=True, currency__code='USD'
+        ).exclude(parent_product__id__in=[product.id, 8]).order_by('-price')[:3]:
+        recommended.append(p.parent_product)
     
     # PRICES SHOULD ONLY BE AVAILABLE IF THIS ISN'T A RESTRICTED COUNTRY
     if product.only_available_in is not None:
