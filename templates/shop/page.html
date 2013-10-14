@@ -20,24 +20,29 @@ div#right {
 
 ul#right-nav {
   list-style-type: none;
-  width: 220px;
-  float: left;
-  margin: 20px 0 0 0;
+  width: 200px;
+  float: right;
+  margin: 0px 0 0 0;
   padding: 0;
   font-size: 13px;	
 }
 
 ul#right-nav li a {
-	background-color: #f1f1f1;
-	width: 200px;
-	float: left;
-	padding: 10px 15px;
-	border-bottom: 2px solid #fff;
+    border-bottom: 1px dashed #444444;
+    float: left;
+    padding: 10px 15px;
+    text-align: center;
+    width: 170px;
+    color:#897963;   
+}
+
+ul#right-nav li a:hover {
+  color: #D2B48C;   
 }
 
 ul#right-nav li.selected a {
   font-weight: bold;
-  color: #333;
+  color: #D2B48C;;
   background-color: #e6e6e6;
 }
 
@@ -74,21 +79,21 @@ div#right-nav ul li.selected a {
 
 <h1>{{ page.title }}</h1>
 
- 	<div id="right">
+
+
+	<div class="left">
+		{{ page.content|safe }}
+	</div>
+
+
+ 	<div class="right">
 		{% include "shop/snippets/pages_nav.html" %}
 		{% if page.image %}
 		{% thumbnail page.image "230x1000" crop="" as im %}
 		<img style="margin-top: 20px;" src="{{ im.url }}">
 		{% endthumbnail %}
 		{% endif %}
-	</div>
-
-	<div id="left">
-		{{ page.content|safe }}
-	</div>
-
-
-	
+	</div>	
 </div>
 
 

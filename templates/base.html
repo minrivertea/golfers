@@ -31,13 +31,15 @@
 	
 	<script src="http://cdn.jquerytools.org/1.2.5/full/jquery.tools.min.js"></script>
 	
-	
+	{% if ga_is_on %}
 	<!-- the SHARETHIS widget needs these -->
 	<script type="text/javascript">var switchTo5x=true;</script>
     <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
     <script type="text/javascript" src="http://s.sharethis.com/loader.js"></script>
+    {% endif %}
+    
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,400italic,600italic' rel='stylesheet' type='text/css'>
 
-	
 {% block extracss %}{% endblock %}
 
  
@@ -59,76 +61,83 @@
     </div>
     {% endif %}
 
-	<div id="container-header">
-	    <div id="header">
-	          
-	          
-	          
-	          <div id="basket">
-	            <div id="inner">
-		          	<img src="/images/cart.png"> 
-			          	{{ basket_quantity }} {% blocktrans count basket_quantity as counter %}item{% plural %}{{ basket_quantity }}items{% endblocktrans %}
-		          		- <a href="{% url basket %}">{% trans 'checkout now!' %}</a>
-		        </div>
+    <div id="header">
+    
+        <div id="nav">
+      	       <div class="container">
+      	       
+      	       <div id="logo">
+                    <a title="ProAdvanced Sports Goods" alt="the ProAdvanced logo" href="/">
+				    <h1><span>ProAdvanced</span></h1>
+				    </a>
+			    </div>
+      	       
+      	       <ul>
+	    	       <li><a href="/about-us/" title="" alt="">{% trans 'About Us' %}</a></li>
+	    	       <li><a href="{% url products %}" title="" alt="">{% trans 'Golf nets' %}</a></li>
+	    	       <li><a href="{% url blog_home %}">{% trans 'Blog' %}</a></li>
+	    	       <li><a href="/media/">{% trans 'Media' %}</a></li>
+	    	       <li><a href="/custom/" title="" alt="">{% trans 'Custom' %}</a></li>
+	    	       <li><a href="/contact-us/" title="" alt="">{% trans 'Contact Us' %}</a></li>
+               </ul>
+      		   </div>
+        </div>
+    </div>
+                      
+            
+    <div id="basket">    
+	    
+	       <div class="container">
+	       
+	           <div id="cart">
+			      {{ basket_quantity }} {% blocktrans count basket_quantity as counter %}item{% plural %}{{ basket_quantity }}items{% endblocktrans %}
+		          {% if basket_quantity > 0 %}- <a class="selected" href="{% url basket %}">{% trans 'Checkout now!' %}{% endif %}</a>
+		       </div>
+	           
 		        
 		        {% if countrycode in european_countries %}
 		        {% else %}
 		        <div id="currency">
-		          	Change your currency:&nbsp;&nbsp;&nbsp;
 		          	<a href="{% url change_currency %}?curr=usd" {% if currency.code == 'USD' %}class="selected"{% endif %}>$</a>
 		          	<a href="{% url change_currency %}?curr=eur" {% if currency.code == 'EUR' %}class="selected"{% endif %}>&euro;</a>
 		          	<a href="{% url change_currency %}?curr=gbp" {% if currency.code == 'GBP' %}class="selected"{% endif %}>&pound;</a>
 	            </div>
 	            {% endif %}
-	          
-	          
-	          </div>
-	          
-	          
-	          
-	     	  <div id="nav">
-	    	    <ul>
-	    	    	<li><a class="selected" href="/" title="" alt="">{% trans 'Home' %}</a></li>
-	    	        <li><a href="/about-us/" title="" alt="">{% trans 'About Us' %}</a></li>
-	    	        <li><a href="{% url products %}" title="" alt="">{% trans 'Golf nets' %}</a></li>
-	    	        <li><a href="{% url blog_home %}">{% trans 'Blog' %}</a></li>
-	    	        <li><a href="/media/">{% trans 'Media' %}</a></li>
-	    	        <li><a href="/custom/" title="" alt="">{% trans 'Custom' %}</a></li>
-	    	        <li><a href="/contact-us/" title="" alt="">{% trans 'Contact Us' %}</a></li>
-	  			</ul>
-			   </div>
-			
-				<div id="logo">
-					<a title="ProAdvanced Sports Goods" alt="the ProAdvanced logo" href="/">
-						<h1><span>ProAdvanced</span></h1>
-					</a>
-				</div>
-					
+	            
+	             <div id="language">
+		{% get_current_language as LANGUAGE_CODE %}
+		<!--<a href="{% url changelang 'it' %}" class="{% if LANGUAGE_CODE == 'it' %}selected{% endif %}">{% trans 'Italian' %}</a>-->
+		<a href="{% url changelang 'fr' %}" class="{% if LANGUAGE_CODE == 'fr' %}selected{% endif %}">{% trans 'French' %}</a>
+		<a href="{% url changelang 'en' %}" class="{% if LANGUAGE_CODE == 'en' %}selected{% endif %}">{% trans 'English' %}</a>
+	           </div>
+	            
+	        </div>
+	    		
       	</div>
     </div>
 
-		<div id="container">
-			<div id="language">
-				{% get_current_language as LANGUAGE_CODE %}
-				<!--<a href="{% url changelang 'it' %}" class="{% if LANGUAGE_CODE == 'it' %}selected{% endif %}">{% trans 'Italian' %}</a>-->
-				<a href="{% url changelang 'fr' %}" class="{% if LANGUAGE_CODE == 'fr' %}selected{% endif %}">{% trans 'French' %}</a>
-				<a href="{% url changelang 'en' %}" class="{% if LANGUAGE_CODE == 'en' %}selected{% endif %}">{% trans 'English' %}</a>
-			</div>	    
+		    
 		
-		    {% block content %}{% endblock %}
-			{% include 'shop/snippets/emailsignup.html' %}
-		
-    		{% include 'shop/snippets/footer.html' %}
+    <div id="main">
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    
    
-		</div>
-	</div>
+	
+	{% include 'shop/snippets/footer.html' %}
+   
 
 {% block extrajs %}{% endblock %}
 
+
+{% if ga_is_on %}
 <script>
 var options={ "publisher": "ur-2bdb3793-e277-e6a0-5a58-a7413fc596d8", "position": "left", "ad": { "visible": false, "openDelay": 5, "closeDelay": 0}, "chicklets": { "items": ["facebook", "twitter", "linkedin", "email", "pinterest", "sharethis"]}};
 var st_hover_widget = new sharethis.widgets.hoverbuttons(options);
 </script>
+{% endif %}
 
 <script type="text/javascript">
 	function emailSignupSubmit() {
