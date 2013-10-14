@@ -371,14 +371,14 @@ $(document).ready(function() {
 	   <h3>Also recommended</h3>
 	   {% for x in recommended %}   
 	       <div class="item">
-	           <a href="{{ x.get_absolute_url }}"><span class="link"></span></a>
+	           <a href="{% url product_view x.slug %}"><span class="link"></span></a>
 	           <div class="image">
 	               {% thumbnail x.image "190x160" crop="center" as im %}
-	                   <a href="{{ x.get_absolute_url }}"><img src="{{ im.url }}" /></a>
+	                   <a href="{% url product_view x.slug %}"><img src="{{ im.url }}" /></a>
 	               {% endthumbnail %}
 	           </div>
 	           <div class="text">
-	               <h4><a href="{{ x.get_absolute_url }}">{{ x.name }}</a></h4>
+	               <h4><a href="{% url product_view x.slug %}">{{ x.name }}</a></h4>
 	           </div>
 	       </div>
 	   {% endfor %}
