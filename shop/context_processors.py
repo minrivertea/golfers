@@ -17,6 +17,7 @@ def common(request):
     context['european_countries'] = EUROPE
     context['europe_and_uk'] = EUROPE_INCLUDING_UK
     context['debug'] = settings.DEBUG
+    context['site_url'] = 'www.pro-advanced.com'
     
     # get the users's country
     try:

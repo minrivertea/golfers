@@ -23,7 +23,18 @@
 	<meta name="DC.type" content="Django Site" />
 	<meta name="robots" content="ALL" />
 	
-    {% block extra-head %}{% endblock %}
+    {% block extra-head %}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="ProAdvanced Sports - Manufacturer of Quality Golf Practice Nets, Golf Cages and Chipping Nets. See our Revolutionary ReadyNet! Instant Set Up and Automatic Ball Return. " />
+        <meta property="og:url" content="http://www.pro-advanced.com" />
+        <meta property="og:description" content="The best Golf Practice Nets, Golf Cages and Chipping Nets. Instant Set Up and Automatic Ball Return." />
+        <meta property="og:site_name" content="ProAdvanced" />
+        <meta property="og:image" content="http://{{ site_url }}/images/logo2.png" />
+        <meta name="twitter:image" content="http://{{ site_url }}/images/logo2.png" />
+        <meta name="twitter:title" content="ProAdvanced" />
+        <meta name="twitter:site" content="@Pro_Advanced" />
+        <meta name="twitter:card" content="website" />
+	{% endblock %}
     <link rel="stylesheet" href="/css/styles.css" />
     <title>ProAdvanced Sports - {% block pagetitle %}{% endblock %}</title>
     	

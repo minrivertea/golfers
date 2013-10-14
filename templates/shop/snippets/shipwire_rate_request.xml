@@ -6,10 +6,10 @@
     <Order id="{{ order.invoice_id }}">
         <Warehouse>00</Warehouse>
         <AddressInfo type="ship">
-            <Address1>{{ order.address.house_name_number }} </Address1>
+            <Address1>{{ order.address.house_name_number|safe }} </Address1>
             <Address2>{{ order.address.address_line_1|safe }}</Address2>
-            <City>{{ order.address.town_city }}</City>
-            <State>{{ order.address.state }}</State>
+            <City>{{ order.address.town_city|safe }}</City>
+            <State>{{ order.address.state|safe }}</State>
             <Country>{% if order.address.country %}{{ order.address.country }}{% else %}US{% endif %}</Country>
             <Zip>{{ order.address.postcode }}</Zip>
         </AddressInfo>

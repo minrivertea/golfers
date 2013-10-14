@@ -4,11 +4,11 @@ New order from {{ order.owner.email }}
 	{{ item }}
 {% endfor %}
 
-{{ order.address.address_line_1 }}
-{{ order.address.address_line_2 }}
-{{ order.address.town_city }}
-{{ order.address.state }}
-{{ order.address.postcode }}
+{{ order.address.address_line_1|safe }}
+{{ order.address.address_line_2|safe }}
+{{ order.address.town_city|safe }}
+{{ order.address.state|safe }}
+{{ order.address.postcode|safe }}
 {{ order.address.get_country_display }}
 tel: {{ order.address.phone }}
 

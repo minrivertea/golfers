@@ -239,15 +239,20 @@ def product_view(request, slug):
     
     reviews = Review.objects.filter(is_published=True, product=product)
     
+    
+    recommended = []
+    recommended.append(get_object_or_404(Product, id=8))
+    
+    for p in Product.objects.filter(is_active=True).exclude(id__in=[product.id, 8])[:3]:
+        recommended.append(p)
+    
     # PRICES SHOULD ONLY BE AVAILABLE IF THIS ISN'T A RESTRICTED COUNTRY
     if product.only_available_in is not None:
         if RequestContext(request)['countrycode'] in product.only_available_in:
             prices = UniqueProduct.objects.filter(parent_product=product, currency=_get_currency(request))
         else:
             prices = None
-            
-    others = Product.objects.filter(category="GOL", is_active=True).exclude(id=product.id)
-    
+                
     notifyform = NotifyForm()
      
     return render(request, "shop/product_view.html", locals())
