@@ -599,10 +599,7 @@ def order_confirm(request):
     
     
 def order_complete(request):
-    
-    # SET A COOKIE TO SHOW WE'VE CONVERTED THIS ORDER IN GOOGLE. STOPS DUPLICATE CONVERSIONS
-    request.session['ORDER_CONVERTED'] = order.id
-    
+        
     # the user should be logged in here, so we'll find their Shopper object
     # or redirect them to home if they're not logged in
     try:
