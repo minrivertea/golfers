@@ -37,21 +37,42 @@ $(document).ready(function() {
 {% block extracss %}
 <link rel="stylesheet" href="/css/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />
 <style type="text/css">
+  
+  .right {
+    width: 200px;
+    color: #f1f1f1; 
+    padding: 25px;
+    background: #232323;
+    border-radius: 4px;
+  }
+  
+  .right p {
+    margin: 0; 
+  }
+  
+  .left {
+    width: 550px; 
+  }
+  
+  h1 {
+    margin: 0 0 10px 0; 
+  }
+  
   #top {
     width: 100%;
     float: left;
-    margin: 0px 0 30px;	
+    margin: 0px 0 0px;	
   }
   
   #top #topleft {
-    width: 500px;
+    width: 550px;
     float: left;
     margin-right: 30px;
   }
   
   #top #topright {
     float: left;
-    width: 350px;	
+    width: 320px;	
   }
   
   #top #topright p {
@@ -62,15 +83,24 @@ $(document).ready(function() {
   }
   
   #top #topright ul {
-    font-weight: bold;
-  	font-size: 16px;
-  	line-height: 1.6em;
-  	margin: 0 0 10px 10px;
-  	padding-left: 0px;
+    list-style-type: none;
+    margin: 0;
+    padding-left: 0;
+  }
+  
+  #top #topright ul li {
+    float: left;
+    padding: 10px 0;
+    border-bottom: 1px solid #333;
+    font-weight: 100; 
+    width: 100%;
+    text-align: right;
+    font-size: 14px;
   }
   
   #top .prices {
     font-size: 24px;
+    width: 100%;
     font-weight: bold;	
     margin-top: 20px;
     float: left;
@@ -79,13 +109,17 @@ $(document).ready(function() {
   
   #top .prices .price {
     float: left; 
-    width: 110px;	
+    width: 190px;
+    padding-left: 10px;	
   }
   
-  #top .prices .price span.strikethrough {
+#top .prices .price span.strikethrough {
+    color: #af2020;
+    font-size: 15px;
+    font-weight: normal;
     text-decoration: line-through;
-    font-weight: normal;	
-  }
+    margin-left: 5px;
+}
   
   #top .prices .button {
     float: left;
@@ -93,23 +127,16 @@ $(document).ready(function() {
   }
   
   #top .prices a {
-  	font-size: 20px;
-    padding: 7px 10px;
-    background: -moz-linear-gradient(100% 100% 90deg, #e6e6e6, #f1f1f1); 
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f1f1f1), to(#e6e6e6)); 
-    background: -webkit-linear-gradient(#e6e6e6, #f1f1f1); 
-	background: -o-linear-gradient(#e6e6e6, #f1f1f1);   
-    border-color: #e1e1e1 #C1C1C1 #C1C1C1 #e1e1e1;
+  	font-size: 18px;
+    padding: 3px 15px 5px;
+    background: #e1e1e1;   
     border-radius: 4px 4px 4px 4px;
-    border-style: solid;
-    border-width: 1px;
-    box-shadow: 0 1px -1px #666, 0 -1px 0 #666;
-    text-shadow: 0 1px 2px #fff;
+    color: #af2020;
   }
   
   #top .prices a {
     float: right;
-    width: 200px;	
+    width: auto;	
     text-align: center;
   }
   
@@ -121,15 +148,28 @@ $(document).ready(function() {
 	color: #BD1B30;
   }
   
-  #message {
-    background-color: #f1f1f1;
-    border: 1px solid #E1E1E1;
-    border-radius: 5px 5px 5px 5px;
-    float: right;
-    font-size: 13px;
-    padding: 15px 20px;
+#message {
+    background-color: #444444;
+    border-radius: 4px 4px 4px 4px;
+    font-size: 15px;
+    font-weight: 100;
+    padding: 5px 15px;
+    position: absolute;
+    right: 0;
     text-align: right;
-  }
+    top: 10px;
+}
+
+#message:before {
+    border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #444444;
+    border-style: none solid solid;
+    border-width: 0 10px 10px;
+    content: " ";
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: -10px;
+}
   
   span.red {color: #BD1B30;}
   
@@ -190,6 +230,13 @@ $(document).ready(function() {
   color: red;   
 }
 
+
+.right ul.reviews li {
+  padding: 10px 0;
+  border-bottom: 1px solid #333;
+  margin: 0;
+}
+
 </style>
 {% endblock %}
 
@@ -201,8 +248,7 @@ $(document).ready(function() {
 	
 	{% if message %}
 	<div id="message">
-	  <strong>{% blocktrans with product.name as name %}1 x {{ name }} added to your basket!{% endblocktrans %}<br/>
-	  <a href="{% url basket %}">Checkout now &raquo</a></strong>
+	  <strong>{% blocktrans with product.name as name %}1 x {{ name }} added to your basket!{% endblocktrans %}
 	</div>
 	{% endif %}
 	
@@ -210,14 +256,56 @@ $(document).ready(function() {
 
 	<div id="top">
 		<div id="topleft">
-		{% thumbnail product.image "500" crop="center" as im %}
+		{% thumbnail product.image "550" crop="center" as im %}
 		<img class="main" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
 		{% endthumbnail %}
+		
+		<div id="product-photos-small">	
+			{% if product.image_2 %}
+				{% thumbnail product.image_2 "550" crop="" as im_large %}
+				<a class="group" href="{{ im_large.url }}" rel="group1" title="{{ product.image_2_caption }}">
+					{% thumbnail product.image_2 "80x80" crop="center" as im %}
+					<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
+					{% endthumbnail %}
+				</a>
+				{% endthumbnail %}
+			{% endif %}
+			
+			{% if product.image_3 %}
+			    {% thumbnail product.image_3 "550" crop="" as im_large %}
+				<a class="group"  href="{{ im_large.url }}" rel="group1" title="{{ product.image_3_caption }}">
+				    {% thumbnail product.image_3 "80x80" crop="center" as im %}
+				    <img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
+				    {% endthumbnail %}
+				
+				</a>
+				{% endthumbnail %}
+			{% endif %}
+			{% if product.image_4 %}
+			    {% thumbnail product.image_4 "550" crop="" as im_large %}
+				<a class="group" href="{{ im_large.url }}" rel="group1" title="{{ product.image_4_caption }}">
+				    {% thumbnail product.image_4 "80x80" crop="center" as im %}
+				    <img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
+				    {% endthumbnail %}
+				</a>
+				{% endthumbnail %}
+			{% endif %}
+			{% if product.image_5 %}
+			    {% thumbnail product.image_5 "550" crop="" as im_large %}
+				<a class="group"  href="{{ im_large.url }}" rel="group1" title="{{ product.image_5_caption }}">
+				    {% thumbnail product.image_5 "80x80" crop="center" as im %}
+				<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
+				{% endthumbnail %}
+				</a>
+				{% endthumbnail %}
+			{% endif %}
+			</div>	
+		
+		
 		</div>
 		
 		<div id="topright">
 			{{ product.long_description|safe }}
-			
 			
 			{% if not prices %}
 				<form action="{% url notify_signup product.slug %}" type="post" id="notify-form">
@@ -229,46 +317,7 @@ $(document).ready(function() {
 			{% endif %}
 			
 			
-			<div class="product-photos-small">	
-			{% if product.image_2 %}
-				{% thumbnail product.image_2 "500" crop="" as im_large %}
-				<a class="group" href="{{ im_large.url }}" rel="group1" title="{{ product.image_2_caption }}">
-					{% thumbnail product.image_2 "80x80" crop="center" as im %}
-					<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
-					{% endthumbnail %}
-				</a>
-				{% endthumbnail %}
-			{% endif %}
 			
-			{% if product.image_3 %}
-			    {% thumbnail product.image_3 "500" crop="" as im_large %}
-				<a class="group"  href="{{ im_large.url }}" rel="group1" title="{{ product.image_3_caption }}">
-				    {% thumbnail product.image_3 "80x80" crop="center" as im %}
-				    <img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
-				    {% endthumbnail %}
-				
-				</a>
-				{% endthumbnail %}
-			{% endif %}
-			{% if product.image_4 %}
-			    {% thumbnail product.image_4 "500" crop="" as im_large %}
-				<a class="group" href="{{ im_large.url }}" rel="group1" title="{{ product.image_4_caption }}">
-				    {% thumbnail product.image_4 "80x80" crop="center" as im %}
-				    <img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
-				    {% endthumbnail %}
-				</a>
-				{% endthumbnail %}
-			{% endif %}
-			{% if product.image_5 %}
-			    {% thumbnail product.image_5 "500" crop="" as im_large %}
-				<a class="group"  href="{{ im_large.url }}" rel="group1" title="{{ product.image_5_caption }}">
-				    {% thumbnail product.image_5 "80x80" crop="center" as im %}
-				<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
-				{% endthumbnail %}
-				</a>
-				{% endthumbnail %}
-			{% endif %}
-			</div>	
 			
 			
 			{% if prices %}
@@ -305,13 +354,14 @@ $(document).ready(function() {
 		
 	</div>
 	
+	<div class="hr"></div>
+	
 
 	<div class="left">
 		{{ product.body_text|safe }}	
   	</div>		
 
 	<div class="right">
-	<img src="/images/paypal-horz.gif" style="margin-bottom: 20px;">
 	<h3>Customer testimonials</h3>
 		<ul class="reviews">
 			{% for review in reviews %}
