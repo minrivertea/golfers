@@ -114,6 +114,7 @@ h4 {
 p {
   margin: 0 0 20px 0;
   line-height: 1.8em;
+  font-size: 16px;
 }
 
 div.left p {
@@ -437,7 +438,8 @@ div#content img {
 .product-promo {
     float: left;
     margin: 0px 20px 20px 0;
-    width: 440px;
+    width: 280px;
+    height: 250px;
     overflow: hidden;
     position: relative;
 }
