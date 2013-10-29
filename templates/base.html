@@ -40,16 +40,14 @@
     
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,400italic,600italic' rel='stylesheet' type='text/css'>
 
-{% block extracss %}{% endblock %}
-
- 
+    {% block extracss %}{% endblock %} 
     
-{% block ga %}
-    {% if ga_is_on %}
-		{{ shopsettings.ga_script|safe }}    {% endif %}
-{% endblock %}
+    {% block ga %}
+        {% if ga_is_on %}
+    		{{ shopsettings.ga_script|safe }}        {% endif %}
+    {% endblock %}
 
-{% block google_conversion_code %}{% endblock %}
+    {% block google_conversion_code %}{% endblock %}
     
 </head>
 

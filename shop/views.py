@@ -246,8 +246,13 @@ def product_view(request, slug):
         else:
             prices = None
             
-    others = Product.objects.filter(category="GOL", is_active=True).exclude(id=product.id)
+    recommended = []
+    recommended.append(get_object_or_404(Product, id=8))
     
+    for p in UniqueProduct.objects.filter(is_active=True, currency__code='USD'
+        ).exclude(parent_product__id__in=[product.id, 8]).order_by('-price')[:3]:
+        recommended.append(p.parent_product)
+            
     notifyform = NotifyForm()
      
     return render(request, "shop/product_view.html", locals())

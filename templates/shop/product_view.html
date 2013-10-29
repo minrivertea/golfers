@@ -242,6 +242,39 @@ $(document).ready(function() {
   padding-bottom: 0;   
 }
 
+#recommended {
+  float: left;
+  width: 100%;   
+}
+
+#recommended > div {
+  float: left;
+  width: 210px;
+  height: 200px;
+  margin: 0 20px 0 0; 
+  position: relative;  
+}
+
+#recommended > div img {
+  width: 210px;
+  height: 140px;
+  float: left;   
+}
+
+#recommended > div:last-child {
+  margin-right: 0;  
+} 
+
+#recommended > div:hover img {
+  opacity: 0.8;   
+}
+
+#recommended > div h4 {
+  border: none;
+  margin: 0;
+  padding: 0;   
+}
+
 </style>
 {% endblock %}
 
@@ -374,13 +407,18 @@ $(document).ready(function() {
 			{% endfor %}
 		</ul>
 	</div>
+	
+	<div class="hr"></div>
 
     <div id="recommended">
-        {% for x in others %}
+        <h3>{% trans 'Also recommended for you' %}</h3>
+        {% for x in recommended %}
         <div>
-            {% thumbnail x.image "200x130" crop="center" as im %}
+            <a href="{{ x.get_absolute_url }}"><span class="link"></span></a>
+            {% thumbnail x.image "210x140" crop="center" as im %}
             <img src="{{ im.url }}" />
             {% endthumbnail %}
+            <h4>{{ x.name }}</h4>
         </div>
         {% endfor %}
     </div>
