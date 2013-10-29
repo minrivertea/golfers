@@ -598,10 +598,8 @@ def order_confirm(request):
     
     
     
-def order_complete(request):
+def order_complete(request, order=None):
         
-    # the user should be logged in here, so we'll find their Shopper object
-    # or redirect them to home if they're not logged in
     try:
         shopper = get_object_or_404(Shopper, user=request.user)
     except:
@@ -625,7 +623,10 @@ def order_complete(request):
         
     # this line should reset the basket cookie. basically, if 
     # the user ends up here, they need to have a new basket
-    request.session['BASKET_ID'] = None
+    try:
+        request.session['BASKET_ID'] = None
+    except:
+        pass
    
 
     return render(request, "shop/order_complete.html", locals())

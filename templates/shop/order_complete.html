@@ -4,16 +4,12 @@
 
 <div id="feature">
 
-<h1>Congratulations!</h2>
-
+<h1>Congratulations!</h1>
 
 <p>Your order has been placed successfully and you'll be getting confirmation emails shortly. If you have any problems and need to get in contact, please 
 
-
 {% if order %}remember to quote this order ID : <strong>{{ order.invoice_id }}</strong>{% else %} get in touch immediately.{% endif %}
-
 </p>
-
 
 </div>
 {% endblock %}
@@ -24,28 +20,24 @@
     {% endblock %}
 {% endif %}
 
-{% if not order_converted %}
 {% block google_conversion_code %}
-<!-- Google Code for ReadyNet conv Conversion Page -->
+<!-- Google Code for Ventes Conversion Page -->
 <script type="text/javascript">
 /* <![CDATA[ */
 var google_conversion_id = 1014551126;
 var google_conversion_language = "en";
 var google_conversion_format = "3";
 var google_conversion_color = "ffffff";
-var google_conversion_label = "yBiTCNro5gIQ1qTj4wM";
-var google_conversion_value = {% if order %}{{ order.get_total_value|floatformat:"2" }}{% else %}0{% endif %};
-if (199) {
- google_conversion_value = 199;
-}
+var google_conversion_label = "G6gYCILNvwcQ1qTj4wM";
+var google_conversion_value = {% if order %}{{ order.get_total_value|floatformat:"2" }}{% endif %};
+var google_remarketing_only = false;
 /* ]]> */
 </script>
-<script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js">
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
 </script>
 <noscript>
 <div style="display:inline;">
-<img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/1014551126/?value=199&amp;label=yBiTCNro5gIQ1qTj4wM&amp;guid=ON&amp;script=0"/>
+<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/1014551126/?value={% if order %}{{ order.get_total_value|floatformat:'2' }}{% endif %}&amp;label=G6gYCILNvwcQ1qTj4wM&amp;guid=ON&amp;script=0"/>
 </div>
 </noscript>
 {% endblock %}
-{% endif %}
