@@ -29,7 +29,7 @@ var google_conversion_language = "en";
 var google_conversion_format = "3";
 var google_conversion_color = "ffffff";
 var google_conversion_label = "G6gYCILNvwcQ1qTj4wM";
-var google_conversion_value = {% if order %}{{ order.get_total_value|floatformat:"2" }}{% endif %};
+var google_conversion_value = {% if order %}{{ order.get_total_value|floatformat:"2" }}{% else %}100{% endif %};
 var google_remarketing_only = false;
 /* ]]> */
 </script>
@@ -37,7 +37,7 @@ var google_remarketing_only = false;
 </script>
 <noscript>
 <div style="display:inline;">
-<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/1014551126/?value={% if order %}{{ order.get_total_value|floatformat:'2' }}{% endif %}&amp;label=G6gYCILNvwcQ1qTj4wM&amp;guid=ON&amp;script=0"/>
+<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/1014551126/?value={% if order %}{{ order.get_total_value|floatformat:'2' }}{% else %}100{% endif %}&amp;label=G6gYCILNvwcQ1qTj4wM&amp;guid=ON&amp;script=0"/>
 </div>
 </noscript>
 {% endblock %}
