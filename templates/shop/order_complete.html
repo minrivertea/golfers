@@ -29,7 +29,9 @@ var google_conversion_language = "en";
 var google_conversion_format = "3";
 var google_conversion_color = "ffffff";
 var google_conversion_label = "G6gYCILNvwcQ1qTj4wM";
-var google_conversion_value = {% if order %}{{ order.get_total_value|floatformat:"2" }}{% else %}100{% endif %};
+if ({% if order %}{{ order.get_total_value|floatformat:"2" }}{% else %}100{% endif %}) {
+  var google_conversion_value = {% if order %}{{ order.get_total_value|floatformat:"2" }}{% else %}100{% endif %};
+  }
 var google_remarketing_only = false;
 /* ]]> */
 </script>

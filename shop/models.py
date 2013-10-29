@@ -257,14 +257,13 @@ class Order(models.Model):
         items = self.items.all()
         currency = Currency.objects.get(code='USD')
         for i in items:
-            
             if i.item.currency != currency:
                 new_item = UniqueProduct.objects.get(currency=currency, parent_product=i.item.parent_product)
                 value += new_item.price
             else:
                 value += i.item.price
         
-        return value
+        return value # always in USD
     
     def __unicode__(self):
         return self.invoice_id
