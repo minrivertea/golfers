@@ -615,10 +615,12 @@ def order_complete(request, order=None):
     
     if order:
         order_converted = False
-        if request.session['ORDER_CONVERTED'] is not None:
+        try:
             # SET A COOKIE TO SHOW WE'VE CONVERTED THIS ORDER IN GOOGLE. STOPS DUPLICATE CONVERSIONS
-            request.session['ORDER_CONVERTED'] = order.id
+            c = request.session['ORDER_CONVERTED']
             order_converted = True
+        except:
+            request.session['ORDER_CONVERTED'] = order.id
     
         
     # this line should reset the basket cookie. basically, if 
