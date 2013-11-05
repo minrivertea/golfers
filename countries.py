@@ -281,7 +281,7 @@ SLOVENIA = 'SI'
 SPAIN = 'ES'
 SWEDEN = 'SE'
 SWITZERLAND = 'CH'
-UNITED_KINGDOM = 'UK'
+UNITED_KINGDOM = 'GB'
 UK_EU_US_CA = (
     (UNITED_STATES, u"USA"),
     (INVALID, u"-----"),
@@ -389,7 +389,6 @@ EUROPE = ('AT', 'BE', 'BG', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU'
 EUROPE_INCLUDING_UK = ('AT', 'BE', 'BG', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT',
     'NL', 'NO', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'CH', 'GB')
     
-EU_NA_SHORT = ('AT', 'BE', 'BG', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT',
-    'NL', 'NO', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'CH', 'US', 'GB', 'CA')
+EU_NA_SHORT = ('AT', 'BE', 'BG', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'NO', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'CH', 'US', 'GB', 'CA')
 
 

@@ -199,9 +199,7 @@ def products(request):
     
     products = Product.objects.filter(is_active=True).order_by('list_position')
     prices = UniqueProduct.objects.filter(currency=_get_currency(request))
-    products_and_prices = []
-    
-    
+    products_and_prices = []    
     
     for product in products:
         
