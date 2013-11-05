@@ -202,7 +202,7 @@ def products(request):
     products_and_prices = []
     for product in products:
         
-        if RequestContext(request)['country'] not in EU_NA_SHORT:
+        if RequestContext(request)['countrycode'] not in EU_NA_SHORT:
             products_and_prices.append((product, prices.filter(parent_product=product)))
         else:
             if product.only_available_in is None or countrycode in product.only_available_in: 
