@@ -75,7 +75,7 @@ $(document).ready(function() {
   }
   
   #top #topright p {
-  	font-weight: bold;
+  	font-weight: ;
   	font-size: 16px;
   	line-height: 1.6em;
   	margin: 0 0 20px;
@@ -178,10 +178,10 @@ $(document).ready(function() {
 
 #notify-form {
   float: left;
-  width: 320px;
-  background-color: #f6f6f6;
+  width: 290px;
+  background-color: #897963;
   padding: 10px 15px 15px;
-  margin: 0 0 20px 0;	
+  margin: 20px 0 20px 0;	
 }  
 
 #top #topright #notify-form p {
@@ -192,9 +192,8 @@ $(document).ready(function() {
 
 #notify-form input {
   border: none;
-  font-family: Helvetica, sans-serif;
   font-size: 16px;
-  padding: 7px 8px;
+  padding: 3px 8px 5px;
   border: 1px solid #e1e1e1;
   float: left;
   width: 195px;
@@ -202,8 +201,9 @@ $(document).ready(function() {
 
 #notify-form input.button {
   border-left: none;
-  font-size: 14px;	
-  width: 105px;
+  font-size: 14px;
+  padding: 4px 8px 5px;	
+  width: auto;
 }
 
 #notify-form #loading {
@@ -231,14 +231,32 @@ $(document).ready(function() {
 
 
 .right ul.reviews li {
-  padding: 10px;
+  padding: 10px 15px;
   margin: 0 0 15px;
   background: #222;
+  position: relative;
+  color: #999;
 }
 
-.right ul.reviews li:last-child {
-  border-bottom: none;
-  padding-bottom: 0;   
+.right ul.reviews p {
+  font-size: 14px;   
+}
+
+.right ul.reviews li span.name {
+  color: #fff;
+  font-size: 16px;   
+}
+
+.right ul.reviews li:before {
+    border-color: rgba(0, 0, 0, 0) #222 rgba(0, 0, 0, 0) #0000FF;
+    border-style: solid;
+    border-width: 15px 15px 15px 0;
+    content: " ";
+    display: block;
+    left: -15px;
+    position: absolute;
+    top: 20px;
+    z-index: 20;
 }
 
 #recommended {
@@ -399,10 +417,9 @@ $(document).ready(function() {
   	</div>		
 
 	<div class="right">
-	<h3>Customer testimonials</h3>
 		<ul class="reviews">
 			{% for review in reviews %}
-			<li>{{ review.text|safe }} <span class="red">{{ review.owner }}</span></li>
+			<li>{{ review.text|safe }} <span class="name">{{ review.owner }}</span></li>
 			{% endfor %}
 		</ul>
 	</div>

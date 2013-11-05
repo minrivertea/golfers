@@ -60,7 +60,6 @@ span.link {
 	background-color: #e1e1e1;
     border: none;
     font-size: 14px;
-    font-weight: bold;
     padding: 5px 15px;
     text-align: center;
     cursor: pointer;
@@ -130,16 +129,6 @@ div.left p {
   font-size: 18px;   
 }
 
-div.right p.sport, div.left p.sport, div#content p.sport, div#feature p.sport {
-  margin: 0 0 5px 0;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  position: relative;
-  top:3px;
-  font-size: 11px;
-}
-
 
 .right p {
     margin: 0 0 10px;
@@ -155,6 +144,10 @@ div.right p.sport, div.left p.sport, div#content p.sport, div#feature p.sport {
   margin-bottom: 10px;	
 }
 
+input {
+  font-family: Open Sans, Helvetica, sans-serif;   
+}
+
 
 
 /* header styles */
@@ -164,7 +157,7 @@ div.right p.sport, div.left p.sport, div#content p.sport, div#feature p.sport {
     background: #000;
     float: left;
     height: auto;
-    padding: 15px 0 20px 0;
+    padding: 25px 0 30px 0;
 }
 
 #basket {
@@ -174,14 +167,14 @@ div.right p.sport, div.left p.sport, div#content p.sport, div#feature p.sport {
 }
 
 #basket #cart, #basket #currency, #basket #language {
-  float: right;
-  margin: 0px 10px 0 0; 
-  width: auto;
-  position: relative; 
-  padding: 8px 10px;
-  font-size: 16px;
-  height: 20px;
-  color: #897963;
+    color: #897963;
+    float: right;
+    font-size: 16px;
+    height: 20px;
+    margin: 0 0px 0 0;
+    padding: 8px 10px;
+    position: relative;
+    width: auto;
 }
 
 #basket #cart a, #basket #currency a, #basket #language a {
@@ -205,13 +198,15 @@ div.right p.sport, div.left p.sport, div#content p.sport, div#feature p.sport {
 
 
 #currency, #language {
-  border-right: 1px solid #333;
+  border-right: 1px solid #222;
 }
 
 #currency a {
-    margin-right: 5px;
+    background: none repeat scroll 0 0 #252525;
+    margin-right: 0;
+    padding: 3px 7px;
     position: relative;
-    top: 0px;
+    top: 0;
 }
 
 #language {
@@ -229,6 +224,8 @@ div.right p.sport, div.left p.sport, div#content p.sport, div#feature p.sport {
     width: 200px;
     margin: 0px 0 0px 0;
     height: auto;
+    position: relative;
+    bottom: -10px;
 }
 
 div#contact {
@@ -261,16 +258,17 @@ ul#top-nav {
   margin: 0;
   position: absolute;
   right: 0;
-  top: -10px;
+  top: -15px;
 }
 
 ul#top-nav li {
   float:left;   
 }
 
-ul#top-nav li a:link {
-  font-size: 13px;
+ul#top-nav li a {
+  font-size: 14px;
   padding: 0 15px;
+  color: #897963;
 }
 
 ul#top-nav li:last-child a {
@@ -284,11 +282,11 @@ ul#nav {
   float: right;
   position: absolute;
   right: 0;
-  bottom: -10px;
+  bottom: -15px;
 }
 
 ul#nav li {
-    font-size: 18px;
+    font-size: 22px;
     text-transform: uppercase;
     padding: 0;
     float: left;
@@ -344,44 +342,6 @@ a.contact:hover {
   width: 100%;   
 }
 
-div#feature p.super-short, div.left p.super-short {
-  font-size: 22px;
-  margin: 0px 0px 10px; 
-  color: #333;
-  font-weight: bold;
-}
-
-div#feature a.more {
-    background: -moz-linear-gradient(100% 100% 90deg, #e6e6e6, #f1f1f1); 
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f1f1f1), to(#e6e6e6)); 
-    background: -webkit-linear-gradient(#e6e6e6, #f1f1f1); 
-	background: -o-linear-gradient(#e6e6e6, #f1f1f1);   
-    border-color: #e1e1e1 #C1C1C1 #C1C1C1 #e1e1e1;
-    border-radius: 4px 4px 4px 4px;
-    border-style: solid;
-    border-width: 1px;
-    float: left;
-    font-size: 18px;
-    font-weight: bold;
-    text-shadow: 0 1px 2px #fff;
-    margin-right: 10px;
-    margin-top: 10px;
-    padding: 10px 15px;
-    width: 310px;
-    text-align: center;
-}
-
-div#feature a.more:hover {
-    background: -moz-linear-gradient(100% 100% 90deg, #f1f1f1, #e6e6e6); 
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#e6e6e6), to(#f1f1f1)); 
-    background: -webkit-linear-gradient(#f1f1f1, #e6e6e6); 
-	background: -o-linear-gradient(#f1f1f1, #e6e6e6);
-	color: #BD1B30; 	
-}
-
-div#content-container {
-  width: 100%;	
-}
 
 div#content {
   margin: 0 auto;
@@ -464,21 +424,20 @@ div#content img {
 
 .product-promo {
     float: left;
-    margin: 0px 20px 20px 0;
-    width: 280px;
+    margin: 0px 5px 5px 0;
+    width: 295px;
     height: 250px;
     overflow: hidden;
     position: relative;
 }
 
 .product-promo.last {
-    border-right: none;
     margin-right: 0;
 }
 
 .product-promo .tile {
   position: absolute;
-  top: -250px;
+  bottom: -250px;
   left: 0;
   width: 100%;
   display: block;
@@ -501,11 +460,11 @@ div#content img {
 }
 
 .product-promo .text {
-  padding: 20px 25px;
+  padding: 10px 15px;
 }
 
 .product-promo h3 a {
-  font-size: 24px;
+  font-size: 16px;
   color: #000;
 }
 

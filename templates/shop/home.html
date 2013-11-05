@@ -29,10 +29,7 @@ div.right {
 }
 
 .video {
-    border-top: 3px dotted #E1E1E1;
     float: left;
-    margin-top: 30px;
-    padding-top: 20px;
     width: 100%;
 }
 
@@ -152,49 +149,70 @@ a.browse {
 }
 
 
+#feature {
+    
+}
+
+#feature #image-wrap {
+  width: 100%;
+  height:500px;   
+}
+
+#feature #tabs {
+  border-top: 1px solid #444;  
+}
+
+#feature #tabs ul {
+  list-style-type:none;
+  padding: 0;
+  margin: 0;   
+}
+
+#feature #tabs li {
+  float: left;
+  width: 25%;
+}
+
+#feature #tabs li a {
+  padding: 20px 5%;
+  text-align: center;
+  width: 89%;
+  float: left;
+  border-right: 1px solid #444;
+}
+
+#feature #tabs li:last-child a {
+  border-right: none;   
+}
+
+
 </style>
 {% endblock %}
 
 {% block content %}
 
-<div id="feature-container">
-	<div id="feature">	
-			<div class="right">
-				<h1>{{ featured.name }}</h1>	
-				<p class="super-short">{{ featured.super_short_description }}</p>
-				{{ featured.short_description|safe }}
-				<a class="more" href="{% url product_view featured.slug %}">{% trans 'Find out more &raquo;' %} </a>
-				<br/>
-				{% include 'shop/snippets/social.html' %}
-				
 
-			</div>
-			<div class="left">  
-				    
-				<div class="scroll">
-					<div class="pics">
-					    {% for image in shopsettings.homepage_rotating_images.all %}
-      					    {% thumbnail image.image "500x500" crop="center" as im %}
-      					       <div style="background-image:url({{ im.url }});"></div>
-      					    {% endthumbnail %}
-					    {% endfor %}
-					    
-					    {% if not shopsettings.homepage_rotating_images.all %}
-						  {% thumbnail product.image "500x500" crop="center" as im %}
-						      <div style="background-image:url({{ im.url }})"></div>
-						  {% endthumbnail %}
-						  
-						  <div style="background-image:url(/images/home3.jpg)"></div>
-						{% endif %}
-					</div>
-				</div>
+<div id="feature">
+	
+	<div id="image-wrap">
+	
+	</div>
+	
+	<div id="tabs">
+	   <ul>
+	       <li><a href="">Item 1</a></li>
+	       <li><a href="">Item 2</a></li>
+	       <li><a href="">Item 3</a></li>
+	       <li><a href="">Item 4</a></li>	       
+	   </ul>
+	</div>	
+	
+
+
+</div>
 			
-				<button class="prev"></button>
-				<button class="next"></button>
-				<br clear="all"/>
-				       
-			</div>
-			
+	
+	<div class="hr"></div>
 	
 		<div class="video">
 			<div class="benefits">

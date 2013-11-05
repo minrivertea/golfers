@@ -53,19 +53,18 @@
 
 <body>	
 
-    {% if request.user.is_superuser %}
-    <div id="infobar">
-        <div class="container">{{ countrycode }} | {{ paypal_receiver_email }}</div>
-    </div>
-    {% endif %}
 
     <div id="header">
 
         <div class="container">
         
             <ul id="top-nav">
+                {% if request.user.is_superuser %}
+                    <li>{{ countrycode }} | {{ paypal_receiver_email }}</li>
+                {% endif %}
                 <li><a href="/contact-us/" title="" alt="">{% trans 'Contact Us' %}</a></li>
                 <li><a href="/about-us/" title="" alt="">{% trans 'About Us' %}</a></li>
+                <li><a href="{% url blog_home %}">{% trans 'Blog' %}</a></li>
             </ul>    
       	       
       	    <div id="logo">
@@ -76,7 +75,6 @@
       	       
       	    <ul id="nav">
                 <li><a href="{% url products %}" title="" alt="">{% trans 'Golf nets' %}</a></li>
-	    	    <li><a href="{% url blog_home %}">{% trans 'Blog' %}</a></li>
 	    	    <li><a href="/media/">{% trans 'Media' %}</a></li>
 	    	    <li><a href="/custom/" title="" alt="">{% trans 'Custom' %}</a></li>
             </ul>

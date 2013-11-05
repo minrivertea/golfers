@@ -8,9 +8,9 @@
 <script type="text/javascript">
    $(document).ready( function() {
     $('.product-promo').hover( function() {
-       $(this).find('.tile').animate({'top': '0',}, 200) ;
+       $(this).find('.tile').animate({'bottom': '0',}, 200) ;
     }, function() {
-       $(this).find('.tile').animate({'top': '-250',}, 200);  
+       $(this).find('.tile').animate({'bottom': '-250',}, 200);  
     });
    });
     
@@ -67,7 +67,7 @@ span.strikethrough {
             
             <div class="image">
             <a href="{% url product_view product.slug %}">
-                {% thumbnail product.image "280x250" crop="center" as im %}
+                {% thumbnail product.image "295x250" crop="center" as im %}
             	<img class="" src="{{ im.url }}" alt="{{ product.description }}" title="{{ product.description }}"/>
             	{% endthumbnail %}
 			</a>
