@@ -196,17 +196,13 @@ def page(request, slug, sub_page=None):
     
 
 def products(request):            
-    try:
-        countrycode = GetCountry(request)['countryCode']
-    except:
-        countrycode = 'US'
     
     products = Product.objects.filter(is_active=True).order_by('list_position')
     prices = UniqueProduct.objects.filter(currency=_get_currency(request))
     products_and_prices = []
     for product in products:
         
-        if countrycode not in EU_NA_SHORT:
+        if RequestContext(request)['country'] not in EU_NA_SHORT:
             products_and_prices.append((product, prices.filter(parent_product=product)))
         else:
             if product.only_available_in is None or countrycode in product.only_available_in: 
