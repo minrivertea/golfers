@@ -159,11 +159,12 @@ div.right p.sport, div.left p.sport, div#content p.sport, div#feature p.sport {
 
 /* header styles */
 
-#header {
+#header { 
     border-bottom: 1px solid #222222;
+    background: #000;
     float: left;
     height: auto;
-    padding: 0;
+    padding: 15px 0 20px 0;
 }
 
 #basket {
@@ -253,48 +254,65 @@ div#contact {
   opacity: 0.8;	
 }
 
-#nav {
-  float: left;
-  width: 100%;
-  background: #000;
-  margin: 0px 0 0 0;
-  padding: 20px 0
+ul#top-nav {
+  float: right ;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  right: 0;
+  top: -10px;
 }
 
-#nav ul {
+ul#top-nav li {
+  float:left;   
+}
+
+ul#top-nav li a:link {
+  font-size: 13px;
+  padding: 0 15px;
+}
+
+ul#top-nav li:last-child a {
+  padding-right: 0;   
+}
+
+ul#nav {
   margin: 0 auto;
   padding: 0;
   list-style-type: none;
   float: right;
+  position: absolute;
+  right: 0;
+  bottom: -10px;
 }
 
-#nav ul li {
+ul#nav li {
     font-size: 18px;
     text-transform: uppercase;
     padding: 0;
     float: left;
     position: relative;
-    top: 20px;
 }
 
-#nav ul li:not(:last-child) {
+ul#nav li:not(:last-child) {
 }
 
-#nav ul li:not(:first-child) {
-}
-
-
-#nav ul li:hover {
+ul#nav li:not(:first-child) {
 }
 
 
+ul#nav li:hover {
+}
 
-#nav ul li:last-child a {
+
+
+ul#nav li:last-child a {
   padding-right:0;
 }
 
 
-#nav ul a:link, #nav a:visited {
+ul#nav a:link, #nav a:visited {
     color: #fff;
     text-decoration: none;
     display: block;
@@ -302,7 +320,7 @@ div#contact {
     padding: 0 25px;
 }
 
-#nav ul a:hover, #nav a:active {
+ul#nav a:hover, #nav a:active {
   color: #AF2020;
   cursor: pointer;
 }

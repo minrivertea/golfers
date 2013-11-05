@@ -39,11 +39,7 @@ $(document).ready(function() {
 <style type="text/css">
   
   .right {
-    width: 200px;
-    color: #f1f1f1; 
-    padding: 25px;
-    background: #232323;
-    border-radius: 4px;
+    width: 240px;
   }
   
   .right p {
@@ -51,7 +47,10 @@ $(document).ready(function() {
   }
   
   .left {
-    width: 580px; 
+    width: 580px;
+    padding: 25px;
+    background: #fff;
+    color: #333; 
   }
   
   h1 {
@@ -232,9 +231,9 @@ $(document).ready(function() {
 
 
 .right ul.reviews li {
-  padding: 10px 0;
-  border-bottom: 1px solid #333;
-  margin: 0;
+  padding: 10px;
+  margin: 0 0 15px;
+  background: #222;
 }
 
 .right ul.reviews li:last-child {
@@ -403,7 +402,7 @@ $(document).ready(function() {
 	<h3>Customer testimonials</h3>
 		<ul class="reviews">
 			{% for review in reviews %}
-			<li><em>{{ review.text|safe }}</em> <span class="red">{{ review.owner }}</span></li>
+			<li>{{ review.text|safe }} <span class="red">{{ review.owner }}</span></li>
 			{% endfor %}
 		</ul>
 	</div>

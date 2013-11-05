@@ -60,27 +60,29 @@
     {% endif %}
 
     <div id="header">
-    
-        <div id="nav">
-      	       <div class="container">
+
+        <div class="container">
+        
+            <ul id="top-nav">
+                <li><a href="/contact-us/" title="" alt="">{% trans 'Contact Us' %}</a></li>
+                <li><a href="/about-us/" title="" alt="">{% trans 'About Us' %}</a></li>
+            </ul>    
       	       
-      	       <div id="logo">
-                    <a title="ProAdvanced Sports Goods" alt="the ProAdvanced logo" href="/">
+      	    <div id="logo">
+                <a title="ProAdvanced Sports Goods" alt="the ProAdvanced logo" href="/">
 				    <h1><span>ProAdvanced</span></h1>
-				    </a>
-			    </div>
+				</a>
+			</div>
       	       
-      	       <ul>
-	    	       <li><a href="/about-us/" title="" alt="">{% trans 'About Us' %}</a></li>
-	    	       <li><a href="{% url products %}" title="" alt="">{% trans 'Golf nets' %}</a></li>
-	    	       <li><a href="{% url blog_home %}">{% trans 'Blog' %}</a></li>
-	    	       <li><a href="/media/">{% trans 'Media' %}</a></li>
-	    	       <li><a href="/custom/" title="" alt="">{% trans 'Custom' %}</a></li>
-	    	       <li><a href="/contact-us/" title="" alt="">{% trans 'Contact Us' %}</a></li>
-               </ul>
-      		   </div>
+      	    <ul id="nav">
+                <li><a href="{% url products %}" title="" alt="">{% trans 'Golf nets' %}</a></li>
+	    	    <li><a href="{% url blog_home %}">{% trans 'Blog' %}</a></li>
+	    	    <li><a href="/media/">{% trans 'Media' %}</a></li>
+	    	    <li><a href="/custom/" title="" alt="">{% trans 'Custom' %}</a></li>
+            </ul>
         </div>
     </div>
+        
                       
             
     <div id="basket">    
