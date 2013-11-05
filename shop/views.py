@@ -236,22 +236,25 @@ def product_view(request, slug):
         request.session['ADDED'] = None
     
     
-    
     reviews = Review.objects.filter(is_published=True, product=product)
     
     # GET RECOMMENDED PRODUCTS
     recommended = []
-    recommended.append(get_object_or_404(Product, id=8))
+    recommended.append(get_object_or_404(Product, id=8)) # manually adding one so it's 1st
     for p in UniqueProduct.objects.filter(
         is_active=True, 
-        currency__code='USD'
+        currency=RequestContext(request)['currency']
     ).exclude(parent_product__id__in=[product.id, 8]).order_by('-price')[:3]:
         recommended.append(p.parent_product)
     
-    # PRICES SHOULD ONLY BE AVAILABLE IF THIS ISN'T A RESTRICTED COUNTRY
+    # HAS ADMIN SET AN 'ONLY AVAILABLE IN XXX COUNTRY' VALUE?
     if product.only_available_in is not None:
+        # YES. IF THE CURRENT COUNTRY IS IN THAT VALUE:
         if RequestContext(request)['countrycode'] in product.only_available_in:
-            prices = UniqueProduct.objects.filter(parent_product=product, currency=_get_currency(request))
+            prices = UniqueProduct.objects.filter(
+                parent_product=product, 
+                currency=RequestContext(request)['currency'])
+        # OTHERWISE, NO PRICES
         else:
             prices = None
                 
