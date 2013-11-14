@@ -168,6 +168,8 @@ def index(request):
                 featured = Product.objects.filter(is_active=True)[0]
     
     
+    products = Product.objects.filter(is_active=True)
+    
     featured_reviews = Review.objects.filter(is_published=True, product=featured)
     other_reviews = Review.objects.filter(is_published=True).exclude(product=featured)
     reviews = list(chain(featured_reviews, other_reviews))[:2]

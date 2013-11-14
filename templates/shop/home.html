@@ -7,9 +7,18 @@
 {% block extrajs %}
 <script>
 $(function() {
-$(".scroll").scrollable({ circular: true }).autoscroll({ autoplay: true, interval: 3000 });
+    $(".scroll").scrollable({ circular: true }).autoscroll({ autoplay: true, interval: 3000 });
+});
+
+$(document).ready( function() {
+    $('.product-promo').hover( function() {
+        $(this).find('.tile').animate({'bottom': '0',}, 200) ;
+    }, function() {
+        $(this).find('.tile').animate({'bottom': '-250',}, 200);  
+    });
 });
 </script>
+
 {% endblock %}
 
 {% block extracss %}
@@ -28,28 +37,21 @@ div.right {
   width: 350px;	
 }
 
-.video {
+.video, .reviews {
     float: left;
     width: 100%;
+    margin: 20px 0 0;
 }
 
 .video .benefits {
   float: right;
   width: 340px;	
-  font-size: 18px;
 }
 
 .video .benefits ul {
   list-style-type: square;	
 }
 
-.reviews {
-  float: left;
-  width: 100%;
-  margin-top: 30px;
-  padding-top: 20px;
-  border-top: 3px dotted #e1e1e1;	
-}
 
 .reviews .box {
   width: 300px;
@@ -57,22 +59,18 @@ div.right {
   margin-right: 30px;	
 }
 
+.reviews .box p {
+  color: #D2B48C;   
+}
+
+.reviews .box p .owner {
+  color: #fff;   
+}
+
 div.box.last {
   margin-right: 0;	
 }
 
-.reviews .box p {
-  font-size: 13px;	
-}
-
-.reviews .box p strong {
-  position: relative;
-  top: 5px;
-}
-
-.reviews h3 span a {
-  font-size: 14px;	
-}
 
 div#feature p.super-short {
   color: #000;	
@@ -93,15 +91,15 @@ p.quote {
 
 p.quote strong {
   color: #000;
-  font-family: Helvetica, sans-serif;
   font-size: 13px;	
 }
 
 div.paypal {
-  background-color: #fff; 
-  float: left; 
-  margin-bottom: 80px;
-  width: 250px;	
+    background-color: #000000;
+    float: right;
+    margin-bottom: 0;
+    padding: 20px;
+    width: 200px;
 }
 
 #feature ul.social {
@@ -159,7 +157,10 @@ a.browse {
 }
 
 #feature #tabs {
-  border-top: 1px solid #444;  
+  border-top: 1px solid #262626;
+  float: left;
+  width: 100%;
+  margin: 0 0 30px 0;  
 }
 
 #feature #tabs ul {
@@ -177,12 +178,19 @@ a.browse {
   padding: 20px 5%;
   text-align: center;
   width: 89%;
+  height: 30px;
   float: left;
-  border-right: 1px solid #444;
+  border-right: 1px solid #262626;
+  color: #897963;
 }
 
 #feature #tabs li:last-child a {
   border-right: none;   
+}
+
+#feature #tabs li a.selected {
+  color: #fff;
+  font-size: 22px;   
 }
 
 
@@ -200,7 +208,7 @@ a.browse {
 	
 	<div id="tabs">
 	   <ul>
-	       <li><a href="">Item 1</a></li>
+	       <li><a class="selected" href="">Item 1</a></li>
 	       <li><a href="">Item 2</a></li>
 	       <li><a href="">Item 3</a></li>
 	       <li><a href="">Item 4</a></li>	       
@@ -211,6 +219,47 @@ a.browse {
 
 </div>
 			
+			
+    <div class="hr"></div>
+    
+    <div id="products">
+        <h2>{% trans 'GOLF NETS' %}</h2>
+        {% for product in products %}
+            <div class="product-promo {% cycle 'first' '' 'last' %}">
+                
+                <div class="tile">
+                <div class="text">
+          		<h3>
+          			<a href="{% url product_view product.slug %}" 
+          			title="{{ product.name }} - {{ product.description }}">{{ product.name }}</a>
+          		</h3>
+    
+          		{% for price in prices %}  	
+            		{% if forloop.first %}
+            			<div class="price">
+            			{{ currency.symbol }}{{ price.price|floatformat }} 
+            			{% if price.original_price %}
+    					<span class="strikethrough">{{ currency.symbol }}{{ price.original_price }}</span>
+    					{% endif %}
+                		</div>
+    		        {% else %}
+        		    {% endif %}
+            	{% endfor %}
+            	
+	      	    <p>{{ product.short_description|safe }}</p> 
+	      	    </div>
+	      	    </div>
+            
+                <div class="image">
+                <a href="{% url product_view product.slug %}">
+                    {% thumbnail product.image "295x250" crop="center" as im %}
+                	<img class="" src="{{ im.url }}" alt="{{ product.description }}" title="{{ product.description }}"/>
+                	{% endthumbnail %}
+    			</a>
+    			</div>
+            </div>
+        {% endfor %}
+    </div>
 	
 	<div class="hr"></div>
 	
@@ -230,11 +279,13 @@ a.browse {
 								
 		</div>
 		
+		<div class="hr"></div>
+		
 		<div class="reviews">
 			<h3>{% trans 'Testimonials from Golfers' %} <span><a href="{% url testimonials %}">- {% trans 'see more testimonials' %}</a></span></h3>
 			{% for r in reviews %}
 			<div class="box {% if forloop.last %}last{% endif %}">
-			  <p><em>{{ r.text|safe }}</em><br/><strong>{{ r.owner }}</strong></p>
+			  <p>{{ r.text|safe }}<br/><span class="owner">{{ r.owner }}</span></p>
 			</div>
 			
 			{% endfor %}

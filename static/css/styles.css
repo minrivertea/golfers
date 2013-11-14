@@ -157,16 +157,19 @@ input {
     background: #000;
     float: left;
     height: auto;
-    padding: 25px 0 30px 0;
+    padding: 25px 0 40px 0;
 }
 
 #basket {
-  float: left;
-  width: 100%;
-  margin: 0 0 0px 0;
+    float: left;
+    margin: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
 }
 
-#basket #cart, #basket #currency, #basket #language {
+#basket #cart, #basket #currency, #basket #language, #basket #contact {
     color: #897963;
     float: right;
     font-size: 16px;
@@ -177,11 +180,11 @@ input {
     width: auto;
 }
 
-#basket #cart a, #basket #currency a, #basket #language a {
+#basket #cart a, #basket #currency a, #basket #language a, #basket #contact a {
   color: #897963;
 }
 
-#basket #cart a:hover, #basket #currency a:hover, #basket #language a:hover {
+#basket #cart a:hover, #basket #currency a:hover, #basket #language a:hover, #basket #contact a:hover {
   color: #d2b48c;
 }
 
@@ -197,8 +200,8 @@ input {
 }
 
 
-#currency, #language {
-  border-right: 1px solid #222;
+#currency, #language, #contact {
+  border-right: 1px solid #333;
 }
 
 #currency a {
@@ -225,7 +228,7 @@ input {
     margin: 0px 0 0px 0;
     height: auto;
     position: relative;
-    bottom: -10px;
+    bottom: -20px;
 }
 
 div#contact {
@@ -259,8 +262,9 @@ ul#top-nav {
   position: absolute;
   right: 0;
   top: -15px;
+  display: none;
 }
-
+  
 ul#top-nav li {
   float:left;   
 }
@@ -282,7 +286,7 @@ ul#nav {
   float: right;
   position: absolute;
   right: 0;
-  bottom: -15px;
+  bottom: -25px;
 }
 
 ul#nav li {
@@ -487,10 +491,67 @@ div#content img {
     padding: 20px 0 80px;
 }
 
+#footer #social {
+  list-style-type: none;
+  text-align: center;   
+}
+
+#footer #social li {
+  display: inline-table;   
+}
+
+#footer #social li a {
+  height: 52px;
+  width: 51px;
+  float: left;
+  background: url('/images/social-icons.png') no-repeat top left;   
+}
+
+#footer #social li a:hover {
+  background-position: 0px -52px;   
+}
+
+#footer #social li a#twitter {
+  background-position: -52px 0px;   
+}
+
+#footer #social li a#twitter:hover {
+  background-position: -52px -52px;   
+}
+
+#footer #social li a#facebook {
+  background-position: -104px 0px;   
+}
+
+#footer #social li a#facebook:hover {
+  background-position: -104px -52px;   
+}
+
+#footer #social li a#google {
+  background-position: -156px 0px;   
+}
+
+#footer #social li a#google:hover {
+  background-position: -156px -52px;   
+}
+
+
+
+
+
 #footer p {
   color: #fff;
-  font-size: 11px;
-  margin-top: 0;	
+  font-size: 13px;
+  margin-top: 0;
+  text-align: center;	
+}
+
+#footer p a {
+  color:#897963;   
+}
+
+#footer p a:hover {
+ color: #D2B48C;   
 }
 
 #footer ul {
@@ -561,33 +622,32 @@ div#footer ul li a:hover, div#footer ul li a:active {
 
 #email-signup input {
     float: left;
-    font-family: Helvetica,sans-serif;
+    font-family: Open Sans, sans-serif;
     font-size: 15px;
-    padding: 6px 10px 4px;
+    padding: 5px 10px 5px;
     position: relative;
     top: -3px;
-    width: 250px;
-    background: #111;
+    width: 350px;
+    background: #222;
     color: #666;
-    border: 1px solid #222;
+    border: 1px solid #333;
 }
 
 #email-signup input.button {
-  width: 100px;	
-  padding: 5px 6px 4px;
-  border-left: none;
-  background: #e1e1e1;
-  color: #af2020;
-  border-radius: 4px;
+    background: none repeat scroll 0 0 #555555;
+    border: medium none;
+    color: #FFFFFF;
+    padding: 4px 6px 6px;
+    width: 100px;
 }
 
 #email-signup p {
     color: #d2b48c;
     float: left;
     font-size: 18px;
-    font-weight: bold;
     line-height: 1em;
-    margin: 0 15px 5px 0;
+    margin: 3px 15px 5px 0;
+    
 }
 
 
