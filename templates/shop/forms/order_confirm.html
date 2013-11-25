@@ -6,15 +6,6 @@
 {% block extracss %}
 <style type="text/css">
 
-h1 {
-  padding-bottom: 20px;	
-}
-
-div.row {
-  float: left;
-  width: 100%;
-  margin-top: 30px;	
-}
 
 </style>
 {% endblock %}
@@ -29,15 +20,14 @@ div.row {
 
 <h1>{% trans 'Please confirm your order' %}</h1>
 
-
+<div id="items">
 
 <form id="paypal" method="post" action="{{ paypal_submit_url }}">
     
     	<div id="checkout-button">
 			<img src="{% staticfile '/images/002.gif' %}" class="paypal">
-			<input type="submit" value="Confirm and pay" next="" class="button"/>
+			<input type="submit" value="{% trans 'Confirm and pay' %}" next="" class="button arrow"/>
 			<p class="checkout"><strong>Next step:</strong> <em>pay securely via PayPal, using all major credit and debit cards or your linked Paypal account.</em></p>
-			
 		</div>	
     
 
@@ -157,9 +147,10 @@ div.row {
 	</div>
 </div>
 
+</div>
 
 		<div class="checkout-button">
-			<input type="submit" value="{% trans 'Checkout and pay &raquo;' %}" next="" class="checkout-button"/>
+			<input type="submit" value="{% trans 'Checkout and pay' %}" next="" class="button"/>
 			<p class="checkout"><strong>{% trans 'Next step:' %}</strong> {% trans 'pay securely via Paypal, using all major credit and debit cards or your linked Paypal account.' %}</p>
 		<img src="/images/paypal-horz.gif" class="paypal">
 		</div>

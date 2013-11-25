@@ -11,6 +11,8 @@ from django.core.mail import send_mail
 from django.utils import simplejson
 from django.db.models import Q
 from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
+
 
 
 import urllib
@@ -128,7 +130,6 @@ def GetCountry(request):
     try:
         urlobj = urllib2.urlopen(baseurl, timeout=1)
     except urllib2.URLError, e:
-        print e.reason
         return None
     
     # get the data
@@ -152,19 +153,23 @@ def index(request):
     
     
     # THIS IS MESSY, BUT THE WAY RENAN WANTS IT...
-    # first, try to see if there's a product only featured in this country   
+    # IS THERE A PRODUCT FEATURED AND ONLY AVAILABLE IN THIS COUNTRY?   
     try:
-        featured = Product.objects.filter(is_featured=True, only_available_in__contains=GetCountry(request)['countryCode'], is_active=True)[0] 
+        featured = Product.objects.filter(
+                is_featured=True, 
+                only_available_in__contains=GetCountry(request)['countryCode'], 
+                is_active=True,
+                )[0] 
     except:
-        # otherwise, see if there's a product that has an empty 'Only Available In' list, and is featured
+        # IS THERE A FEATURED PRODUCT THAT HAS AN EMPTY 'ONLY_AVAILABLE_IN'?
         try:
             featured = Product.objects.filter(is_featured=True, only_available_in__isnull=True, is_active=True)[0]
         except:
-            # last ditch, make the pro-return net the default, even if it's not featured
+            # IF NOTHING, TRY THE PRO-RETURN NET
             try:
-                featured = Product.objects.get(slug="proreturn-golf-practice-net")        
+                featured = Product.objects.get(slug=_("proreturn-golf-practice-net"))        
             except:
-                # if we can't find the pro-return net for some reason, show any other product.
+                # LAST DITCH, SHOW ANY PRODUCT
                 featured = Product.objects.filter(is_active=True)[0]
     
     
@@ -172,7 +177,7 @@ def index(request):
     
     featured_reviews = Review.objects.filter(is_published=True, product=featured)
     other_reviews = Review.objects.filter(is_published=True).exclude(product=featured)
-    reviews = list(chain(featured_reviews, other_reviews))[:2]
+    reviews = list(chain(featured_reviews, other_reviews))[:4]
     
     return render(request, "shop/home.html", locals())
 
@@ -242,11 +247,14 @@ def product_view(request, slug):
     reviews = Review.objects.filter(is_published=True, product=product)
     
     # PRICES SHOULD ONLY BE AVAILABLE IF THIS ISN'T A RESTRICTED COUNTRY
-    if product.only_available_in is not None:
-        if RequestContext(request)['countrycode'] in product.only_available_in:
-            prices = UniqueProduct.objects.filter(parent_product=product, currency=_get_currency(request))
-        else:
-            prices = None
+    if product.is_available(request):
+        prices = UniqueProduct.objects.filter(
+                parent_product=product,
+                currency=_get_currency(request)
+                )
+    else:
+        prices = None
+
             
     recommended = []
     recommended.append(get_object_or_404(Product, id=8))
@@ -599,11 +607,17 @@ def order_confirm(request):
     
     
     
-def order_complete(request):
+def order_complete(request, order=None):
     
     # SET A COOKIE TO SHOW WE'VE CONVERTED THIS ORDER IN GOOGLE. STOPS DUPLICATE CONVERSIONS
-    request.session['ORDER_CONVERTED'] = order.id
-    
+    if order:
+        try:
+            converted = request.session['ORDER_CONVERTED']
+            order_converted = True
+        except:
+            request.session['ORDER_CONVERTED'] = order.id
+            order_converted = False
+            
     # the user should be logged in here, so we'll find their Shopper object
     # or redirect them to home if they're not logged in
     try:
@@ -618,13 +632,6 @@ def order_complete(request):
             order = get_object_or_404(Order, invoice_id=request.session['ORDER_ID'])
         except:
             pass
-    
-    if order:
-        order_converted = False
-        if request.session['ORDER_CONVERTED'] is not None:
-            # SET A COOKIE TO SHOW WE'VE CONVERTED THIS ORDER IN GOOGLE. STOPS DUPLICATE CONVERSIONS
-            request.session['ORDER_CONVERTED'] = order.id
-            order_converted = True
     
         
     # this line should reset the basket cookie. basically, if 

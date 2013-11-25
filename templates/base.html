@@ -74,9 +74,8 @@
 			</div>
       	       
       	    <ul id="nav">
-                <li><a href="{% url products %}" title="" alt="">{% trans 'Golf nets' %}</a></li>
-	    	    <li><a href="/media/">{% trans 'Media' %}</a></li>
-	    	    <li><a href="/custom/" title="" alt="">{% trans 'Custom' %}</a></li>
+                <li><a href="{% url products %}" title="" alt="">{% trans 'Sports nets' %}</a></li>
+                <li><a href="{% url products %}" title="" alt="">{% trans 'Accessories' %}</a></li>
             </ul>
         </div>
     </div>
@@ -88,7 +87,7 @@
 	       <div class="container">
 	       
 	           <div id="cart">
-			      {{ basket_quantity }} {% blocktrans count basket_quantity as counter %}item{% plural %}{{ basket_quantity }}items{% endblocktrans %}
+			       {% blocktrans count basket_quantity as counter %}{{ basket_quantity }} item{% plural %}{{ basket_quantity }} items{% endblocktrans %}
 		          {% if basket_quantity > 0 %}- <a class="selected" href="{% url basket %}">{% trans 'Checkout now!' %}{% endif %}</a>
 		       </div>
 	           

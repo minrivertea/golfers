@@ -9,7 +9,7 @@
 <div class="container">
 
 <form action="{% url email_signup %}" type="post" id="email-signup">
-<p>Signup to receive regular emails from ProAdvanced &raquo;</p>
+<p>{% trans 'Signup for discounts and promotions from ProAdvanced' %} &raquo;</p>
 <input type="text" class="clearMeFocus" name="email" id="id_email" title="Your email address" value=""/>
 <input type="submit" value="Signup!" class="button"/>
 <img id="loading" src="/images/loading.gif"/>
@@ -41,6 +41,7 @@
 	   <li><a id="twitter" href=""></a></li>
 	   <li><a id="facebook" href=""></a></li>
 	   <li><a id="google" href=""></a></li>
+	   <li><a id="youtube" href=""></a></li>
 	</ul>
 	
 	

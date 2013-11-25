@@ -1,9 +1,9 @@
 {% load i18n %}
 
 {% for item in quotes %}
-<td>{% trans 'Shipping' %}</td>
-<td>Sent using {{ item.service }} from {{ item.warehouse }}<br/>Delivered in {{ item.min_days }}-{{ item.max_days }} days</td>
-<td>{{ currency.symbol }}{{ item.cost }}</td>
+<td valign="top">{% trans 'Shipping' %}</td>
+<td valign="top">Sent using {{ item.service }} from {{ item.warehouse }}<br/>Delivered in {{ item.min_days }}-{{ item.max_days }} days</td>
+<td valign="top">{{ currency.symbol }}{{ item.cost }}</td>
 
 {% endfor %}
 

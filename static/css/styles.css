@@ -55,19 +55,67 @@ span.link {
 }
 
 
-.button, input.button {
-
-	background-color: #e1e1e1;
+.button, input.button, a.button {
+	background-color: #444;
+	color: #fff;
     border: none;
-    font-size: 14px;
-    padding: 5px 15px;
+    font-size: 21px;
+    padding: 6px 20px 6px 20px;
     text-align: center;
     cursor: pointer;
-    color: #af2020;
+    font-weight: normal;
+    position: relative;
 }
 
-.button:hover, input.button:hover {
-  background: #f1f1f1;
+.button.arrow, a.button.arrow {
+   padding: 6px 60px 6px 20px;
+}
+
+.button.arrow:before, input.button.arrow:before {
+   position: absolute;
+   content: " ";
+   height: 35px;
+   width: 35px;
+   border-radius: 35px;
+   background: #333;
+
+   right: 10px;
+   top: 7px; 
+   border: 1px solid #343434;
+}
+
+.button.arrow:after, input.button.arrow:after {
+    border-color: rgba(0, 0, 0, 0) #444;
+    border-style: solid none solid solid;
+    border-width: 13px 0 13px 13px;
+    content: " ";
+    display: block;
+    position: absolute;
+    right: 19px;
+    top: 12px;
+}
+
+.button:hover, input.button:hover, a.button:hover {
+  background: #666;
+  color: #fff;
+}
+
+.button.arrow:hover:before {
+   background: #444;   
+}
+
+.button.arrow:hover:after {
+   border-color: rgba(0, 0, 0, 0) #c1c1c1;   
+}
+
+.button.price {
+  padding-left: 120px;   
+}
+
+.button.price span.price {
+  float: left;
+  position: absolute;
+  left: 15px;   
 }
 
 .container {
@@ -89,18 +137,18 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
     color: #fff;
-    font-size: 40px;
-    font-weight: 100;
-    margin: 0 0 30px;
+    font-size: 44px;
+    margin: 10px 0 20px;
+    font-weight: normal;
     text-transform: ;
 }
 
 
 h2 {
-    color: #D2B48C;
+    color: #AF2020;
     font-size: 26px;
     font-weight: normal;
-    margin: 10px 0 5px;
+    margin: 0px 0 5px;
 }
 
 
@@ -123,6 +171,11 @@ p {
   margin: 0 0 20px 0;
   line-height: 1.8em;
   font-size: 16px;
+}
+
+ul, ol {
+  font-size: 18px;
+  line-height: 1.8em;   
 }
 
 div.left p {
@@ -157,7 +210,8 @@ input {
     background: #000;
     float: left;
     height: auto;
-    padding: 25px 0 40px 0;
+    padding: 15px 0 40px 0;
+    margin: 0 0 15px 0;
 }
 
 #basket {
@@ -239,9 +293,9 @@ div#contact {
 }
 
 #logo h1 {
-  background: url('/images/logo2_small.png') no-repeat top left;
-  height: 40px;
-  width: 230px;	
+  background: url('/images/logo.png') no-repeat top left;
+  height: 60px;
+  width: 300px;	
   margin: 0;
   border-bottom: none;
 }
@@ -416,19 +470,55 @@ div#content img {
   float: right;
 }
 
-.left {
-  float: left;
-  width: 600px;
+div.left {
+    background: none repeat scroll 0 0 #FFFFFF;
+    color: #333333;
+    padding: 25px;
+    width: 580px;
+    float: left;
 }
 
-.right {
+div.right {
   float: right;
-  width: 200px;
+  width: 240px;
+}
+
+.right .box {
+  float: right;
+  background: #333;  
+  position: relative;
+  overflow: hidden;
+  margin: 0 0 20px 0; 
+}
+
+.right .box img.back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.right .box .inner {
+  padding: 15px;   
+  position: relative;
+  z-index: 20;
+}
+
+.right .box h3 {
+  font-size: 16px; 
+  margin: 0;  
+}
+
+.right .box p {
+  font-size: 14px;
+  margin: 0;
+  padding: 0; 
+  color: #999999;  
 }
 
 .product-promo {
     float: left;
-    margin: 0px 5px 5px 0;
+    margin: 0px 5px 45px 0;
     width: 295px;
     height: 250px;
     overflow: hidden;
@@ -441,11 +531,11 @@ div#content img {
 
 .product-promo .tile {
   position: absolute;
-  bottom: -250px;
+  bottom: -223px;
   left: 0;
   width: 100%;
   display: block;
-  height: 250px;
+  height: 223px;
   background: #fff;
   z-index: 20; 
   overflow: hidden;  
@@ -453,6 +543,18 @@ div#content img {
 
 .product-promo:hover {
   cursor: pointer;   
+}
+
+.product-promo:hover h3 a {
+  color: #fff ;   
+}
+
+.product-promo .tile h4 {
+    color: #333333;
+    font-size: 15px;
+    font-weight: 100;
+    margin: 0;
+    padding: 0 0 5px;  
 }
 
 .product-promo .image {
@@ -468,8 +570,8 @@ div#content img {
 }
 
 .product-promo h3 a {
-  font-size: 16px;
-  color: #000;
+    color: #D2B48C;
+    font-size: 16px;
 }
 
 
@@ -535,6 +637,13 @@ div#content img {
   background-position: -156px -52px;   
 }
 
+#footer #social li a#youtube {
+  background-position: -207px 0px;   
+}
+
+#footer #social li a#youtube:hover {
+  background-position: -207px -52px;   
+}
 
 
 
@@ -577,39 +686,52 @@ div#footer ul li a:hover, div#footer ul li a:active {
 
 /* shopping basket and ordering steps styles */
 
+#items {
+  float: left;
+  padding: 20px 3%;
+  background: #222;
+  color: #999;
+  width: 94%;     
+}
+
 #steps {
-    background-color: #f1f1f1;
-    border: 1px solid #E1E1E1;
-    border-radius: 5px 5px 5px 5px;
-    color: #666666;
-    float: left;
-    margin: 0 20px 0 0;
-    font-size: 20px;
-    font-weight: bold;
-    padding: 15px 20px;
+    background-color: #222;
+    border-radius: 5px 5px 0 0;
+    color: #e1e1e1;
+    float: right;
+    font-size: 25px;
+    margin: 10px 0 0;
+    padding: 10px 15px;
+    position: relative;
+    top: 20px;
 }
 
-.checkout-button {
-  float:;
+#checkout-button {
   font-size: 13px;	
-  text-align: right;
   margin-top: 20px;
+  float: left;
+  text-align: right;
+  width: 100%;
+  color: #999;
 }
 
-.checkout-button input {
-  border: none;
-  background: none;
-  font-weight: bold;
-  font-size: 20px;
-  font-family: Arial, sans-serif;
-  padding: 0;
-  color: #AF2020;	
+#checkout-button {
+  float: right;
+  width: 350px;   
 }
 
-.checkout-button input:hover {
-  cursor: pointer;
-  color: #ffaeae;	
+#checkout-button a {
+    float: right;
+    font-size: 28px;
+    font-weight: normal;
+    margin: 0;
 }
+
+#checkout-button p {
+  float: right;
+}
+
+/* FOOTER STYLES */
 
 #emailsignup {
   float: left;
@@ -620,34 +742,38 @@ div#footer ul li a:hover, div#footer ul li a:active {
   display: none;	
 } 
 
-#email-signup input {
+#email-signup input[type="text"] {
+    background: none repeat scroll 0 0 #222222;
+    border: 1px solid #333333;
+    color: #666666;
     float: left;
-    font-family: Open Sans, sans-serif;
+    font-family: Open Sans,sans-serif;
     font-size: 15px;
     padding: 5px 10px 5px;
     position: relative;
-    top: -3px;
     width: 350px;
-    background: #222;
-    color: #666;
-    border: 1px solid #333;
 }
 
-#email-signup input.button {
-    background: none repeat scroll 0 0 #555555;
-    border: medium none;
-    color: #FFFFFF;
-    padding: 4px 6px 6px;
+#email-signup input[type="text"]:focus {
+  background: #e1e1e1;
+  color: #333;
+  border: 1px solid #e1e1e1;   
+}
+
+#email-signup input[type="submit"].button {
+    padding: 5px 6px 5px;
+    font-size: 15px;
     width: 100px;
 }
 
 #email-signup p {
-    color: #d2b48c;
+    color: #D2B48C;
     float: left;
     font-size: 18px;
     line-height: 1em;
     margin: 3px 15px 5px 0;
-    
+    text-align: left;
+    width: auto;
 }
 
 
@@ -683,6 +809,7 @@ div#footer ul li a:hover, div#footer ul li a:active {
   background-position: -160px 0px;	
 }
 
+/* END FOOTER STYLES */
 
 #infobar {
   width: 100%;

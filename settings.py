@@ -7,7 +7,7 @@ PROJECT_PATH = os.path.abspath(os.path.split(__file__)[0])
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-
+SITE_URL = 'http://www.pro-advanced.com'
 
 ADMINS = (
     ('Chris West', 'chris@minrivertea.com'),
@@ -56,7 +56,7 @@ TEMPLATE_LOADERS = (
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.media',
-    'django.core.context_processors.debug',
+    #'django.core.context_processors.debug',
     'django.core.context_processors.request',
     'django.core.context_processors.i18n',
     'shop.context_processors.get_basket',
@@ -161,11 +161,4 @@ try:
     from local_settings import *
 except ImportError:
     pass
-
-import logging 
-                    
-logging.basicConfig(filename=LOG_FILENAME,
-                   level=logging.DEBUG,
-                   datefmt="%Y-%m-%d %H:%M:%S",
-                   format="%(asctime)s %(levelname)s %(name)s %(message)s",
-                  )
+               

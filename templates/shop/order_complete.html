@@ -1,16 +1,21 @@
 {% extends "base.html" %}
 
+{% load i18n %}
+
 {% block content %}
 
 <div id="feature">
 
-<h1>Congratulations!</h2>
+<h1>{% trans 'Congratulations!' %}</h2>
 
-<p>Your order has been placed successfully and you'll be getting confirmation emails shortly. If you have any problems and need to get in contact, please 
-
-{% if order %}remember to quote this order ID : <strong>{{ order.invoice_id }}</strong>{% else %} get in touch immediately.{% endif %}
-
+<div id="items">
+<p class="intro">
+    {% trans "Your order has been placed successfully and you'll be getting confirmation emails shortly. If you have any problems please get in touch immediately." %}
 </p>
+
+{% if order %}<p>Your order ID is: <strong>{{ order.invoice_id }}</strong> - please remember to quote it when you contact us.</p>{% endif %}
+
+</div>
 </div>
 {% endblock %}
 

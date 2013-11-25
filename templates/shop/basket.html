@@ -9,16 +9,20 @@
 
 <style type="text/css">
 
-h1 {
-  padding-bottom: 20px;	
-}
-
 .basket-row {
   float: left;
   width: 100%;	
-  border-bottom: 1px solid #e1e1e1;
-  padding: 20px 0;
-  
+  border-bottom: 1px solid #333;
+  padding: 10px 0;
+}
+
+.basket-row:first-child {
+  padding-top: 0;   
+}
+
+.basket-row:last-child {
+  padding-bottom: 0;
+  border-bottom: none;   
 }
 
 .basket-row .remove {
@@ -29,94 +33,88 @@ h1 {
 
 .basket-row .photo {
   float: left;
-  width: 100px;	
+  width: 80px;	
   margin-right: 20px;
   display: block;
 }
 
 .basket-row .details {
   float: left;
-  width: 300px;	
+  width: 450px;	
+  font-size: 16px;
 }
 
-.basket-row .details a {
-  font-weight: bold;	
+.basket-row.shipping .details, .basket-row.discount .details {
+  width: 600px;   
+}
+
+.basket-row.discount .details strong {
+  float: left;
+  margin: 0 20px 0 0;   
+}
+
+.basket-row.discount form {
+  float: left;   
+}
+
+.basket-row.discount form input[type="text"] {
+    background: none repeat scroll 0 0 #444444;
+    border: 1px solid #555555;
+    color: #FFFFFF;
+    font-size: 12px;
+    padding: 3px 6px;
+    width: 200px;
+}
+
+.basket-row.discount form input[type="submit"] {
+    font-size: 12px;
+    padding: 3px 6px;
+}
+
+.basket-row .details a, .details strong {
+    color: #FFFFFF;
+    font-weight: normal;
+    font-size: 18px;
 }
 
 .basket-row .details .remove {
-  font-size: 10px;	
+  font-size: 12px;	
   font-weight: normal;
 }
 
 .basket-row .quantity {
   float: left;
   width: 150px;
-  font-weight: bold;	
-}
-
-.basket-row .quantity a {
-  font-weight: bold;
   font-size: 18px;	
 }
 
+.basket-row.totals .quantity {
+   font-size: 22px;
+   color: #fff;
+   text-align: right;
+}
+
+.basket-row .quantity a {
+    background: none repeat scroll 0 0 #333333;
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 1em;
+    margin: 0 0 0 5px;
+    padding: 0 5px;
+    position: relative;
+    top: 3px;
+}
+
 .basket-row .total {
-  float: left;
-  width:180px;	
+    color: #FFFFFF;
+    float: left;
+    font-size: 22px;
+    text-align: right;
+    width: 120px;
 }
 
-#totals {
-  float: left;
-  margin-top: 30px;
-  width: 100%;
-  font-weight: bold;
-}
 
-#totals .label {
-  margin-left: 470px;
-  float: left;	
-}
-
-#totals .total {
-  float: left;
-  margin-left: 45px;	
-}
-
-#checkout-button {
-  font-size: 13px;	
-  margin-top: 40px;
-  float: left;
-  text-align: right;
-  width: 100%;
-}
-
-#checkout-button a {
-  font-weight: bold;
-  font-size: 20px;	
-}
-
-div.total ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  font-weight: bold;
-  font-size: 13px;	
-}
-
-div.total ul li {
-  margin-bottom: 5px;	
-}
-
-div.total span.red {
-  font-size: 12px;
-  font-weight: bold;
-  color: red;	
-}
-
-div.total span.black a {
-  font-size: 12px;
-  font-weight: bold;
-  color: #000;	
-}
 
 </style>
 {% endblock %}
@@ -125,9 +123,11 @@ div.total span.black a {
 
 <div id="feature">
 
+{% if basket_items %}
 <div id="steps">
 {% trans 'Step 1/4' %}
 </div>
+{% endif %}
 
 <h1>{% trans 'Your shopping basket' %}</h1>
 
@@ -136,16 +136,14 @@ div.total span.black a {
 <p class="introduction">{% trans 'Your basket is empty!' %}</p>
 {% else %}
 
-<p class="introduction">
-	{% blocktrans count basket_quantity as counter %}You currently have {{ basket_quantity }} item in your basket{% plural %}You currently have {{ basket_quantity }} items in your basket{% endblocktrans %}
-</p>
 
-      
+<div id="items">
+  
 {% for thing in basket_items %}
   <div class="basket-row">
     <div class="remove"></div>
 	<div class="photo">
-	    {% thumbnail thing.item.parent_product.image "100x100" crop="center" as im %}
+	    {% thumbnail thing.item.parent_product.image "80x80" crop="center" as im %}
 		<img src="{{ im.url }}"/><br/>
 		{% endthumbnail %}
 	</div>
@@ -164,38 +162,27 @@ div.total span.black a {
   </div>
 {% endfor %}
 
-{% if shopsettings.use_shipwire %}
-	  <div class="basket-row">
-			<div class="photo"><em>&nbsp;</em></div>
-			<div class="details">
-				<strong>{% trans 'Shipping' %}</strong><br/>
-				<span style="font-size: 14px;">{% trans "We'll calculate accurate shipping rates after the next step, when we know where to send your products!" %}</span>
-			</div>
-			<div class="quantity">&nbsp;</div>
-			<div class="total">
-				
-			</div>	
-	  </div>
-{% else %}
-	  <div class="basket-row">
-			<div class="photo"><em>&nbsp;</em></div>
-			<div class="details">
-				<strong>{% trans 'Shipping' %}</strong><br/>
-				<span style="font-size: 14px;">{{ shopsettings.get_shipping_country_choices_display }}{% trans ' - FEDEX Home Delivery/UPS Ground' %}</span>
-			</div>
-			<div class="quantity">&nbsp;</div>
-			<div class="total">
-				{{ currency.symbol }}{{ shipping_price|floatformat:"2" }}
-			</div>	
-	  </div>
-{% endif %}
-  
+<div class="basket-row shipping">
+    <div class="photo"><em>&nbsp;</em></div>
+    <div class="details">
+        <strong>{% trans 'Shipping' %}</strong><br/>
+        {% if shopsettings.use_shipwire %}			
+            <span>{% trans "We'll calculate accurate shipping rates after the next step, when we know where to send your products!" %}</span>
+	   {% else %}
+	       <span style="font-size: 14px;">{{ shopsettings.get_shipping_country_choices_display }}{% trans ' - FEDEX Home Delivery/UPS Ground' %}</span>
+	   {% endif %}
+	</div>
+	<div class="total">
+		{% if not shopsettings.use_shipwire	%}
+		  	{{ currency.symbol }}{{ shipping_price|floatformat:"2" }}
+		{% endif %}   	
+	</div>	
+</div>  
 
-  <div class="basket-row">
+  <div class="basket-row discount">
 		<div class="photo"><em>&nbsp;</em></div>
-		<div class="details">{% trans 'Have a discount code?' %}</div>
-		<div class="quantity">&nbsp;</div>
-		<div class="total">
+		<div class="details"><strong>{% trans 'Have a discount code?' %}</strong>
+		
 		{% if discount %}
 		  {% with discount.discount_value|cut:"0." as dis %}
 		<span class="red">{% blocktrans %}Your discount code is worth {{ dis }}% off!{% endblocktrans %}</span> 
@@ -207,20 +194,30 @@ div.total span.black a {
 			{% if discount_message %}
 			    <span class="red">{{ discount_message }}</span><br/>
 			{% endif %}
-			<input type="submit" value="{% trans 'Update' %}"/>
+			<input type="submit" class="button" value="{% trans 'Update' %}"/>
 		</form>
 		{% endif %}
+		</div>
+		<div class="total">
+		  {% if discount %}
+		      -{{ currency.symbol }}{{ discount_value|floatformat:"2" }}
+		  {% endif %}  
 		</div>	
   </div>
 
-  <div id="totals">
-	<div class="label">{% trans 'TOTAL:' %}</div><div class="total">{{ currency.symbol }}{{ total_price|floatformat:2 }}</div>
-  </div>
+<div class="basket-row totals">
+    <div class="photo">&nbsp;</div>
+    <div class="details">&nbsp;</div>
+	<div class="quantity">{% trans 'Subtotal:' %}</div>
+	<div class="total">{{ currency.symbol }}{{ total_price|floatformat:2 }}</div>
+</div>
+  
+</div>
 	
 	
 <div id="checkout-button">
-	<a href="{% url order_check_details %}">{% trans 'Proceed to checkout &raquo;' %}</a>
-	<p class="checkout"><strong>{% trans 'Next step:' %}</strong> {% trans 'Please provide your address and personal details' %}</p>
+	<a class="button arrow" href="{% url order_check_details %}">{% trans 'Proceed to checkout' %}</a>
+	<p><strong>{% trans 'Next step:' %}</strong> {% trans 'Please provide your address and personal details' %}</p>
 </div>
 
 

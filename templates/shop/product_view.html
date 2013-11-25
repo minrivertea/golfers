@@ -38,19 +38,8 @@ $(document).ready(function() {
 <link rel="stylesheet" href="/css/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />
 <style type="text/css">
   
-  .right {
-    width: 240px;
-  }
-  
   .right p {
     margin: 0; 
-  }
-  
-  .left {
-    width: 580px;
-    padding: 25px;
-    background: #fff;
-    color: #333; 
   }
   
   h1 {
@@ -97,55 +86,35 @@ $(document).ready(function() {
     font-size: 16px;
   }
   
-  #top .prices {
-    font-size: 24px;
-    width: 100%;
-    font-weight: bold;	
-    margin-top: 20px;
+#top .prices {
     float: left;
+    font-size: 24px;
+    font-weight: normal;
     margin-bottom: 15px;
-  }
-  
-  #top .prices .price {
-    float: left; 
-    width: 190px;
-    padding-left: 10px;	
-  }
-  
+    margin-top: 20px;
+    padding: 0px;
+    width: 100%;
+    position: relative;
+}
+
+
 #top .prices .price span.strikethrough {
-    color: #af2020;
+    color: #999;
     font-size: 15px;
     font-weight: normal;
     text-decoration: line-through;
     margin-left: 5px;
 }
   
-  #top .prices .button {
-    float: left;
-    width: 160px;	
-  }
   
-  #top .prices a {
-  	font-size: 18px;
-    padding: 3px 15px 5px;
-    background: #e1e1e1;   
-    border-radius: 4px 4px 4px 4px;
-    color: #af2020;
-  }
-  
-  #top .prices a {
+#top .prices a.button {
     float: right;
-    width: auto;	
-    text-align: center;
-  }
-  
-  #top .prices a:hover {
-  	background: -moz-linear-gradient(100% 100% 90deg, #f1f1f1, #e6e6e6); 
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f1f1f1), to(#e6e6e6)); 
-    background: -webkit-linear-gradient(#e6e6e6, #f1f1f1); 
-	background: -o-linear-gradient(#e6e6e6, #f1f1f1);
-	color: #BD1B30;
-  }
+    padding-bottom: 10px;
+    padding-top: 10px;
+    width: 75%;
+    text-align: right;
+}
+   
   
 #message {
     background-color: #444444;
@@ -153,21 +122,20 @@ $(document).ready(function() {
     font-size: 15px;
     font-weight: 100;
     padding: 5px 15px;
-    position: absolute;
-    right: 0;
     text-align: right;
-    top: 10px;
+    float: right;
+    position: relative;
 }
 
 #message:before {
-    border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #444444;
-    border-style: none solid solid;
-    border-width: 0 10px 10px;
+    border-color: #444444 rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+    border-style: solid solid none;
+    border-width: 10px 10px 0px;
     content: " ";
     display: block;
     position: absolute;
     right: 20px;
-    top: -10px;
+    bottom: -10px;
 }
   
   span.red {color: #BD1B30;}
@@ -231,11 +199,13 @@ $(document).ready(function() {
 
 
 .right ul.reviews li {
-  padding: 10px 15px;
-  margin: 0 0 15px;
-  background: #222;
-  position: relative;
-  color: #999;
+    background: none repeat scroll 0 0 #222222;
+    color: #999999;
+    font-size: 14px;
+    line-height: 1.6em;
+    margin: 0 0 15px;
+    padding: 10px 15px;
+    position: relative;
 }
 
 .right ul.reviews p {
@@ -292,6 +262,15 @@ $(document).ready(function() {
   padding: 0;   
 }
 
+ul.social {
+  position: absolute;
+  top: 25px;
+  right: 0;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;   
+}
+
 </style>
 {% endblock %}
 
@@ -300,12 +279,7 @@ $(document).ready(function() {
 
 {% block content %}
 <div id="feature">	
-	
-	{% if message %}
-	<div id="message">
-	  <strong>{% blocktrans with product.name as name %}1 x {{ name }} added to your basket!{% endblocktrans %}
-	</div>
-	{% endif %}
+
 	
 	<h1>{{ product.name }}</h1>
 
@@ -360,7 +334,9 @@ $(document).ready(function() {
 		</div>
 		
 		<div id="topright">
+			{% if product.long_description %}
 			{{ product.long_description|safe }}
+			{% endif %}
 			
 			{% if not prices %}
 				<form action="{% url notify_signup product.slug %}" type="post" id="notify-form">
@@ -373,19 +349,29 @@ $(document).ready(function() {
 			
 			
 			
+			{% if message %}
+         	<div id="message">
+         	  <strong>{% blocktrans with product.name as name %}1 x {{ name }} added to your basket!{% endblocktrans %}
+         	</div>
+         	{% endif %}
+			
 			
 			
 			{% if prices %}
 				{% for price in prices %}
 					<div class="prices">
-						<a href="{% url add_to_basket price.id %}">Add to basket</a>
-						<div class="price">
-													
-							{{ price.currency.symbol }}{{ price.price }} 
-							{% if price.original_price %}
-								<span class="strikethrough">{{ price.currency.symbol }}{{ price.original_price }}</span>
-							{% endif %}
-						</div> 						
+						<a class="button arrow price" href="{% url add_to_basket price.id %}">
+					        <span class="price">
+					        {{ price.currency.symbol }}{{ price.price }}
+					           {% if price.original_price %}
+					           <span class="strikethrough">
+					               {{ price.currency.symbol }}{{ price.original_price }}
+					           </span>
+					           {% endif %}
+					        </span>
+    						{% trans 'Add to basket' %}
+						
+						</a>				
 					</div>
 				{% endfor %}		      
 			{% endif %}				
@@ -438,6 +424,38 @@ $(document).ready(function() {
         </div>
         {% endfor %}
     </div>
+    
+    
+    {% if ga_is_on %}
+    <ul class="social">
+		<li id="google">
+			<div class="g-plusone" data-size="medium"></div>
+			<!-- Place this tag after the last +1 button tag. -->
+            <div style="display: none; width: 0;">
+            <script type="text/javascript">
+              (function() {
+                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                po.src = 'https://apis.google.com/js/plusone.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+              })();
+            </script>
+            </div>
+		</li>
+		<li id="twitter">
+		      <a href="https://twitter.com/share" class="twitter-share-button" data-url="{{ site_url }}{{ product.get_absolute_url }}" data-text="I love this {{ product.name }}" data-size="small">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+		
+		</li>
+    	<li id="facebook">
+		    <div id="fb-root"></div>
+		    <script src="http://connect.facebook.net/en_US/all.js#appId=234100573279411&amp;xfbml=1"></script>
+		    <fb:like href="{{ site_url }}{{ product.get_absolute_url }}" send="false" layout="button_count" width="80" show_faces="true" font="">
+		    </fb:like>
+		</li>
+	</ul>
+	{% else %}
+	<ul class="social"><li><img src="/images/debug_social.jpg" /></li></ul>
+	{% endif %}
 
 </div>
 

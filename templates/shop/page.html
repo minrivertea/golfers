@@ -20,9 +20,9 @@ div#right {
 
 ul#right-nav {
   list-style-type: none;
-  width: 200px;
+  width: 100%;
   float: right;
-  margin: 0px 0 0 0;
+  margin: 0px 0 20px 0;
   padding: 0;
   font-size: 13px;	
 }
@@ -32,7 +32,7 @@ ul#right-nav li a {
     float: left;
     padding: 10px 15px;
     text-align: center;
-    width: 170px;
+    width: 210px;
     color:#897963;   
 }
 
@@ -93,6 +93,26 @@ div#right-nav ul li.selected a {
 		<img style="margin-top: 20px;" src="{{ im.url }}">
 		{% endthumbnail %}
 		{% endif %}
+		
+		{% comment %}
+		{# COMMENTING THESE OUT BUT WE CAN USE THEM LATER IF NEEDED #}
+		<div class="box">
+		  <div class="inner">
+    		  <h3>Some title</h3>
+	       	  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+		  </div>
+		</div>
+		
+		<div class="box">
+		  <img class="back" src="/images/golfer.jpg" />
+		  <div class="inner">
+    		  <h3>Some title</h3>
+	       	  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+		  </div>
+		</div>
+		{% endcomment %}
+		
+		
 	</div>	
 </div>
 

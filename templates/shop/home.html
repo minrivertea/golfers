@@ -7,7 +7,7 @@
 {% block extrajs %}
 <script>
 $(function() {
-    $(".scroll").scrollable({ circular: true }).autoscroll({ autoplay: true, interval: 3000 });
+    $("#scrollable").scrollable({ circular: true }).autoscroll({ autoplay: true, interval: 3000 });
 });
 
 $(document).ready( function() {
@@ -95,7 +95,7 @@ p.quote strong {
 }
 
 div.paypal {
-    background-color: #000000;
+    background-color: #fff;
     float: right;
     margin-bottom: 0;
     padding: 20px;
@@ -148,12 +148,17 @@ a.browse {
 
 
 #feature {
+   position: relative;
     
 }
 
 #feature #image-wrap {
   width: 100%;
-  height:500px;   
+  height:450px;   
+}
+
+#feature #image-wrap img {
+  width: 100%;   
 }
 
 #feature #tabs {
@@ -194,6 +199,104 @@ a.browse {
 }
 
 
+
+
+
+
+
+/*
+root element for the scrollable.  when scrolling occurs this
+element stays still.
+*/
+#scrollable {
+  /* required settings */
+  position:relative;
+  overflow:hidden;
+  width: 900px;
+  height:450px;
+}
+ 
+/*
+root element for scrollable items. Must be absolutely positioned
+and it should have a extremely large width to accommodate scrollable
+items.  it's enough that you set width and height for the root element
+and not for this element.
+*/
+#scrollable .items {
+  /* this cannot be too large */
+  width:20000em;
+  position:absolute;
+}
+ 
+/*
+a single item. must be floated in horizontal scrolling.  typically,
+this element is the one that *you* will style the most.
+*/
+.items div {
+  float:left;
+  position: relative;
+}
+
+.items div img {
+  width: 900px;   
+}
+
+a.browse {
+  float: left;
+  
+background: -moz-linear-gradient(left,  rgba(170,170,170,0.65) 0%, rgba(0,0,0,0) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(170,170,170,0.65)), color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(left,  rgba(170,170,170,0.65) 0%,rgba(0,0,0,0) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(left,  rgba(170,170,170,0.65) 0%,rgba(0,0,0,0) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(left,  rgba(170,170,170,0.65) 0%,rgba(0,0,0,0) 100%); /* IE10+ */
+background: linear-gradient(to right,  rgba(170,170,170,0.65) 0%,rgba(0,0,0,0) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6aaaaaa', endColorstr='#00000000',GradientType=1 ); /* IE6-9 */
+
+
+  height: 70px;
+  width: 100px;
+  position: absolute; 
+  top: 45%;
+  margin: 0px 0 0 0;
+  opacity: 0; 
+}
+
+a.browse:hover {
+  opacity: 0.3;   
+}
+
+a.next.browse {
+  float: right;
+  right: 0; 
+background: -moz-linear-gradient(left,  rgba(0,0,0,0) 0%, rgba(170,170,170,0.65) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(170,170,170,0.65))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(left,  rgba(0,0,0,0) 0%,rgba(170,170,170,0.65) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(left,  rgba(0,0,0,0) 0%,rgba(170,170,170,0.65) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(left,  rgba(0,0,0,0) 0%,rgba(170,170,170,0.65) 100%); /* IE10+ */
+background: linear-gradient(to right,  rgba(0,0,0,0) 0%,rgba(170,170,170,0.65) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6aaaaaa',GradientType=1 ); /* IE6-9 */
+  
+}
+
+a.browse .arrow {
+    border-color: rgba(0, 0, 0, 0) #fff;
+    border-style: solid solid solid none;
+    border-width: 25px 25px 25px 0;
+    left: 10px;
+    position: absolute;
+    top: 10px;
+}
+
+a.browse.next .arrow {
+    border-color: rgba(0, 0, 0, 0) #fff;
+    border-style: solid none solid solid ;
+    border-width: 25px 0 25px 25px;
+    right: 10px;
+    left: auto;
+    position: absolute;
+}
+
+
 </style>
 {% endblock %}
 
@@ -202,20 +305,34 @@ a.browse {
 
 <div id="feature">
 	
-	<div id="image-wrap">
+	<div id="scrollable">
 	
-	</div>
+	   <div class="items">
 	
-	<div id="tabs">
-	   <ul>
-	       <li><a class="selected" href="">Item 1</a></li>
-	       <li><a href="">Item 2</a></li>
-	       <li><a href="">Item 3</a></li>
-	       <li><a href="">Item 4</a></li>	       
-	   </ul>
-	</div>	
-	
+    	<div>
+            <img src="/images/homepage/01_{{ request.LANGUAGE_CODE }}_{{ currency.code }}.jpg" />
+            <a href="{% url product_view _('proreturn-golf-practice-net') %}"><span class="link"></span></a>
+        </div>
+        <div>
+            <img src="/images/homepage/02_{{ request.LANGUAGE_CODE }}_{{ currency.code }}.jpg" />
+            <a href="{% url product_view _('golf_net_package') %}"><span class="link"></span></a>
+        </div>
+        <div>
+            <img src="/images/homepage/03_{{ request.LANGUAGE_CODE }}_{{ currency.code }}.jpg" />
+            <a href="{% url product_view _('proapproach-popup-net') %}"><span class="link"></span></a>
+        </div>
+        <div>
+            <img src="/images/homepage/04_{{ request.LANGUAGE_CODE }}_{{ currency.code }}.jpg" />
+            <a href="{% url products %}"><span class="link"></span></a>
+        </div>
+        
+        </div>
+        
+        
+    </div>
 
+    <a href="#" class="prev browse left"><span class="arrow"></span></a>
+    <a href="#" class="next browse right"><span class="arrow"></span></a>
 
 </div>
 			
@@ -223,17 +340,11 @@ a.browse {
     <div class="hr"></div>
     
     <div id="products">
-        <h2>{% trans 'GOLF NETS' %}</h2>
         {% for product in products %}
             <div class="product-promo {% cycle 'first' '' 'last' %}">
                 
                 <div class="tile">
-                <div class="text">
-          		<h3>
-          			<a href="{% url product_view product.slug %}" 
-          			title="{{ product.name }} - {{ product.description }}">{{ product.name }}</a>
-          		</h3>
-    
+                <div class="text">    
           		{% for price in prices %}  	
             		{% if forloop.first %}
             			<div class="price">
@@ -249,6 +360,11 @@ a.browse {
 	      	    <p>{{ product.short_description|safe }}</p> 
 	      	    </div>
 	      	    </div>
+	      	    
+	      	    <h3>
+          			<a href="{% url product_view product.slug %}" 
+          			title="{{ product.name }} - {{ product.description }}">{{ product.name }}</a>
+          		</h3>
             
                 <div class="image">
                 <a href="{% url product_view product.slug %}">
@@ -283,16 +399,18 @@ a.browse {
 		
 		<div class="reviews">
 			<h3>{% trans 'Testimonials from Golfers' %} <span><a href="{% url testimonials %}">- {% trans 'see more testimonials' %}</a></span></h3>
+
+			<div class="paypal">
+				
+				<img src="/images/paypal-icon.png">
+			</div>
 			{% for r in reviews %}
 			<div class="box {% if forloop.last %}last{% endif %}">
 			  <p>{{ r.text|safe }}<br/><span class="owner">{{ r.owner }}</span></p>
 			</div>
 			
 			{% endfor %}
-			<div class="paypal">
-				
-				<img src="/images/paypal-icon.png">
-			</div>
+
 		</div>
 		
 		
