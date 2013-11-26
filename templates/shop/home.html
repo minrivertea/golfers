@@ -377,7 +377,7 @@ span.strikethrough {
                 <div class="tile">
                 <a href="{% url product_view product.slug %}"><span class="link"></span></a>
                 <div class="text">    
-          		{% for price in x.prices %}  	
+          		{% for price in product.prices %}  	
             		{% if forloop.first %}
             			<div class="price">
             			{{ currency.symbol }}{{ price.price|floatformat }} 
