@@ -11,6 +11,8 @@ from django.core.mail import send_mail
 from django.utils import simplejson
 from django.db.models import Q
 from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
+
 
 
 import urllib
@@ -128,7 +130,6 @@ def GetCountry(request):
     try:
         urlobj = urllib2.urlopen(baseurl, timeout=1)
     except urllib2.URLError, e:
-        print e.reason
         return None
     
     # get the data
@@ -152,25 +153,31 @@ def index(request):
     
     
     # THIS IS MESSY, BUT THE WAY RENAN WANTS IT...
-    # first, try to see if there's a product only featured in this country   
+    # IS THERE A PRODUCT FEATURED AND ONLY AVAILABLE IN THIS COUNTRY?   
     try:
-        featured = Product.objects.filter(is_featured=True, only_available_in__contains=GetCountry(request)['countryCode'], is_active=True)[0] 
+        featured = Product.objects.filter(
+                is_featured=True, 
+                only_available_in__contains=GetCountry(request)['countryCode'], 
+                is_active=True,
+                )[0] 
     except:
-        # otherwise, see if there's a product that has an empty 'Only Available In' list, and is featured
+        # IS THERE A FEATURED PRODUCT THAT HAS AN EMPTY 'ONLY_AVAILABLE_IN'?
         try:
             featured = Product.objects.filter(is_featured=True, only_available_in__isnull=True, is_active=True)[0]
         except:
-            # last ditch, make the pro-return net the default, even if it's not featured
+            # IF NOTHING, TRY THE PRO-RETURN NET
             try:
-                featured = Product.objects.get(slug="proreturn-golf-practice-net")        
+                featured = Product.objects.get(slug=_("proreturn-golf-practice-net"))        
             except:
-                # if we can't find the pro-return net for some reason, show any other product.
+                # LAST DITCH, SHOW ANY PRODUCT
                 featured = Product.objects.filter(is_active=True)[0]
     
     
+    products = Product.objects.filter(is_active=True)
+    
     featured_reviews = Review.objects.filter(is_published=True, product=featured)
     other_reviews = Review.objects.filter(is_published=True).exclude(product=featured)
-    reviews = list(chain(featured_reviews, other_reviews))[:2]
+    reviews = list(chain(featured_reviews, other_reviews))[:4]
     
     return render(request, "shop/home.html", locals())
 
@@ -600,7 +607,7 @@ def order_confirm(request):
     
     
 def order_complete(request, order=None):
-        
+
     try:
         shopper = get_object_or_404(Shopper, user=request.user)
     except:

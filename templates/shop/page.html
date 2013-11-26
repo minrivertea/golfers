@@ -20,25 +20,32 @@ div#right {
 
 ul#right-nav {
   list-style-type: none;
-  width: 220px;
-  float: left;
-  margin: 20px 0 0 0;
+  width: 100%;
+  float: right;
+  margin: 0px 0 20px 0;
   padding: 0;
   font-size: 13px;	
 }
 
 ul#right-nav li a {
-	background-color: #f1f1f1;
-	width: 200px;
-	float: left;
-	padding: 10px 15px;
-	border-bottom: 2px solid #fff;
+    border-bottom: 1px dashed #444444;
+    float: left;
+    padding: 10px 15px;
+    text-align: center;
+    width: 210px;
+    color:#897963;   
+}
+
+ul#right-nav li a:hover {
+  color: #D2B48C;   
 }
 
 ul#right-nav li.selected a {
-  font-weight: bold;
-  color: #333;
-  background-color: #e6e6e6;
+    background-color: #333333;
+    color: #D2B48C;
+    font-size: 16px;
+    font-weight: 200;
+    letter-spacing: -0.5px;
 }
 
 
@@ -74,21 +81,41 @@ div#right-nav ul li.selected a {
 
 <h1>{{ page.title }}</h1>
 
- 	<div id="right">
+
+
+	<div class="left">
+		{{ page.content|safe }}
+	</div>
+
+
+ 	<div class="right">
 		{% include "shop/snippets/pages_nav.html" %}
 		{% if page.image %}
 		{% thumbnail page.image "230x1000" crop="" as im %}
 		<img style="margin-top: 20px;" src="{{ im.url }}">
 		{% endthumbnail %}
 		{% endif %}
-	</div>
-
-	<div id="left">
-		{{ page.content|safe }}
-	</div>
-
-
-	
+		
+		{% comment %}
+		{# COMMENTING THESE OUT BUT WE CAN USE THEM LATER IF NEEDED #}
+		<div class="box">
+		  <div class="inner">
+    		  <h3>Some title</h3>
+	       	  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+		  </div>
+		</div>
+		
+		<div class="box">
+		  <img class="back" src="/images/golfer.jpg" />
+		  <div class="inner">
+    		  <h3>Some title</h3>
+	       	  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+		  </div>
+		</div>
+		{% endcomment %}
+		
+		
+	</div>	
 </div>
 
 

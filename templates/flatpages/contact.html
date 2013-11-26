@@ -17,26 +17,25 @@ div.left p {
 div.left label {
     color: #000000;
     float: left;
-    font-size: 13px;
-    font-weight: bold;
     margin: 10px 0;
     padding-right: 15px;
     text-align: right;
-    width: 100px;	
+    width: 100px;
 }
 
-div.left input {
+div.left input[type="text"] {
     border-color: #E1E1E1;
     border-radius: 5px 5px 5px 5px;
     border-style: solid;
     border-width: 1px;
     color: #666666;
     float: left;
-    font: 95% arial,helvetica,clean,sans-serif;
     height: 20px;
     margin: 5px 0;
     padding: 7px 15px;
     width: 400px;
+    font-size: 18px;
+    
 }
 
 div.left textarea {
@@ -46,10 +45,11 @@ div.left textarea {
     border-width: 1px;
     color: #666666;
     float: left;
-    font: 95% arial,helvetica,clean,sans-serif;
     margin: 0 0 20px 0px;
     padding: 10px 15px;
     width: 400px;
+    font-size: 18px;
+    font-family: Open Sans, sans-serif;
 }
 
 div.left label {
@@ -75,28 +75,18 @@ div.left input.submit-button {
     height: auto;
 }
 
-div.left input.submit-button:hover {
-    background: -moz-linear-gradient(100% 100% 90deg, #f1f1f1, #e6e6e6); 
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#e6e6e6), to(#f1f1f1)); 
-    background: -webkit-linear-gradient(#f1f1f1, #e6e6e6); 
-	background: -o-linear-gradient(#f1f1f1, #e6e6e6);
-	color: #BD1B30; 
-	cursor: pointer;	
-}
-
 
 div.left p.help-text {
     float: left;
-    font-size: 0.7em;
+    font-size: 13px;
     padding-left: 10px;
     position: relative;
-    left: 240px;
-    top: 10px;
+    left: 110px;
+    top: 0px;
 }
 
 div.left p.help-text.captcha {
-    left: 110px;
-    margin-bottom: 40px;
+    margin-bottom: 10px;
 }
 
 div.left input#id_captcha_1 {
@@ -161,7 +151,7 @@ div.left input#id_captcha_1 {
 				{{ form.captcha }}
 				<p class="help-text captcha {% if form.captcha.errors %}red{% endif %}">Please fill in the captcha - it helps reduce spam.</p>
 
-				<input class="submit-button" value="Submit &raquo;" type="submit">
+				<input class="button" value="Submit &raquo;" type="submit">
 				<p class="help-text">
 					* We will never share, sell or spam your email address
 				</p>

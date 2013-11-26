@@ -7,40 +7,31 @@
 {% block extracss %}
 <style type="text/css">
 
-h1 {
-  padding-bottom: 20px;	
-}
-
-.row {
-  width: 650px;
-  float: left;	
-}
-
-.row-box p {
+form p {
   float: left;
-  width: 650px;
-  margin: 10px 0 0px 0;	
+  width: 100%; 
+  margin: 0;  
 }
 
-.row label {
-    color: #000000;
+form p.intro {
+  margin: 0 0 10px 0;   
+}
+
+form p label {
+    color: #fff;
     float: left;
-    font-size: 13px;
-    font-weight: bold;
-    margin: 10px 0;
+    font-weight: ;
+    margin: 5px 0;
     padding-right: 15px;
     text-align: right;
-    width: 200px;
+    width: 120px;
 }
 
-.row input {
-    border-color: #E1E1E1;
-    border-radius: 5px 5px 5px 5px;
-    border-style: solid;
-    border-width: 1px;
-    color: #666666;
+form p input {
+    color: #333;
     float: left;
-    font: 95% arial,helvetica,clean,sans-serif;
+    font-family: Open Sans, sans-serif;
+    font-size:20px;
     height: 20px;
     margin: 5px 0;
     padding: 7px 15px;
@@ -54,15 +45,6 @@ h1 {
   margin-top: 20px;
 }
 
-.checkout-button input {
-  border: none;
-  background: none;
-  font-weight: bold;
-  font-size: 20px;
-  font-family: Arial, sans-serif;
-  padding: 0;
-  color: #AF2020;	
-}
 
 .checkout-button input:hover {
   cursor: pointer;
@@ -74,10 +56,13 @@ span.red {
 }
 
 span.help {
-    color: #666666;
-    font-size: 12px;
-    left: 220px;
-    position: relative;	
+    color: #999999;
+    float: left;
+    font-size: 13px;
+    left: 140px;
+    position: relative;
+    text-align: left;
+    width: 400px;
 }
 
 
@@ -94,6 +79,7 @@ span.help {
 
 <h1>{% trans 'Please provide your details' %}</h1>
 
+<div id="items">
     <form method="post" action="">
 
 	<span class="red">
@@ -106,27 +92,15 @@ span.help {
     {% endfor %}
 	</span>
 
+	<h2>{% trans 'Your details' %}</h2>
+   	<p class="intro">{% trans 'Please give your name and email - just in case we need to contact you about your order.' %}</p>
+   	
+    <p><label for="id_first_name">{% trans 'First name ' %}</label><input type="text" name="first_name" id="id_first_name" value="{{ first_name }}"/></p>
+    <p><label for="id_last_name">{% trans 'Last name' %}</label><input type="text" name="last_name" id="id_last_name" value="{{ last_name }}"/></p>
+    <p><label for="id_email">{% trans 'Email address' %}</label><input type="text" name="email" id="id_email" value="{{ email }}"/></p>	
 
-	<div class="row">
-		<div class="row-label">
-			<h2>{% trans 'Your details' %}</h2>
-		</div>
-    	<div class="row-box">
-    	<p class="intro">{% trans 'Please give your name and email - just in case we need to contact you about your order.' %}</p>
-    		<p><label for="id_first_name">{% trans 'First name ' %}</label><input type="text" name="first_name" id="id_first_name" value="{{ first_name }}"/></p>
-    		<p><label for="id_last_name">{% trans 'Last name' %}</label><input type="text" name="last_name" id="id_last_name" value="{{ last_name }}"/></p>
-    		<p><label for="id_email">{% trans 'Email address' %}</label><input type="text" name="email" id="id_email" value="{{ email }}"/></p>	
-    	</div>
-    </div>
-    
-    
-	
-	<div class="row">
-		<div class="row-label">
-			<h2>{% trans 'Your address' %}</h2>
-		</div>
-    	<div class="row-box">
-    		<p class="intro">{% blocktrans %}Please make sure this is a valid address in the USA, UK, Canada or EU. For delivery to other countries, please <a href="/contact-us/">contact us</a> (<a href="/shipping/" target="_blank">find out why</a>){% endblocktrans %}</p>
+    <h2>{% trans 'Your address' %}</h2>
+	<p class="intro">{% blocktrans %}Please make sure this is a valid address in the USA, UK, Canada or EU. For delivery to other countries, please <a href="/contact-us/">contact us</a> (<a href="/shipping/" target="_blank">find out why</a>){% endblocktrans %}</p>
 
 	  {{ form.address_line_1.error }}
 	  <p>
@@ -216,16 +190,15 @@ span.help {
       	<span class="help">{% trans 'Please provide a valid phone number for fast-track shipping' %}</span> 
       </p>
       
- 	</div> 
-	</div>
+</div>
 	
 	
 	
 
  <br clear="all"/>
 
-	<div class="checkout-button">
-		<input type="submit" value="{% trans 'Submit your details &raquo;' %}" class="button-confirm-address"/>
+	<div id="checkout-button">
+		<input type="submit" value="{% trans 'Submit your details' %}" class="button"/>
 		<p class="checkout"><strong>{% trans 'Next step:' %}</strong> {% trans 'Confirm your order' %}</p>
 	</div>
 	

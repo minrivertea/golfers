@@ -37,99 +37,106 @@ $(document).ready(function() {
 {% block extracss %}
 <link rel="stylesheet" href="/css/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />
 <style type="text/css">
+  
+  .right p {
+    margin: 0; 
+  }
+  
+  h1 {
+    margin: 0 0 10px 0; 
+  }
+  
   #top {
     width: 100%;
     float: left;
-    margin: 0px 0 30px;	
+    margin: 0px 0 0px;	
   }
   
   #top #topleft {
-    width: 500px;
+    width: 550px;
     float: left;
     margin-right: 30px;
   }
   
   #top #topright {
     float: left;
-    width: 350px;	
+    width: 320px;	
   }
   
   #top #topright p {
-  	font-weight: bold;
+  	font-weight: ;
   	font-size: 16px;
   	line-height: 1.6em;
   	margin: 0 0 20px;
   }
   
   #top #topright ul {
-    font-weight: bold;
-  	font-size: 16px;
-  	line-height: 1.6em;
-  	margin: 0 0 10px 10px;
-  	padding-left: 0px;
+    list-style-type: none;
+    margin: 0;
+    padding-left: 0;
   }
   
-  #top .prices {
-    font-size: 24px;
-    font-weight: bold;	
-    margin-top: 20px;
+  #top #topright ul li {
     float: left;
-    margin-bottom: 15px;
-  }
-  
-  #top .prices .price {
-    float: left; 
-    width: 110px;	
-  }
-  
-  #top .prices .price span.strikethrough {
-    text-decoration: line-through;
-    font-weight: normal;	
-  }
-  
-  #top .prices .button {
-    float: left;
-    width: 160px;	
-  }
-  
-  #top .prices a {
-  	font-size: 20px;
-    padding: 7px 10px;
-    background: -moz-linear-gradient(100% 100% 90deg, #e6e6e6, #f1f1f1); 
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f1f1f1), to(#e6e6e6)); 
-    background: -webkit-linear-gradient(#e6e6e6, #f1f1f1); 
-	background: -o-linear-gradient(#e6e6e6, #f1f1f1);   
-    border-color: #e1e1e1 #C1C1C1 #C1C1C1 #e1e1e1;
-    border-radius: 4px 4px 4px 4px;
-    border-style: solid;
-    border-width: 1px;
-    box-shadow: 0 1px -1px #666, 0 -1px 0 #666;
-    text-shadow: 0 1px 2px #fff;
-  }
-  
-  #top .prices a {
-    float: right;
-    width: 200px;	
-    text-align: center;
-  }
-  
-  #top .prices a:hover {
-  	background: -moz-linear-gradient(100% 100% 90deg, #f1f1f1, #e6e6e6); 
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f1f1f1), to(#e6e6e6)); 
-    background: -webkit-linear-gradient(#e6e6e6, #f1f1f1); 
-	background: -o-linear-gradient(#e6e6e6, #f1f1f1);
-	color: #BD1B30;
-  }
-  
-  #message {
-    background-color: #f1f1f1;
-    border: 1px solid #E1E1E1;
-    border-radius: 5px 5px 5px 5px;
-    float: right;
-    font-size: 13px;
-    padding: 15px 20px;
+    padding: 10px 0;
+    border-bottom: 1px solid #333;
+    font-weight: 100; 
+    width: 100%;
     text-align: right;
+    font-size: 16px;
   }
+  
+#top .prices {
+    float: left;
+    font-size: 24px;
+    font-weight: normal;
+    margin-bottom: 15px;
+    margin-top: 20px;
+    padding: 0px;
+    width: 100%;
+    position: relative;
+}
+
+
+#top .prices .price span.strikethrough {
+    color: #999;
+    font-size: 15px;
+    font-weight: normal;
+    text-decoration: line-through;
+    margin-left: 5px;
+}
+  
+  
+#top .prices a.button {
+    float: right;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    width: 75%;
+    text-align: right;
+}
+   
+  
+#message {
+    background-color: #897963;
+    border-radius: 4px 4px 4px 4px;
+    font-size: 15px;
+    font-weight: 100;
+    padding: 5px 15px;
+    text-align: right;
+    float: right;
+    position: relative;
+}
+
+#message:before {
+    border-color: #897963 rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+    border-style: solid solid none;
+    border-width: 10px 10px 0px;
+    content: " ";
+    display: block;
+    position: absolute;
+    right: 20px;
+    bottom: -10px;
+}
   
   span.red {color: #BD1B30;}
   
@@ -139,10 +146,10 @@ $(document).ready(function() {
 
 #notify-form {
   float: left;
-  width: 320px;
-  background-color: #f6f6f6;
+  width: 290px;
+  background-color: #897963;
   padding: 10px 15px 15px;
-  margin: 0 0 20px 0;	
+  margin: 20px 0 20px 0;	
 }  
 
 #top #topright #notify-form p {
@@ -153,9 +160,8 @@ $(document).ready(function() {
 
 #notify-form input {
   border: none;
-  font-family: Helvetica, sans-serif;
   font-size: 16px;
-  padding: 7px 8px;
+  padding: 3px 8px 5px;
   border: 1px solid #e1e1e1;
   float: left;
   width: 195px;
@@ -163,8 +169,9 @@ $(document).ready(function() {
 
 #notify-form input.button {
   border-left: none;
-  font-size: 14px;	
-  width: 105px;
+  font-size: 14px;
+  padding: 4px 8px 5px;	
+  width: auto;
 }
 
 #notify-form #loading {
@@ -190,49 +197,91 @@ $(document).ready(function() {
   color: red;   
 }
 
-#recommended {
-  width: 100%;
-  float: left   
-}
-
-#recommended h3 {
-  border-bottom: 1px dashed #e1e1e1;
-  padding: 0 0 10px 0;
-  margin: 0 0 15px 0;   
-}
-
-#recommended .item {
-    border-right: 1px dashed #E1E1E1;
-    float: left;
-    height: 210px;
-    margin: 0 20px 0 0;
-    padding-right: 20px;
+.right ul.reviews li {
+    background: none repeat scroll 0 0 #222222;
+    color: #999999;
+    font-size: 14px;
+    line-height: 1.6em;
+    margin: 0 0 15px;
+    padding: 10px 15px;
     position: relative;
-    width: 190px;
-    
 }
 
-#recommended .item:last-child {
-   border-right: none;
-   padding-right: 0;
-   margin-right: 0;   
+.right ul.reviews p {
+  font-size: 14px;   
 }
 
-#recommended .item:hover h4 a, #recommended .item:hover .image img {
-  opacity: 0.6;   
+.right ul.reviews li span.name {
+  color: #fff;
+  font-size: 16px;   
 }
 
-#recommended .item .image {
-  width: 190px;
-  height: 160px;
+.right ul.reviews li:before {
+    border-color: rgba(0, 0, 0, 0) #222 rgba(0, 0, 0, 0) #0000FF;
+    border-style: solid;
+    border-width: 15px 15px 15px 0;
+    content: " ";
+    display: block;
+    left: -15px;
+    position: absolute;
+    top: 20px;
+    z-index: 20;
+}
+
+#recommended {
   float: left;
-  margin: 0 0 10px 0;   
+  width: 100%;   
 }
 
-#recommended .item .text h4 {
+#recommended > div {
+  float: left;
+  width: 210px;
+  height: 200px;
+  margin: 0 20px 0 0; 
+  position: relative;  
+}
+
+#recommended > div img {
+  width: 210px;
+  height: 140px;
+  float: left;   
+}
+
+#recommended > div:last-child {
+  margin-right: 0;  
+} 
+
+#recommended > div:hover img {
+  opacity: 0.8;   
+}
+
+#recommended > div h4 {
   border: none;
-  font-weight: bold;
-  font-size: 13px;    
+  margin: 0;
+  padding: 0;   
+}
+
+ul.social {
+  position: absolute;
+  top: 25px;
+  right: 0;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;   
+}
+
+ul.social li {
+  float: left;
+  width: 80px;    
+}
+
+ul.social li#google {
+  width: 65px;   
+}
+/* IMPORTANT - THIS FIXES PROBLEM OF SOCIAL ICONS CHANGING WIDTH OF PAGE */
+iframe[id^="oauth2relay"] { 
+    left: auto !important; 
+    right: 0px !important; 
 }
 
 </style>
@@ -243,27 +292,64 @@ $(document).ready(function() {
 
 {% block content %}
 <div id="feature">	
+
 	
-	{% if message %}
-	<div id="message">
-	  <strong>{% blocktrans with product.name as name %}1 x {{ name }} added to your basket!{% endblocktrans %}<br/>
-	  <a href="{% url basket %}">Checkout now &raquo</a></strong>
-	</div>
-	{% endif %}
-	
-    <p class="sport">{{ product.category }}</p>
 	<h1>{{ product.name }}</h1>
 
 	<div id="top">
 		<div id="topleft">
-		{% thumbnail product.image "500" crop="center" as im %}
+		{% thumbnail product.image "550" crop="center" as im %}
 		<img class="main" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
 		{% endthumbnail %}
+		
+		<div id="product-photos-small">	
+			{% if product.image_2 %}
+				{% thumbnail product.image_2 "550" crop="" as im_large %}
+				<a class="group" href="{{ im_large.url }}" rel="group1" title="{{ product.image_2_caption }}">
+					{% thumbnail product.image_2 "80x80" crop="center" as im %}
+					<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
+					{% endthumbnail %}
+				</a>
+				{% endthumbnail %}
+			{% endif %}
+			
+			{% if product.image_3 %}
+			    {% thumbnail product.image_3 "550" crop="" as im_large %}
+				<a class="group"  href="{{ im_large.url }}" rel="group1" title="{{ product.image_3_caption }}">
+				    {% thumbnail product.image_3 "80x80" crop="center" as im %}
+				    <img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
+				    {% endthumbnail %}
+				
+				</a>
+				{% endthumbnail %}
+			{% endif %}
+			{% if product.image_4 %}
+			    {% thumbnail product.image_4 "550" crop="" as im_large %}
+				<a class="group" href="{{ im_large.url }}" rel="group1" title="{{ product.image_4_caption }}">
+				    {% thumbnail product.image_4 "80x80" crop="center" as im %}
+				    <img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
+				    {% endthumbnail %}
+				</a>
+				{% endthumbnail %}
+			{% endif %}
+			{% if product.image_5 %}
+			    {% thumbnail product.image_5 "550" crop="" as im_large %}
+				<a class="group"  href="{{ im_large.url }}" rel="group1" title="{{ product.image_5_caption }}">
+				    {% thumbnail product.image_5 "80x80" crop="center" as im %}
+				<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
+				{% endthumbnail %}
+				</a>
+				{% endthumbnail %}
+			{% endif %}
+			</div>	
+		
+		
 		</div>
 		
 		<div id="topright">
+			{% if product.long_description %}
 			{{ product.long_description|safe }}
-			
+			{% endif %}
 			
 			{% if not prices %}
 				<form action="{% url notify_signup product.slug %}" type="post" id="notify-form">
@@ -275,59 +361,30 @@ $(document).ready(function() {
 			{% endif %}
 			
 			
-			<div class="product-photos-small">	
-			{% if product.image_2 %}
-				{% thumbnail product.image_2 "500" crop="" as im_large %}
-				<a class="group" href="{{ im_large.url }}" rel="group1" title="{{ product.image_2_caption }}">
-					{% thumbnail product.image_2 "80x80" crop="center" as im %}
-					<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
-					{% endthumbnail %}
-				</a>
-				{% endthumbnail %}
-			{% endif %}
 			
-			{% if product.image_3 %}
-			    {% thumbnail product.image_3 "500" crop="" as im_large %}
-				<a class="group"  href="{{ im_large.url }}" rel="group1" title="{{ product.image_3_caption }}">
-				    {% thumbnail product.image_3 "80x80" crop="center" as im %}
-				    <img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
-				    {% endthumbnail %}
-				
-				</a>
-				{% endthumbnail %}
-			{% endif %}
-			{% if product.image_4 %}
-			    {% thumbnail product.image_4 "500" crop="" as im_large %}
-				<a class="group" href="{{ im_large.url }}" rel="group1" title="{{ product.image_4_caption }}">
-				    {% thumbnail product.image_4 "80x80" crop="center" as im %}
-				    <img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
-				    {% endthumbnail %}
-				</a>
-				{% endthumbnail %}
-			{% endif %}
-			{% if product.image_5 %}
-			    {% thumbnail product.image_5 "500" crop="" as im_large %}
-				<a class="group"  href="{{ im_large.url }}" rel="group1" title="{{ product.image_5_caption }}">
-				    {% thumbnail product.image_5 "80x80" crop="center" as im %}
-				<img class="product-small" alt="a picture of {{ product.name }}" title="{{ product.description }}" src="{{ im.url }}"/>
-				{% endthumbnail %}
-				</a>
-				{% endthumbnail %}
-			{% endif %}
-			</div>	
+			{% if message %}
+         	<div id="message">
+         	  <strong>{% blocktrans with product.name as name %}1 x {{ name }} added to your basket!{% endblocktrans %}
+         	</div>
+         	{% endif %}
+			
 			
 			
 			{% if prices %}
 				{% for price in prices %}
 					<div class="prices">
-						<a href="{% url add_to_basket price.id %}">Add to basket</a>
-						<div class="price">
-													
-							{{ price.currency.symbol }}{{ price.price }} 
-							{% if price.original_price %}
-								<span class="strikethrough">{{ price.currency.symbol }}{{ price.original_price }}</span>
-							{% endif %}
-						</div> 						
+						<a class="button arrow price" href="{% url add_to_basket price.id %}">
+					        <span class="price">
+					        {{ price.currency.symbol }}{{ price.price }}
+					           {% if price.original_price %}
+					           <span class="strikethrough">
+					               {{ price.currency.symbol }}{{ price.original_price }}
+					           </span>
+					           {% endif %}
+					        </span>
+    						{% trans 'Add to basket' %}
+						
+						</a>				
 					</div>
 				{% endfor %}		      
 			{% endif %}				
@@ -350,40 +407,69 @@ $(document).ready(function() {
 		
 	</div>
 	
+	<div class="hr"></div>
+	
 
 	<div class="left">
 		{{ product.body_text|safe }}	
   	</div>		
 
 	<div class="right">
-	<img src="/images/paypal-horz.gif" style="margin-bottom: 20px;">
-	<h3>Customer testimonials</h3>
 		<ul class="reviews">
 			{% for review in reviews %}
-			<li><em>{{ review.text|safe }}</em> <span class="red">{{ review.owner }}</span></li>
+			<li>{{ review.text|safe }} <span class="name">{{ review.owner }}</span></li>
 			{% endfor %}
 		</ul>
 	</div>
 	
-	{% if recommended %}
-	<div id="recommended">
-	   <h3>Also recommended</h3>
-	   {% for x in recommended %}   
-	       <div class="item">
-	           <a href="{% url product_view x.slug %}"><span class="link"></span></a>
-	           <div class="image">
-	               {% thumbnail x.image "190x160" crop="center" as im %}
-	                   <a href="{% url product_view x.slug %}"><img src="{{ im.url }}" /></a>
-	               {% endthumbnail %}
-	           </div>
-	           <div class="text">
-	               <h4><a href="{% url product_view x.slug %}">{{ x.name }}</a></h4>
-	           </div>
-	       </div>
-	   {% endfor %}
-	</div>
-    {% endif %}
+
+	<div class="hr"></div>
+
+    <div id="recommended">
+        <h3>{% trans 'Also recommended for you' %}</h3>
+        {% for x in recommended %}
+        <div>
+            <a href="{{ x.get_absolute_url }}"><span class="link"></span></a>
+            {% thumbnail x.image "210x140" crop="center" as im %}
+            <img src="{{ im.url }}" />
+            {% endthumbnail %}
+            <h4>{{ x.name }}</h4>
+        </div>
+        {% endfor %}
+    </div>
     
+    
+    {% if ga_is_on %}
+    <ul class="social">
+		<li id="google">
+			<div class="g-plusone" data-size="medium"></div>
+			<!-- Place this tag after the last +1 button tag. -->
+            <div style="display: none; width: 0;">
+            <script type="text/javascript">
+              (function() {
+                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                po.src = 'https://apis.google.com/js/plusone.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+              })();
+            </script>
+            </div>
+		</li>
+		<li id="twitter">
+		      <a href="https://twitter.com/share" class="twitter-share-button" data-url="{{ site_url }}{{ product.get_absolute_url }}" data-text="I love this {{ product.name }}" data-size="small">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+		
+		</li>
+    	<li id="facebook">
+		    <div id="fb-root"></div>
+		    <script src="http://connect.facebook.net/en_US/all.js#appId=234100573279411&amp;xfbml=1"></script>
+		    <fb:like href="{{ site_url }}{{ product.get_absolute_url }}" send="false" layout="button_count" width="80" show_faces="true" font="">
+		    </fb:like>
+		</li>
+	</ul>
+	{% else %}
+	<ul class="social"><li><img src="/images/debug_social.jpg" /></li></ul>
+	{% endif %}
+
 </div>
 
 	

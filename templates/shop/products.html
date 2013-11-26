@@ -3,15 +3,32 @@
 
 {% block pagetitle %}{% trans 'Our Products' %}{% endblock %}
 
+{% block extrajs %}
+
+<script type="text/javascript">
+   $(document).ready( function() {
+    $('.product-promo').hover( function() {
+       $(this).find('.tile').animate({'bottom': '0',}, 200) ;
+    }, function() {
+       $(this).find('.tile').animate({'bottom': '-223',}, 200);  
+    });
+   });
+</script>
+
+{% endblock %}
+
 {% block extracss %}
 <style type="text/css">
 
 div.price {
-  font-weight: bold;	
+    color: #000000;
+    font-weight: normal;
 }
+
 span.strikethrough {
   text-decoration: line-through;
-  font-weight: normal;	
+  font-weight: normal;
+  color: #D30000;	
 }
 </style>
 {% endblock %}
@@ -20,34 +37,43 @@ span.strikethrough {
 
 <div id="feature">
 
-	<h1>{% trans 'Our golf nets' %}</h1>
+	<h1>{% trans 'Our sports nets' %}</h1>
 
 	{% for product, prices in products_and_prices %}
-	     <div class="{% cycle 'product-promo first' 'product-promo' 'product-promo last' %}">
+	     <div class="product-promo {% cycle 'first' '' 'last' %}">
+            
+            <div class="tile">
+                <a href="{% url product_view product.slug %}"><span class="link"></span></a>
+                <div class="text">            
+              		{% for price in prices %}  	
+                		{% if forloop.first %}
+                			<div class="price">
+                			{{ currency.symbol }}{{ price.price|floatformat:"2" }} 
+                			{% if price.original_price %}
+        					<span class="strikethrough">{{ currency.symbol }}{{ price.original_price|floatformat:"2" }}</span>
+        					{% endif %}
+                    		</div>
+        		        {% else %}
+            		    {% endif %}
+                	{% endfor %}
+        	      	<p>{{ product.short_description|safe }}</p> 
+    	      	</div>            
+            </div>
+            
+            <h3>
+    			<a href="{% url product_view product.slug %}" 
+    			title="{{ product.name }} - {{ product.description }}">{{ product.name }}</a>
+    		</h3>
+        
+            <div class="image">
             <a href="{% url product_view product.slug %}">
-                {% thumbnail product.image "210x153" crop="center" as im %}
-            	<img class="product-promo" src="{{ im.url }}" alt="{{ product.description }}" title="{{ product.description }}"/>
+                {% thumbnail product.image "295x250" crop="center" as im %}
+            	<img class="" src="{{ im.url }}" alt="{{ product.description }}" title="{{ product.description }}"/>
             	{% endthumbnail %}
 			</a>
-			<p class="sport">{{ product.category }}</p>
-      		<h3>
-      			<a href="{% url product_view product.slug %}" 
-      			title="{{ product.name }} - {{ product.description }}">{{ product.name }}</a>
-      		</h3>
-    
-      		{% for price in prices %}  	
-        		{% if forloop.first %}
-        			<div class="price">
-        			{{ currency.symbol }}{{ price.price|floatformat }} 
-        			{% if price.original_price %}
-					<span class="strikethrough">{{ currency.symbol }}{{ price.original_price }}</span>
-					{% endif %}
-            		</div>
-		        {% else %}
-    		    {% endif %}
-        	{% endfor %}
-	      	<p>{{ product.short_description|safe }}</p> 
-		</div>          
+			</div>
+			
+					</div>          
 	{% endfor %}
 
 </div>

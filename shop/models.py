@@ -4,6 +4,9 @@ from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.shortcuts import render_to_response, get_object_or_404
 from django.conf import settings
+from django.template import RequestContext
+from django.core.urlresolvers import reverse
+
 
 from datetime import datetime
 from tinymce import models as tinymce_models
@@ -116,7 +119,17 @@ class Product(models.Model):
         return self.name
       
     def get_absolute_url(self):
-        return "/products/%s/" % self.slug  
+        return reverse('product_view', args=[self.slug])  
+    
+    def is_available(self, request):
+        if self.only_available_in:
+            if RequestContext(request)['countrycode'] in self.only_available_in:
+                return True
+        else:
+            return True
+        
+        return False
+        
     
     class Meta:
 
