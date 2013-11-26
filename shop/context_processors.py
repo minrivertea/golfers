@@ -30,7 +30,7 @@ def common(request):
     context['countrycode'] = country
         
         
-    context['promo_products'] = Product.objects.filter(is_active=True)[:2]
+    context['promo_products'] = Product.objects.filter(is_active=True).order_by('list_position')
       
     # change paypal account depending on location
     if country in EUROPE_INCLUDING_UK:

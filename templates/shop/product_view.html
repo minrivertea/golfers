@@ -416,11 +416,13 @@ iframe[id^="oauth2relay"] {
   	</div>		
 
 	<div class="right">
+		
 		<ul class="reviews">
 			{% for review in reviews %}
 			<li>{{ review.text|safe }} <span class="name">{{ review.owner }}</span></li>
 			{% endfor %}
 		</ul>
+		<img src="/images/paypal-icon_black.png"/>
 	</div>
 	
 
