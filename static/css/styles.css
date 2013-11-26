@@ -568,8 +568,8 @@ div.right div h4 {
 }
 
 .right .product-promo {
-  width: 240px; 
-  margin-bottom: 25px;  
+  width: 240px;   
+  margin-bottom: 25px;
 }
 
 .product-promo.last {
@@ -609,13 +609,14 @@ div.right div h4 {
 .product-promo .image {
   float: left; 
   background: #fff;
-  height: 165px; 
+  height: 220px; 
   width: 295px;
   position: relative; 
 }
 
 .right .product-promo .image {
   width: 240px;  
+  height: 165px
 } 
 
 .product-promo .image img {
