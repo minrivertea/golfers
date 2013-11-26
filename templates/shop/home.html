@@ -149,7 +149,7 @@ a.browse {
 
 #feature {
    position: relative;
-    
+   margin: 0 0 20px 0; 
 }
 
 #feature #image-wrap {
@@ -297,6 +297,17 @@ a.browse.next .arrow {
 }
 
 
+div.price {
+    color: #000000;
+    font-weight: normal;
+}
+
+span.strikethrough {
+  text-decoration: line-through;
+  font-weight: normal;
+  color: #D30000;	
+}
+
 </style>
 {% endblock %}
 
@@ -311,19 +322,19 @@ a.browse.next .arrow {
 	
     	{% if request.LANGUAGE_CODE == 'fr' and currency.code != 'EUR' %}
     	<div>
-            <img src="/images/homepage/01_en_USD.jpg" />
+            <img src="/images/homepage/01_en_{{ currency.code }}.jpg" />
             <a href="{% url product_view _('proreturn-golf-practice-net') %}"><span class="link"></span></a>
         </div>
         <div>
-            <img src="/images/homepage/02_en_USD.jpg" />
+            <img src="/images/homepage/02_en_{{ currency.code }}.jpg" />
             <a href="{% url product_view _('golf_net_package') %}"><span class="link"></span></a>
         </div>
         <div>
-            <img src="/images/homepage/03_en_USD.jpg" />
+            <img src="/images/homepage/03_en_{{ currency.code }}.jpg" />
             <a href="{% url product_view _('proapproach-popup-net') %}"><span class="link"></span></a>
         </div>
         <div>
-            <img src="/images/homepage/04_en_USD.jpg" />
+            <img src="/images/homepage/04_en_{{ currency.code }}.jpg" />
             <a href="{% url products %}"><span class="link"></span></a>
         </div>
     	
@@ -358,7 +369,6 @@ a.browse.next .arrow {
 </div>
 			
 			
-    <div class="hr"></div>
     
     <div id="products">
         {% for product in products %}
@@ -367,7 +377,7 @@ a.browse.next .arrow {
                 <div class="tile">
                 <a href="{% url product_view product.slug %}"><span class="link"></span></a>
                 <div class="text">    
-          		{% for price in prices %}  	
+          		{% for price in x.prices %}  	
             		{% if forloop.first %}
             			<div class="price">
             			{{ currency.symbol }}{{ price.price|floatformat }} 

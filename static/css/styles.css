@@ -382,6 +382,36 @@ ul#nav a:hover, #nav a:active {
   cursor: pointer;
 }
 
+ul#right-nav {
+  list-style-type: none;
+  width: 100%;
+  float: right;
+  margin: 0px 0 20px 0;
+  padding: 0;
+  font-size: 13px;	
+}
+
+ul#right-nav li a {
+    border-bottom: 1px dashed #444444;
+    float: left;
+    padding: 10px 15px;
+    text-align: center;
+    width: 210px;
+    color:#897963;   
+}
+
+ul#right-nav li a:hover {
+  color: #D2B48C;   
+}
+
+ul#right-nav li.selected a {
+    background-color: #333333;
+    color: #D2B48C;
+    font-size: 16px;
+    font-weight: 200;
+    letter-spacing: -0.5px;
+}
+
 a.contact {
   color: white;	
   margin-right: 10px;
@@ -484,6 +514,16 @@ div.right {
   width: 240px;
 }
 
+div.right div p {
+  color: #999;  
+} 
+
+div.right div h4 {
+  font-size: 20px;
+  margin-top: 0;
+  border-bottom: 1px solid #444;   
+}
+
 .right .box {
   float: right;
   background: #333;  
@@ -527,6 +567,11 @@ div.right {
     text-align: center;
 }
 
+.right .product-promo {
+  width: 240px; 
+  margin-bottom: 25px;  
+}
+
 .product-promo.last {
     margin-right: 0;
 }
@@ -559,14 +604,19 @@ div.right {
     padding: 0 0 5px;  
 }
 
+
+
 .product-promo .image {
   float: left; 
   background: #fff;
-  height: 220px; 
+  height: 165px; 
   width: 295px;
   position: relative; 
 }
 
+.right .product-promo .image {
+  width: 240px;  
+} 
 
 .product-promo .image img {
    

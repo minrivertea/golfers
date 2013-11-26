@@ -174,6 +174,8 @@ def index(request):
     
     
     products = Product.objects.filter(is_active=True)
+    for x in products:
+        x.prices = UniqueProduct.objects.filter(parent_product=x, currency=_get_currency(request))
     
     featured_reviews = Review.objects.filter(is_published=True, product=featured)
     other_reviews = Review.objects.filter(is_published=True).exclude(product=featured)

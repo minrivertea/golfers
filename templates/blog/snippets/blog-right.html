@@ -1,6 +1,49 @@
-		<div class="box clear">
-			<h4>Who are we?</h4>
-			<p>ProAdvanced is a premium retailer of sports goods worldwide</p>
-			<p class="link"><a href="{% url products %}">&raquo; Browse our products </a></p>
-			<p class="link"><a href="/about-us/">&raquo; Read more about us</a></p>
-		</div>
+{% load thumbnail i18n %}
+
+<div class="">
+	<h4>Who are we?</h4>
+	<p>ProAdvanced is a premium retailer of sports goods worldwide</p>
+	<ul id="right-nav">
+	<li class="link"><a href="{% url products %}">&raquo; Browse our products </a></li>
+	<li class="link"><a href="/about-us/">&raquo; Read more about us</a></li>
+	</ul>
+</div>
+
+{% for product in promo_products %}
+<div class="">    
+   <div class="product-promo {% cycle 'first' '' 'last' %}">
+            
+            <div class="tile">
+                <a href="{% url product_view product.slug %}"><span class="link"></span></a>
+                <div class="text">            
+              		{% for price in product.prices %}  	
+                		{% if forloop.first %}
+                			<div class="price">
+                			{{ currency.symbol }}{{ price.price|floatformat:"2" }} 
+                			{% if price.original_price %}
+        					<span class="strikethrough">{{ currency.symbol }}{{ price.original_price|floatformat:"2" }}</span>
+        					{% endif %}
+                    		</div>
+        		        {% else %}
+            		    {% endif %}
+                	{% endfor %}
+        	      	<p>{{ product.short_description|safe }}</p> 
+    	      	</div>            
+            </div>
+            
+            <h3>
+    			<a href="{% url product_view product.slug %}" 
+    			title="{{ product.name }} - {{ product.description }}">{{ product.name }}</a>
+    		</h3>
+        
+            <div class="image">
+                {% thumbnail product.image "220x200" crop="" as im %}
+                <a href="{% url product_view product.slug %}" style="height:{{ im.height }}px; width:{{ im.width }}px;">
+                <img class="" src="{{ im.url }}" alt="{{ product.description }}" title="{{ product.description }}"/>
+                </a>
+                {% endthumbnail %}
+			</div>
+			
+					</div>  
+</div>
+{% endfor %}
