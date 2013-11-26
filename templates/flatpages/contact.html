@@ -56,32 +56,17 @@ div.left label {
   margin-bottom: 5px;	
 }
 
-div.left input.submit-button {
-    background: -moz-linear-gradient(100% 100% 90deg, #e6e6e6, #f1f1f1); 
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f1f1f1), to(#e6e6e6)); 
-    background: -webkit-linear-gradient(#e6e6e6, #f1f1f1); 
-	background: -o-linear-gradient(#e6e6e6, #f1f1f1);   
-    border-color: #e1e1e1 #C1C1C1 #C1C1C1 #e1e1e1;
-    border-radius: 4px 4px 4px 4px;
-    border-style: solid;
-    border-width: 1px;
+div.left input.button {
     float: left;
-    font-size: 18px;
-    font-weight: bold;
-    text-shadow: 0 1px 2px #fff;
-    margin: 0 0 0 240px;
-    padding: 10px 15px;
-    width: 310px;
-    height: auto;
+    margin-left: 120px;
 }
 
 
 div.left p.help-text {
     float: left;
     font-size: 13px;
-    padding-left: 10px;
+    padding-left: 120px;
     position: relative;
-    left: 110px;
     top: 0px;
 }
 
@@ -150,7 +135,7 @@ div.left input#id_captcha_1 {
 
 				{{ form.captcha }}
 				<p class="help-text captcha {% if form.captcha.errors %}red{% endif %}">Please fill in the captcha - it helps reduce spam.</p>
-
+                <br clear="all"/>
 				<input class="button" value="Submit &raquo;" type="submit">
 				<p class="help-text">
 					* We will never share, sell or spam your email address
