@@ -369,7 +369,7 @@ a.browse.next .arrow {
             
                 <div class="image">
                 <a href="{% url product_view product.slug %}">
-                    {% thumbnail product.image "295x295" crop="center" as im %}
+                    {% thumbnail product.image "295x230" crop="center" as im %}
                 	<img class="" src="{{ im.url }}" alt="{{ product.description }}" title="{{ product.description }}"/>
                 	{% endthumbnail %}
     			</a>
