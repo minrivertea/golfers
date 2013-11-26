@@ -520,7 +520,7 @@ div.right {
     float: left;
     margin: 0px 5px 45px 0;
     width: 295px;
-    height: 250px;
+    height: auto;
     overflow: hidden;
     position: relative;
 }
@@ -558,11 +558,26 @@ div.right {
 }
 
 .product-promo .image {
-  float: left;   
+  float: left; 
+  background: #fff;
+  height: 220px; 
+  width: 295px;
+  position: relative; 
+}
+
+
+.product-promo .image img {
+   
 }
 
 .product-promo .image a {
-  float: left;   
+  float: left;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto; 
 }
 
 .product-promo .text {
