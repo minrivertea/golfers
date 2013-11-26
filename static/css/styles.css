@@ -585,7 +585,8 @@ div.right div h4 {
   height: 223px;
   background: #fff;
   z-index: 20; 
-  overflow: hidden;  
+  overflow: hidden; 
+  color: #333; 
 }
 
 .product-promo:hover {
