@@ -344,6 +344,7 @@ a.browse.next .arrow {
             <div class="product-promo {% cycle 'first' '' 'last' %}">
                 
                 <div class="tile">
+                <a href="{% url product_view product.slug %}"><span class="link"></span></a>
                 <div class="text">    
           		{% for price in prices %}  	
             		{% if forloop.first %}
