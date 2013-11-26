@@ -309,6 +309,26 @@ a.browse.next .arrow {
 	
 	   <div class="items">
 	
+    	{% if request.LANGUAGE_CODE == 'fr' and currency.code != 'EUR' %}
+    	<div>
+            <img src="/images/homepage/01_en_USD.jpg" />
+            <a href="{% url product_view _('proreturn-golf-practice-net') %}"><span class="link"></span></a>
+        </div>
+        <div>
+            <img src="/images/homepage/02_en_USD.jpg" />
+            <a href="{% url product_view _('golf_net_package') %}"><span class="link"></span></a>
+        </div>
+        <div>
+            <img src="/images/homepage/03_en_USD.jpg" />
+            <a href="{% url product_view _('proapproach-popup-net') %}"><span class="link"></span></a>
+        </div>
+        <div>
+            <img src="/images/homepage/04_en_USD.jpg" />
+            <a href="{% url products %}"><span class="link"></span></a>
+        </div>
+    	
+    	
+    	{% else %}    	
     	<div>
             <img src="/images/homepage/01_{{ request.LANGUAGE_CODE }}_{{ currency.code }}.jpg" />
             <a href="{% url product_view _('proreturn-golf-practice-net') %}"><span class="link"></span></a>
@@ -325,6 +345,7 @@ a.browse.next .arrow {
             <img src="/images/homepage/04_{{ request.LANGUAGE_CODE }}_{{ currency.code }}.jpg" />
             <a href="{% url products %}"><span class="link"></span></a>
         </div>
+        {% endif %}
         
         </div>
         
