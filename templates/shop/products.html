@@ -66,7 +66,7 @@ span.strikethrough {
     		</h3>
         
             <div class="image">
-                {% thumbnail product.image "260" crop="" as im %}
+                {% thumbnail product.image "260x220" crop="" as im %}
                 <a href="{% url product_view product.slug %}" style="height:{{ im.height }}px; width:{{ im.width }}px;">
                 <img class="" src="{{ im.url }}" alt="{{ product.description }}" title="{{ product.description }}"/>
                 </a>

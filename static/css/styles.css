@@ -524,6 +524,7 @@ div.right {
     height: auto;
     overflow: hidden;
     position: relative;
+    text-align: center;
 }
 
 .product-promo.last {
