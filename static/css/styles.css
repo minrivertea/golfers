@@ -637,6 +637,7 @@ div.right div h4 {
 .product-promo .text {
   padding: 10px 15px;
   float:left;
+  width: 100%
 }
 
 .product-promo .text ul {
