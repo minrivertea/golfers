@@ -1,0 +1,9 @@
+Django=1.4
+PIL
+sorl-thumbnail
+django-paypal
+django-tinymce
+django-modeltranslation
+django-modeltranslation-wrapper
+django-rosetta
+django-simple-captcha
